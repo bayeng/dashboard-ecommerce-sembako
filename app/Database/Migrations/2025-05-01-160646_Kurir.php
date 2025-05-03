@@ -35,6 +35,10 @@ class Kurir extends Migration
                 'constraint' => 255,
                 'null' => true,
             ],
+            'user_id' => [
+                'type' => 'INT',
+                'null' => false,
+            ],
             'created_at' => [
                 'type' => 'DATETIME',
                 'null' => true,
@@ -49,6 +53,7 @@ class Kurir extends Migration
             ]
             ]);
             $this->forge->addKey('id', true);
+            $this->forge->addForeignKey('user_id', 'users', 'id');
             $this->forge->createTable('kurir');
     }
 

@@ -24,7 +24,7 @@ class Toko extends Migration
             ],
             'foto' => [
                 'type' => 'VARCHAR',
-                'constraint' => 255,
+                'constraint' => 350,
             ],
             'created_at' => [
                 'type' => 'DATETIME',

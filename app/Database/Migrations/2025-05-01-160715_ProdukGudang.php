@@ -28,13 +28,16 @@ class ProdukGudang extends Migration
             ],
             'foto' => [
                 'type' => 'VARCHAR',
-                'constraint' => 255,
+                'constraint' => 350,
             ],
             'stok' => [
                 'type' => 'INT',
                 'constraint' => 11,
             ],
             'kategori_id' => [
+                'type' => 'INT',
+            ],
+            'produk_mentah_id' => [
                 'type' => 'INT',
             ],
             'created_at' => [

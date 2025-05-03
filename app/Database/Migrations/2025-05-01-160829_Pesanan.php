@@ -29,8 +29,9 @@ class Pesanan extends Migration
                 'type' => 'VARCHAR',
                 'constraint' => 255,
             ],
-            'is_bayar' => [
-                'type' => 'BOOLEAN',
+            'status_value' => [
+                'type' => 'TINYINT',
+                'constraint' => 1,
             ],
             'kurir_id' => [
                 'type' => 'INT',

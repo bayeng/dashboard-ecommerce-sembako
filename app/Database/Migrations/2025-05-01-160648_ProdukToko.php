@@ -33,7 +33,7 @@ class ProdukToko extends Migration
             ],
             'foto' => [
                 'type' => 'VARCHAR',
-                'constraint' => 255,
+                'constraint' => 350,
                 'null' => true,
             ],
             'stok' => [
@@ -42,7 +42,7 @@ class ProdukToko extends Migration
             ],
             'toko_id' => [
                 'type' => 'INT',
-                'null' => true,
+                'null' => false,
             ],
             'kategori_id' => [
                 'type' => 'INT',

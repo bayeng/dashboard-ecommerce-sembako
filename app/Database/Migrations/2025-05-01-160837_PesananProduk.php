@@ -14,7 +14,7 @@ class PesananProduk extends Migration
                 'constraint' => 11,
                 'auto_increment' => true,
             ],
-            'jumlah' => [
+            'kuantiti' => [
                 'type' => 'INT',
                 'constraint' => 11,
             ],
