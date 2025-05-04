@@ -17,9 +17,10 @@ class SupplierController extends BaseController
 
     public function index()
     {
-        $suppliers = $this->supplierModel->findAll();
+        $suppliers = $this->supplierModel->paginate(10);
         return view('pages/supplier/index',[
-            'suppliers' => $suppliers
+            'suppliers' => $suppliers,
+            'pager' => $this->supplierModel->pager
         ]);
     }
 
@@ -48,6 +49,34 @@ class SupplierController extends BaseController
         ]);
 
         return redirect()->to('/supplier')->with('success', 'Supplier berhasil ditambahkan');
+    }
+
+    public function update($id)
+    {
+        $rules = [
+            'nama' => 'required',
+            'alamat' => 'permit_empty',
+            'no_hp' => 'required',
+            'email' => 'permit_empty',
+            'bank' => 'permit_empty',
+            'no_rekening' => 'permit_empty',
+        ];
+
+        // Jika kamu ingin validasi aktif, buka komentar ini:
+        // if (!$this->validate($rules)) {
+        //     return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
+        // }
+
+        $this->supplierModel->update($id, [
+            'nama' => $this->request->getPost('nama'),
+            'alamat' => $this->request->getPost('alamat'),
+            'no_hp' => $this->request->getPost('no_hp'),
+            'email' => $this->request->getPost('email'),
+            'bank' => $this->request->getPost('bank'),
+            'no_rekening' => $this->request->getPost('no_rekening'),
+        ]);
+
+        return redirect()->to('/supplier')->with('success', 'Data supplier berhasil diperbarui');
     }
 
 

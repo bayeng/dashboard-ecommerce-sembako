@@ -15,5 +15,7 @@ $routes->group('', ['namespace' => 'App\Controllers\Web'], function ($routes) {
     // Supplier
     $routes->get('supplier', 'SupplierController::index');
     $routes->post('supplier/store', 'SupplierController::store');
+    $routes->put('supplier/update/(:num)', 'SupplierController::update/$1');
+    $routes->delete('supplier/update/(:num)', 'SupplierController::update/$1');
 });
 

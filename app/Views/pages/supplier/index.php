@@ -56,21 +56,22 @@
                                         <tr>
                                             <th class="text-center">No</th>
                                             <th>Nama Supplier</th>
-                                            <th>Email</th>
                                             <th>Nomor Hp</th>
                                             <th>Bank</th>
-                                            <th>Nomor Rekening</th>
+                                            <th>Aksi</th>
                                         </tr>
                                         </thead>
                                         <tbody>
                                         <?php $no = 1; foreach ($suppliers as $supplier): ?>
                                             <tr>
+                                                <td class="text-center"><?= $no++ ?></td>
                                                 <td><?= esc($supplier['nama']) ?></td>
-                                                <td><?= esc($supplier['email']) ?></td>
                                                 <td><?= esc($supplier['no_hp']) ?></td>
                                                 <td><?= esc($supplier['bank']) ?></td>
-                                                <td><?= esc($supplier['no_rekening']) ?></td>
                                                 <td>
+                                                    <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-show-<?= $supplier['id'] ?>">
+                                                        <i class="fas fa-eye"></i>
+                                                    </button>
                                                     <!-- Tombol untuk membuka modal edit -->
                                                     <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modal-edit-<?= $supplier['id'] ?>">
                                                         <i class="fas fa-edit"></i>
@@ -91,7 +92,7 @@
                                 </div>
                             </div>
                             <div class="mt-4 d-flex justify-content-center">
-                                pagination code
+                                <?= $pager->links() ?>
                             </div>
                         </div>
                     </div>
@@ -112,6 +113,15 @@
             'title' => 'Edit Supplier',
             'size' => 'modal-lg',
             'slot' => view('pages/supplier/form-edit', ['supplier' => $supplier])
+        ]) ?>
+    <?php endforeach; ?>
+
+    <?php foreach ($suppliers as $supplier): ?>
+        <?= view('components/modal', [
+            'id' => 'modal-show-' . $supplier['id'],
+            'title' => 'Detail Supplier',
+            'size' => 'modal-lg',
+            'slot' => view('pages/supplier/show', ['supplier' => $supplier])
         ]) ?>
     <?php endforeach; ?>
 
