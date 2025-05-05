@@ -4,9 +4,9 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class SupplierModel extends Model
+class KategoriModel extends Model
 {
-    protected $table            = 'supplier';
+    protected $table            = 'kategori';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';

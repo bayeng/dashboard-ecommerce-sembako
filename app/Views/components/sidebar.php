@@ -16,6 +16,7 @@
                 </ul>
             </li>
             <li class=active><a class="nav-link" href="<?= base_url('supplier') ?>"><i class="fa fa-truck"></i> <span>Supplier</span></a></li>
+            <li class=active><a class="nav-link" href="<?= base_url('kategori-gudang') ?>"><i class="fa fa-tag"></i> <span>Kategori Produk</span></a></li>
             <li class=active><a class="nav-link" href="blank.html"><i class="far fa-square"></i> <span>Blank Page</span></a></li>
             <li class="dropdown">
                 <a href="#" class="nav-link has-dropdown"><i class="fas fa-th"></i> <span>Bootstrap</span></a>

@@ -26,15 +26,15 @@ class SupplierController extends BaseController
 
     public function store()
     {
-        $rules = [
-            'nama' => 'required',
-            'alamat' => 'permit_empty',
-            'no_hp' => 'required',
-            'email' => 'permit_empty',
-            'bank' => 'permit_empty',
-            'no_rekening' => 'permit_empty',
-        ];
-
+//        $rules = [
+//            'nama' => 'required',
+//            'alamat' => 'permit_empty',
+//            'no_hp' => 'required',
+//            'email' => 'permit_empty',
+//            'bank' => 'permit_empty',
+//            'no_rekening' => 'permit_empty',
+//        ];
+//
 //        if (!$this->validate($rules)) {
 //            return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
 //        }
@@ -53,19 +53,18 @@ class SupplierController extends BaseController
 
     public function update($id)
     {
-        $rules = [
-            'nama' => 'required',
-            'alamat' => 'permit_empty',
-            'no_hp' => 'required',
-            'email' => 'permit_empty',
-            'bank' => 'permit_empty',
-            'no_rekening' => 'permit_empty',
-        ];
-
-        // Jika kamu ingin validasi aktif, buka komentar ini:
-        // if (!$this->validate($rules)) {
-        //     return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
-        // }
+//        $rules = [
+//            'nama' => 'required',
+//            'alamat' => 'permit_empty',
+//            'no_hp' => 'required',
+//            'email' => 'permit_empty',
+//            'bank' => 'permit_empty',
+//            'no_rekening' => 'permit_empty',
+//        ];
+//
+//         if (!$this->validate($rules)) {
+//             return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
+//         }
 
         $this->supplierModel->update($id, [
             'nama' => $this->request->getPost('nama'),
@@ -77,6 +76,12 @@ class SupplierController extends BaseController
         ]);
 
         return redirect()->to('/supplier')->with('success', 'Data supplier berhasil diperbarui');
+    }
+
+    public function delete($id)
+    {
+        $this->supplierModel->delete($id);
+        return redirect()->to('/supplier')->with('success', 'Supplier berhasil dihapus');
     }
 
 

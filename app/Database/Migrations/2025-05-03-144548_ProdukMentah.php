@@ -31,6 +31,11 @@ class ProdukMentah extends Migration
                 'type'       => 'VARCHAR',
                 'constraint' => 50,
             ],
+            'harga' => [
+                'type'       => 'FLOAT',
+                'constraint' => 11,
+                'default'    => 0,
+            ],
             'created_at' => [
                 'type'       => 'DATETIME',
                 'null'       => true,
@@ -46,7 +51,7 @@ class ProdukMentah extends Migration
         ]);
 
         $this->forge->addKey('id', true);
-        $this->forge->addForeignKey('supplier_id', 'suppliers', 'id', 'CASCADE', 'CASCADE', 'fk_produk_mentah_suppliers');
+        $this->forge->addForeignKey('supplier_id', 'supplier', 'id', 'CASCADE', 'CASCADE', 'fk_produk_mentah_suppliers');
         $this->forge->createTable('produk_mentah');
     }
 
