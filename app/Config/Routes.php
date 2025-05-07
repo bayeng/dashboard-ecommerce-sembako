@@ -12,6 +12,12 @@ $routes->get('/hello', function () {
 
 $routes->group('', ['namespace' => 'App\Controllers\Web'], function ($routes) {
 
+    $routes->group('auth', function ($routes) {
+        $routes->get('login', 'AuthController::index');
+        $routes->post('login', 'AuthController::login');
+        $routes->get('logout', 'AuthController::logout');
+    });
+
     // produk toko
     $routes->group('produk', function ($routes) {
         $routes->get('', 'ProdukTokoController::index');
