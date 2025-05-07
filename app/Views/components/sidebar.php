@@ -15,6 +15,7 @@
                     <li><a class="nav-link" href="index.html">Ecommerce Dashboard</a></li>
                 </ul>
             </li>
+            <li class=active><a class="nav-link" href="<?= base_url('produk') ?>"><i class="fa fa-box"></i> <span>Produk</span></a></li>
             <li class=active><a class="nav-link" href="<?= base_url('toko') ?>"><i class="fa fa-store"></i> <span>Toko</span></a></li>
             <li class=active><a class="nav-link" href="<?= base_url('supplier') ?>"><i class="fa fa-truck"></i> <span>Supplier</span></a></li>
             <li class=active><a class="nav-link" href="<?= base_url('produk-mentah') ?>"><i class="fa fa-box-open"></i> <span>Produk Mentah</span></a></li>
