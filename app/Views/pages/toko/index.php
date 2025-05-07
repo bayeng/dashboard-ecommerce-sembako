@@ -94,6 +94,7 @@
                                 </div>
                             </div>
                             <div class="mt-4 d-flex justify-content-center">
+                                <?= $pager->links() ?>
                             </div>
                         </div>
                     </div>

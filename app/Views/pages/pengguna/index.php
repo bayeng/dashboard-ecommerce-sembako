@@ -55,13 +55,40 @@
                                         <thead>
                                         <tr>
                                             <th class="text-center">No</th>
-                                            <th>Nama Pengguna</th>
-                                            <th>Alamat</th>
-                                            <th>Foto</th>
+                                            <th>Nama</th>
+                                            <th>Username</th>
+                                            <th>No. Telepon</th>
+                                            <th>Toko</th>
+                                            <th>Aksi</th>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                         
+                                        <?php $no = 1; foreach ($users as $user): ?>
+                                                <tr>
+                                                    <td class="text-center"><?= $no++ ?></td>
+                                                    <td><?= esc($user['nama']) ?></td>
+                                                    <td><?= esc($user['username']) ?></td>
+                                                    <td><?= esc($user['no_hp']) ?></td>
+                                                    <td><?= esc($user['toko_id']) ?></td>
+                                                    <td>
+                                                        <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-show-<?= $user['id'] ?>">
+                                                            <i class="fas fa-eye"></i>
+                                                        </button>
+                                                        <!-- Tombol untuk membuka modal edit -->
+                                                        <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modal-edit-<?= $user['id'] ?>">
+                                                            <i class="fas fa-edit"></i>
+                                                        </button>
+
+                                                        <!-- Form untuk menghapus supplier -->
+                                                        <form action="<?= site_url('pengguna/delete/' . $user['id']) ?>" method="POST" style="display:inline;" onsubmit="return confirm('Yakin ingin menghapus toko ini?')">
+                                                            <?= csrf_field() ?>
+                                                            <button type="submit" class="btn btn-danger btn-sm">
+                                                                <i class="fas fa-trash"></i>
+                                                            </button>
+                                                        </form>
+                                                    </td>
+                                                </tr>
+                                            <?php endforeach; ?>
                                         </tbody>
                                     </table>
                                 </div>
@@ -74,6 +101,31 @@
             </div>
         </section>
     </div>
+
+    <?= view('components/modal', [
+        'id' => 'modal-create',
+        'title' => 'Tambah Pengguna',
+        'slot' => view('pages/pengguna/form-create')
+    ]) ?>
+
+    
+    <?php foreach ($users as $user): ?>
+        <?= view('components/modal', [
+            'id' => 'modal-show-' . $user['id'],
+            'title' => 'Detail Pengguna',
+            'size' => 'modal-lg',
+            'slot' => view('pages/pengguna/show', ['user' => $user])
+        ]) ?>
+    <?php endforeach; ?>
+    
+    <?php foreach ($users as $user): ?>
+        <?= view('components/modal', [
+            'id' => 'modal-edit-' . $user['id'],
+            'title' => 'Perbarui Pengguna',
+            'size' => 'modal-lg',
+            'slot' => view('pages/pengguna/form-edit', ['user' => $user])
+        ]) ?>
+    <?php endforeach; ?>
 
 <?= $this->endSection() ?>
 

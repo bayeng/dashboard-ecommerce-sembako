@@ -12,6 +12,14 @@ $routes->get('/hello', function () {
 
 $routes->group('', ['namespace' => 'App\Controllers\Web'], function ($routes) {
 
+    // user
+    $routes->group('pengguna', function ($routes) {
+        $routes->get('', 'UserController::index');
+        $routes->post('store', 'UserController::store');
+        $routes->put('update/(:num)', 'UserController::update/$1');
+        $routes->post('delete/(:num)', 'UserController::delete/$1');
+    });
+
     // toko
     $routes->group('toko', function ($routes) {
         $routes->get('', 'TokoController::index');
