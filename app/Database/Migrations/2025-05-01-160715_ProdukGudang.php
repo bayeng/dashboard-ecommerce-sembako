@@ -39,6 +39,7 @@ class ProdukGudang extends Migration
             ],
             'produk_mentah_id' => [
                 'type' => 'INT',
+                'null' => true,
             ],
             'created_at' => [
                 'type' => 'DATETIME',
