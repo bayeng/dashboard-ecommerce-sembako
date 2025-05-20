@@ -19,6 +19,7 @@
             <li class=active><a class="nav-link" href="<?= base_url('toko') ?>"><i class="fa fa-store"></i> <span>Toko</span></a></li>
             <li class=active><a class="nav-link" href="<?= base_url('supplier') ?>"><i class="fa fa-truck"></i> <span>Supplier</span></a></li>
             <li class=active><a class="nav-link" href="<?= base_url('produk-mentah') ?>"><i class="fa fa-box-open"></i> <span>Produk Mentah</span></a></li>
+            <li class=active><a class="nav-link" href="<?= base_url('produk-gudang') ?>"><i class="fa fa-box"></i> <span>Produk Gudang</span></a></li>
             <li class=active><a class="nav-link" href="<?= base_url('kategori-gudang') ?>"><i class="fa fa-tag"></i> <span>Kategori Produk</span></a></li>
             <li class=active><a class="nav-link" href="<?= base_url('pengguna') ?>"><i class="fa fa-user"></i> <span>Pengguna</span></a></li>
             <li class=active><a class="nav-link" href="blank.html"><i class="far fa-square"></i> <span>Blank Page</span></a></li>

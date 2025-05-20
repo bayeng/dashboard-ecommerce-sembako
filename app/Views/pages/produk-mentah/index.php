@@ -73,7 +73,7 @@ Produk Mentah
                                             </td>
                                             <td><?= esc($item['nama']) ?></td>
                                             <td><?= esc($item['nama_supplier']) ?></td>
-                                            <td><?= esc($item['kuantiti']) ?> <?= esc($item['satuan_kuantiti']) ?></td>
+                                            <td><?= esc($item['stok']) ?> <?= esc($item['satuan_stok']) ?></td>
                                             <td>
                                                 <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-show-<?= $item['id'] ?>">
                                                     <i class="fas fa-eye"></i>
@@ -127,7 +127,7 @@ Produk Mentah
         'id' => 'modal-show-' . $item['id'],
         'title' => 'detail Produk Mentah',
         'size' => 'modal-lg',
-        'slot' => view('pages/produk-mentah/show', ['kategori' => $item, 'supplier' => $supplier])
+        'slot' => view('pages/produk-mentah/show', ['item' => $item, 'supplier' => $supplier])
     ]) ?>
 <?php endforeach; ?>
 

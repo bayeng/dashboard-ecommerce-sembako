@@ -9,11 +9,16 @@
     </div>
 
     <div class="form-group">
-        <label for="supplier_id">Supplier</label>
-        <select class="form-control" id="supplier_id" name="supplier_id" disabled required>
-            <option value="<?= $item['id_supplier'] ?>"><?= $item['nama_supplier'] ?></option>
-            <?php foreach ($supplier as $s): ?>
-                <option value="<?= $s['id'] ?>"><?= $s['nama'] ?></option>
+        <label for="kode">Kode Produk</label>
+        <input type="text" class="form-control" id="kode" name="kode" value="<?= $item['kode'] ?>" disabled required>
+    </div>
+
+    <div class="form-group">
+        <label for="kategori_id">Kategori</label>
+        <select class="form-control" id="kategori_id" name="kategori_id" disabled required>
+            <option value="<?= $item['id_kategori'] ?>"><?= $item['nama_kategori'] ?></option>
+            <?php foreach ($kategori as $k): ?>
+                <option value="<?= $k['id'] ?>"><?= $k['nama'] ?></option>
             <?php endforeach; ?>
         </select>
     </div>
@@ -27,7 +32,7 @@
         <label for="foto">Foto</label>
         <?php if (!empty($item['foto'])): ?>
             <div class="mb-2">
-                <img src="<?= base_url('uploads/produk-mentah/' . $item['foto']) ?>" alt="Foto Produk" width="100">
+                <img src="<?= base_url('uploads/produk-gudang/' . $item['foto']) ?>" alt="Foto Produk" width="100">
             </div>
         <?php endif; ?>
     </div>

@@ -46,6 +46,17 @@ class Alamat extends Migration
                 'type'       => 'DATETIME',
                 'null'       => true,
             ],
+
+            'lat' => [
+                'type'       => 'VARCHAR',
+                'constraint' => 255,
+                'null'       => true,
+            ],
+            'lng' => [
+                'type'       => 'VARCHAR',
+                'constraint' => 255,
+                'null'       => true,
+            ],
             'updated_at' => [
                 'type'       => 'DATETIME',
                 'null'       => true,

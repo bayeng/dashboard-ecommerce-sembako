@@ -11,7 +11,7 @@
     <div class="form-group">
         <label for="supplier_id">Supplier</label>
         <select class="form-control" id="supplier_id" name="supplier_id" required>
-            <option value="<?= $kategori['supplier_id'] ?>"><?= $kategori['nama_supplier'] ?></option>
+            <option value="<?= $kategori['id_supplier'] ?>"><?= $kategori['nama_supplier'] ?></option>
             <?php foreach ($supplier as $item): ?>
                 <option value="<?= $item['id'] ?>"><?= $item['nama'] ?></option>
             <?php endforeach; ?>
@@ -35,13 +35,13 @@
 
     <div class="form-row">
         <div class="form-group col-md-6">
-            <label for="kuantiti">Kuantiti</label>
-            <input type="text" class="form-control" id="kuantiti" name="kuantiti" value="<?= $kategori['kuantiti'] ?>" required>
+            <label for="stok">Kuantiti</label>
+            <input type="text" class="form-control" id="stok" name="stok" value="<?= $kategori['stok'] ?>" required>
         </div>
 
         <div class="form-group col-md-6">
-            <label for="satuan_kuantiti">Satuan Kuantiti</label>
-            <input type="text" class="form-control" id="satuan_kuantiti" name="satuan_kuantiti" value="<?= $kategori['satuan_kuantiti'] ?>" required>
+            <label for="satuan_stok">Satuan Kuantiti</label>
+            <input type="text" class="form-control" id="satuan_stok" name="satuan_stok" value="<?= $kategori['satuan_stok'] ?>" required>
         </div>
     </div>
 

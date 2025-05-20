@@ -1,4 +1,4 @@
-<form action="<?= site_url('produk-mentah/store'); ?>" method="POST" enctype="multipart/form-data">
+<form action="<?= site_url('produk-gudang/store'); ?>" method="POST" enctype="multipart/form-data">
     <?= csrf_field(); ?>
 
     <div class="form-group">
@@ -7,11 +7,26 @@
     </div>
 
     <div class="form-group">
+        <label for="kode">Kode Produk</label>
+        <input type="text" class="form-control" id="kode" name="kode" required>
+    </div>
+
+    <div class="form-group">
+        <label for="kategori_id">Kategori Produk</label>
+        <select class="form-control" id="kategori_id" name="kategori_id" required>
+            <option value="">-- Kategori Produk --</option>
+            <?php foreach ($kategori as $item): ?>
+                <option value="<?= $item['id'] ?>"><?= $item['nama'] ?></option>
+            <?php endforeach; ?>
+        </select>
+    </div>
+
+    <div class="form-group">
         <label for="supplier_id">Supplier</label>
         <select class="form-control" id="supplier_id" name="supplier_id" required>
             <option value="">-- Pilih Supplier --</option>
-            <?php foreach ($supplier as $item): ?>
-                <option value="<?= $item['id'] ?>"><?= $item['nama'] ?></option>
+            <?php foreach ($supplier as $s): ?>
+                <option value="<?= $s['id'] ?>"><?= $s['nama'] ?></option>
             <?php endforeach; ?>
         </select>
     </div>

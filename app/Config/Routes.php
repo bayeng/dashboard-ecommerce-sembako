@@ -54,6 +54,12 @@ $routes->group('', ['namespace' => 'App\Controllers\Web'], function ($routes) {
     $routes->put('produk-mentah/update/(:num)', 'ProdukMentahController::update/$1');
     $routes->post('produk-mentah/delete/(:num)', 'ProdukMentahController::delete/$1');
 
+    // Produk Gudang
+    $routes->get('produk-gudang', 'ProdukGudangController::index');
+    $routes->post('produk-gudang/store', 'ProdukGudangController::store');
+    $routes->put('produk-gudang/update/(:num)', 'ProdukGudangController::update/$1');
+    $routes->post('produk-gudang/delete/(:num)', 'ProdukGudangController::delete/$1');
+
     // Kategori
     $routes->get('kategori-gudang', 'KategoriController::index');
     $routes->post('kategori-gudang/store', 'KategoriController::store');

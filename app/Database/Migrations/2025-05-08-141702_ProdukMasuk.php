@@ -4,7 +4,7 @@ namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
 
-class ProdukGudang extends Migration
+class ProdukMasuk extends Migration
 {
     public function up()
     {
@@ -14,45 +14,29 @@ class ProdukGudang extends Migration
                 'constraint' => 11,
                 'auto_increment' => true,
             ],
-            'nama' => [
-                'type' => 'VARCHAR',
-                'constraint' => 255,
-            ],
-            'kode' => [
-                'type' => 'VARCHAR',
-                'constraint' => 255,
-                'null' => true,
-            ],
-            'harga' => [
-                'type' => 'FLOAT',
+            'supplier_id' => [
+                'type' => 'INT',
                 'constraint' => 11,
             ],
-            'foto' => [
-                'type' => 'VARCHAR',
-                'constraint' => 350,
+            'produk_gudang_id' => [
+                'type' => 'INT',
+                'constraint' => 11,
                 'null' => true,
             ],
             'stok' => [
                 'type' => 'INT',
                 'constraint' => 11,
             ],
-            'jenis_value' => [
-                'type' => 'TINYINT',
-                'constraint' => 1,
-            ],
-            'kategori_id' => [
-                'type' => 'INT',
-                'constraint' => 11,
-                'null' => true,
-            ],
-            'supplier_id' => [
-                'type' => 'INT',
-                'constraint' => 11,
-                'null' => true,
-            ],
             'satuan_stok' => [
                 'type' => 'VARCHAR',
                 'constraint' => 50,
+            ],
+            'harga' => [
+                'type' => 'FLOAT',
+                'constraint' => 11,
+            ],
+            'tanggal_masuk' => [
+                'type' => 'DATE',
             ],
             'created_at' => [
                 'type' => 'DATETIME',
@@ -66,14 +50,16 @@ class ProdukGudang extends Migration
                 'type' => 'DATETIME',
                 'null' => true,
             ]
-            ]);
-            $this->forge->addKey('id', true);
-            $this->forge->addForeignKey('kategori_id', 'kategori', 'id', 'CASCADE', 'CASCADE', 'fk_produk_gudang_kategori');
-            $this->forge->createTable('produk_gudang');
+        ]);
+
+        $this->forge->addKey('id', true);
+        $this->forge->addForeignKey('supplier_id', 'supplier', 'id', 'CASCADE', 'CASCADE', 'fk_produk_masuk_supplier');
+        $this->forge->addForeignKey('produk_gudang_id', 'produk_gudang', 'id', 'cascade', 'cascade', 'fk_produk_masuk_produk_gudang');
+        $this->forge->createTable('produk_masuk');
     }
 
     public function down()
     {
-        $this->forge->dropTable('produk_gudang');
+        $this->forge->dropTable('produk_masuk');
     }
 }

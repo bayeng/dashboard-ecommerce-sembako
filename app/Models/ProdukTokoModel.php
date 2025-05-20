@@ -10,7 +10,7 @@ class ProdukTokoModel extends Model
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
-    protected $useSoftDeletes   = false;
+    protected $useSoftDeletes   = true;
     protected $protectFields    = true;
     protected $allowedFields    = ['nama', 'kode', 'harga', 'stok', 'deskripsi', 'kategori_id', 'toko_id', 'foto'];
 

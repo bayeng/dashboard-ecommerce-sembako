@@ -33,6 +33,16 @@ class Pesanan extends Migration
                 'type' => 'TINYINT',
                 'constraint' => 1,
             ],
+            'lat' => [
+                'type' => 'VARCHAR',
+                'constraint' => 255,
+                'null' => true,
+            ],
+            'lng' => [
+                'type' => 'VARCHAR',
+                'constraint' => 255,
+                'null' => true,
+            ],
             'kurir_id' => [
                 'type' => 'INT',
             ],
