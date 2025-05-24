@@ -41,6 +41,11 @@
         <input type="file" class="form-control" id="foto" name="foto" required>
     </div>
 
+    <div class="form-group">
+        <label for="tanggal_masuk">Tanggal Masuk</label>
+        <input type="date" class="form-control" id="tanggal_masuk" name="tanggal_masuk" required>
+    </div>
+
     <div class="form-row">
         <div class="form-group col-md-6">
             <label for="stok">Stok</label>

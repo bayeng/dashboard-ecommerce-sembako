@@ -33,6 +33,10 @@ class Pesanan extends Migration
                 'type' => 'TINYINT',
                 'constraint' => 1,
             ],
+            'catatan' => [
+                'type' => 'LONGTEXT',
+                'null' => true,
+            ],
             'lat' => [
                 'type' => 'VARCHAR',
                 'constraint' => 255,

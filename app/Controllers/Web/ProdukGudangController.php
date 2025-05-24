@@ -114,6 +114,7 @@ class ProdukGudangController extends BaseController
             'produk_gudang_id' => $this->produkGudangModel->getInsertID(),
             'stok' => $this->request->getPost('stok'),
             'harga' => $this->request->getPost('harga'),
+            'tanggal_masuk' => $this->request->getPost('tanggal_masuk'),
             'satuan_stok' => $this->request->getPost('satuan_stok'),
         ]);
 

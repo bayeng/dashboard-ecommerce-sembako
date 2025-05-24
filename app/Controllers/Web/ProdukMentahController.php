@@ -43,7 +43,7 @@ class ProdukMentahController extends BaseController
         return view('pages/produk-mentah/index',[
             'produkMentah' => $produkMentah,
             'supplier' => $supplier,
-            'pager' => $this->produkMasukModel->pager
+            'pager' => $this->produkMentahModel->pager
         ]);
     }
 
@@ -64,6 +64,7 @@ class ProdukMentahController extends BaseController
             'nama' => $this->request->getPost('nama'),
             'foto' => $filename,
             'harga' => $this->request->getPost('harga'),
+            'supplier_id' => $this->request->getPost('supplier_id'),
             'jenis_value' => 1,
             'stok' => $this->request->getPost('stok'),
             'satuan_stok' => $this->request->getPost('satuan_stok'),
@@ -75,6 +76,7 @@ class ProdukMentahController extends BaseController
             'produk_gudang_id' => $this->produkMentahModel->getInsertID(),
             'stok' => $this->request->getPost('stok'),
             'harga' => $this->request->getPost('harga'),
+            'tanggal_masuk' => $this->request->getPost('tanggal_masuk'),
             'satuan_stok' => $this->request->getPost('satuan_stok'),
         ]);
 

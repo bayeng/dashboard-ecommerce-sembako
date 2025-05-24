@@ -67,3 +67,22 @@ $routes->group('', ['namespace' => 'App\Controllers\Web'], function ($routes) {
     $routes->post('kategori-gudang/delete/(:num)', 'KategoriController::delete/$1');
 });
 
+
+$routes->group('api', ['namespace' => 'App\Controllers\Api'], function ($routes) {
+    //Kurir
+    $routes->get('kurir', 'KurirController::getAllKurirByFilters');
+    $routes->get('kurir/(:num)', 'KurirController::getKurirById/$1');
+    $routes->post('kurir/ulasan/(:num)', 'KurirController::createUlasanKurir/$1');
+
+    //produk toko
+    $routes->get('produk', 'ProdukController::getAllProdukTokoByFilters');
+    $routes->get('produk/(:num)', 'ProdukController::getProdukTokoById/$1');
+
+    //keranjang
+    $routes->get('keranjang', 'KeranjangController::getKeranjangByUser');
+    $routes->get('keranjang/(:num)', 'KeranjangController::getKeranjangById/$1');
+    $routes->post('keranjang', 'KeranjangController::createKeranjangUser');
+    $routes->put('keranjang/(:num)', 'KeranjangController::updateKeranjangUser/$1');
+    $routes->post('keranjang/delete/(:num)', 'KeranjangController::deleteKeranjangUser/$1');
+});
+
