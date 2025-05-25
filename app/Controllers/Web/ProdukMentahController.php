@@ -6,6 +6,7 @@ use App\Controllers\BaseController;
 use App\Models\ProdukGudangModel;
 use App\Models\ProdukMasukModel;
 use App\Models\ProdukMentahModel;
+use App\Models\ProdukPackingModel;
 use App\Models\SupplierModel;
 use CodeIgniter\HTTP\ResponseInterface;
 
@@ -15,12 +16,16 @@ class ProdukMentahController extends BaseController
     protected $produkMentahModel;
     protected $produkMasukModel;
     protected $supllierModel;
+    protected $productPackingModel;
+    protected $produkGudangModel;
 
     public function __construct()
     {
         $this->produkMentahModel = new ProdukGudangModel();
         $this->supllierModel = new SupplierModel();
         $this->produkMasukModel = new ProdukMasukModel();
+        $this->productPackingModel = new ProdukPackingModel();
+        $this->produkGudangModel = new ProdukGudangModel();
     }
 
     public function index()
@@ -128,5 +133,54 @@ class ProdukMentahController extends BaseController
     }
 
 
+    public function showPengemasanProduk($id)
+    {
+        $produkMentah = $this->produkMentahModel->find($id);
+        $produkGudang = $this->produkGudangModel
+            ->where('jenis_value', 2)
+            ->findAll();
+
+        $produkPacking = $this->productPackingModel
+            ->select('produk_packing.*, pg.id as id_produk_gudang, pg.nama as nama_produk_gudang, pg.foto as foto_produk_gudang')
+            ->join('produk_gudang pg', 'pg.id = produk_packing.produk_gudang_id')
+            ->where('produk_mentah_id', $id)
+            ->paginate(10);
+
+
+        if (!$produkMentah) {
+            return redirect()->to('/produk-mentah')->with('error', 'Produk mentah tidak ditemukan');
+        }
+
+        return view('pages/produk-mentah/pengemasan-produk', [
+            'produkMentah' => $produkMentah,
+            'produkPacking' => $produkPacking,
+            'produkGudang' => $produkGudang,
+            'pager' => $this->productPackingModel->pager
+        ]);
+
+    }
+
+    public function tambahPengemasanProduk()
+    {
+        $data = [
+            'produk_mentah_id' => $this->request->getPost('produk_mentah_id'),
+            'produk_gudang_id' => $this->request->getPost('produk_gudang_id'),
+            'stok' => $this->request->getPost('stok'),
+            'satuan_stok' => $this->request->getPost('satuan_stok'),
+        ];
+
+        $cek = $this->productPackingModel
+            ->where('produk_mentah_id', $data['produk_mentah_id'])
+            ->where('produk_gudang_id', $data['produk_gudang_id'])
+            ->first();
+
+        if ($cek) {
+            return redirect()->to('/produk-mentah/' . '/pengemasan-produk/' . $data['produk_mentah_id'])->with('error', 'Produk pengemasan sudah ada');
+        }
+
+        $this->productPackingModel->insert($data);
+
+        return redirect()->to('/produk-mentah/' . '/pengemasan-produk/' . $data['produk_mentah_id'] )->with('success', 'Produk pengemasan berhasil ditambahkan');
+    }
 
 }

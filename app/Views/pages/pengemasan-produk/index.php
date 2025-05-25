@@ -1,7 +1,7 @@
 <?= $this->extend('layouts/main') ?>
 
 <?= $this->section('title') ?>
-Produk Mentah
+Pengemasan Produk
 <?= $this->endSection() ?>
 
 <?= $this->section('style') ?>
@@ -15,7 +15,7 @@ Produk Mentah
             <h1>Produk Mentah</h1>
             <div class="section-header-breadcrumb">
                 <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
-                <div class="breadcrumb-item"><a href="#">Produk Mentah</a></div>
+                <div class="breadcrumb-item"><a href="#">Pengemasan Produk</a></div>
             </div>
         </div>
 
@@ -75,7 +75,6 @@ Produk Mentah
                                             <td><?= esc($item['nama_supplier']) ?></td>
                                             <td><?= esc($item['stok']) ?> <?= esc($item['satuan_stok']) ?></td>
                                             <td>
-                                                <a href="<?= base_url('produk-mentah/pengemasan-produk/' . $item['id']) ?>" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="Pengemasan Produk">Kemas</a>
                                                 <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-show-<?= $item['id'] ?>">
                                                     <i class="fas fa-eye"></i>
                                                 </button>

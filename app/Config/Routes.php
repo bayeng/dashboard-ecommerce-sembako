@@ -50,9 +50,17 @@ $routes->group('', ['namespace' => 'App\Controllers\Web'], function ($routes) {
 
     // Produk Mentah
     $routes->get('produk-mentah', 'ProdukMentahController::index');
+    $routes->get('produk-mentah/pengemasan-produk/(:num)', 'ProdukMentahController::showPengemasanProduk/$1');
     $routes->post('produk-mentah/store', 'ProdukMentahController::store');
+    $routes->post('produk-mentah/pengemasan-produk', 'ProdukMentahController::tambahPengemasanProduk');
     $routes->put('produk-mentah/update/(:num)', 'ProdukMentahController::update/$1');
     $routes->post('produk-mentah/delete/(:num)', 'ProdukMentahController::delete/$1');
+
+    // Pengemasan Produk
+    $routes->get('pengemasan-produk', 'PengemasanProdukController::index');
+    $routes->post('pengemasan-produk/store', 'PengemasanProdukController::store');
+    $routes->put('pengemasan-produk/update/(:num)', 'PengemasanProdukController::update/$1');
+    $routes->post('pengemasan-produk/delete/(:num)', 'PengemasanProdukController::delete/$1');
 
     // Produk Gudang
     $routes->get('produk-gudang', 'ProdukGudangController::index');

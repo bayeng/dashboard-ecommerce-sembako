@@ -1,7 +1,7 @@
 <?= $this->extend('layouts/main') ?>
 
 <?= $this->section('title') ?>
-Produk Mentah
+Pengemasan Produk
 <?= $this->endSection() ?>
 
 <?= $this->section('style') ?>
@@ -12,10 +12,11 @@ Produk Mentah
 <div class="main-content">
     <section class="section">
         <div class="section-header">
-            <h1>Produk Mentah</h1>
+            <h1>Pengemasan Produk Mentah</h1>
             <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
+                <div class="breadcrumb-item"><a href="#">Dashboard</a></div>
                 <div class="breadcrumb-item"><a href="#">Produk Mentah</a></div>
+                <div class="breadcrumb-item active font-weight-bold"><a href="#">Pengemasan Produk</a></div>
             </div>
         </div>
 
@@ -24,13 +25,13 @@ Produk Mentah
                 <div class="col-12 col-md-12 col-lg-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4>List Kategori</h4>
+                            <h4>List Pengemasan Produk - <?= $produkMentah['nama'] ?></h4>
                             <div class="card-header-action">
                                 <form>
                                     <div class="input-group">
                                         <div class="input-group-btn">
                                             <!-- Tombol untuk membuka modal -->
-                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-create">
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-create-<?= $produkMentah['id'] ?>">
                                                 Tambah
                                             </button>
                                         </div>
@@ -57,31 +58,24 @@ Produk Mentah
                                         <th class="text-center">No</th>
                                         <th>Foto</th>
                                         <th>Nama Produk</th>
-                                        <th>Nama Supplier</th>
-                                        <th>Kuantiti</th>
+                                        <th>Stok</th>
                                         <th>Aksi</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <?php $no = 1; foreach ($produkMentah as $item): ?>
+                                    <?php $no = 1; foreach ($produkPacking as $item): ?>
                                         <tr>
                                             <td class="text-center"><?= $no++ ?></td>
                                             <td>
-                                                <?php if (!empty($item['foto'])): ?>
-                                                    <img src="<?= base_url('uploads/produk-mentah/' . $item['foto']) ?>" width="100px" height="100px" alt="">
+                                                <?php if (!empty($item['foto_produk_gudang'])): ?>
+                                                    <img src="<?= base_url('uploads/produk-gudang/' . $item['foto_produk_gudang']) ?>" width="100px" height="100px" alt="">
                                                 <?php endif; ?>
                                             </td>
-                                            <td><?= esc($item['nama']) ?></td>
-                                            <td><?= esc($item['nama_supplier']) ?></td>
+                                            <td><?= esc($item['nama_produk_gudang']) ?></td>
                                             <td><?= esc($item['stok']) ?> <?= esc($item['satuan_stok']) ?></td>
                                             <td>
-                                                <a href="<?= base_url('produk-mentah/pengemasan-produk/' . $item['id']) ?>" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="Pengemasan Produk">Kemas</a>
                                                 <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-show-<?= $item['id'] ?>">
-                                                    <i class="fas fa-eye"></i>
-                                                </button>
-                                                <!-- Tombol untuk membuka modal edit -->
-                                                <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modal-edit-<?= $item['id'] ?>">
-                                                    <i class="fas fa-edit"></i>
+                                                    <i class="fas fa-cart-plus"></i>
                                                 </button>
 
                                                 <!-- Form untuk menghapus supplier -->
@@ -108,29 +102,29 @@ Produk Mentah
     </section>
 </div>
 <?= view('components/modal', [
-    'id' => 'modal-create',
+    'id' => 'modal-create-' . $produkMentah['id'],
     'title' => 'Tambah Produk Mentah',
 //        'size' => 'modal-lg', // opsional
-    'slot' => view('pages/produk-mentah/create-form', ['supplier' => $supplier])
+    'slot' => view('pages/produk-mentah/create-pengemasan', ['produkMentah' => $produkMentah, 'produkGudang' => $produkGudang])
 ]) ?>
-
-<?php foreach ($produkMentah as $item): ?>
-    <?= view('components/modal', [
-        'id' => 'modal-edit-' . $item['id'],
-        'title' => 'Edit Produk Mentah',
-        'size' => 'modal-lg',
-        'slot' => view('pages/produk-mentah/edit-form', ['kategori' => $item, 'supplier' => $supplier])
-    ]) ?>
-<?php endforeach; ?>
-
-<?php foreach ($produkMentah as $item): ?>
-    <?= view('components/modal', [
-        'id' => 'modal-show-' . $item['id'],
-        'title' => 'detail Produk Mentah',
-        'size' => 'modal-lg',
-        'slot' => view('pages/produk-mentah/show', ['item' => $item, 'supplier' => $supplier])
-    ]) ?>
-<?php endforeach; ?>
+<!---->
+<?php //foreach ($produkMentah as $item): ?>
+<!--    --><?php //= view('components/modal', [
+//        'id' => 'modal-edit-' . $item['id'],
+//        'title' => 'Edit Produk Mentah',
+//        'size' => 'modal-lg',
+//        'slot' => view('pages/produk-mentah/edit-form', ['kategori' => $item, 'supplier' => $supplier])
+//    ]) ?>
+<?php //endforeach; ?>
+<!---->
+<?php //foreach ($produkMentah as $item): ?>
+<!--    --><?php //= view('components/modal', [
+//        'id' => 'modal-create-' . $item['id'],
+//        'title' => 'Tambah Pengemasan',
+//        'size' => 'modal-lg',
+//        'slot' => view('pages/produk-mentah/create-pengemasan', ['item' => $item, 'produkGudang' => $produkGudang])
+//    ]) ?>
+<?php //endforeach; ?>
 
 <?= $this->endSection() ?>
 
