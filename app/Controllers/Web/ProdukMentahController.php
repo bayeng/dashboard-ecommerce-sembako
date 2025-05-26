@@ -183,4 +183,17 @@ class ProdukMentahController extends BaseController
         return redirect()->to('/produk-mentah/' . '/pengemasan-produk/' . $data['produk_mentah_id'] )->with('success', 'Produk pengemasan berhasil ditambahkan');
     }
 
+    public function tambahStokPengemasanProduk($id)
+    {
+        $produkPacking = $this->productPackingModel->find($id);
+        if (!$produkPacking) {
+            return redirect()->to('/produk-mentah')->with('error', 'Produk pengemasan tidak ditemukan');
+        }
+
+        $produkPacking->stok += $this->request->getPost('stok');
+        $this->productPackingModel->update($id, $produkPacking);
+
+        return redirect()->to('/produk-mentah/' . '/pengemasan-produk/' . $produkPacking['produk_mentah_id'])->with('success', 'Stok produk pengemasan berhasil ditambahkan');
+    }
+
 }

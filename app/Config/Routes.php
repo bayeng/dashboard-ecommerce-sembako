@@ -5,12 +5,17 @@ use CodeIgniter\Router\RouteCollection;
 /**
  * @var RouteCollection $routes
  */
-$routes->get('/', 'Home::index');
+$routes->get('/', function (){
+    return view('pages/hello-world');
+});
 $routes->get('/hello', function () {
     return view('pages/hello-world');
 });
+$routes->get('login', 'Web\AuthController::index');
+$routes->post('auth/login', 'Web\AuthController::login');
 
-$routes->group('', ['namespace' => 'App\Controllers\Web'], function ($routes) {
+
+$routes->group('', ['namespace' => 'App\Controllers\Web', 'filter' => 'auth'], function ($routes) {
 
     $routes->group('auth', function ($routes) {
         $routes->get('login', 'AuthController::index');
