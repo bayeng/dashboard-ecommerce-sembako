@@ -16,7 +16,6 @@ $routes->post('auth/login', 'Web\AuthController::login');
 
 
 $routes->group('', ['namespace' => 'App\Controllers\Web', 'filter' => 'auth'], function ($routes) {
-$routes->group('', ['namespace' => 'App\Controllers\Web'], function ($routes) {
     // dashboard
     $routes->get('/', function() {
         return view('pages/dashboard/index');
