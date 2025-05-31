@@ -69,7 +69,7 @@
                                                     <td><?= esc($user['nama']) ?></td>
                                                     <td><?= esc($user['username']) ?></td>
                                                     <td><?= esc($user['no_hp']) ?></td>
-                                                    <td><?= esc($user['toko_id']) ?></td>
+                                                    <td><?= esc($user['nama_toko']) ?></td>
                                                     <td>
                                                         <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-show-<?= $user['id'] ?>">
                                                             <i class="fas fa-eye"></i>

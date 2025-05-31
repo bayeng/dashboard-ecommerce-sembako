@@ -64,7 +64,7 @@ class PesananController extends BaseController
             }
             $pesanan['produk'] = $this->pesananModel
                 ->select('pesanan_produk.*, produk_toko.id as produk_id, produk_toko.nama as produk, produk_toko.gambar as gambar')
-                ->join('produk_toko', 'produk_toko.id = pesanan_produk.produk_toko_id')
+                ->join('produk_toko', 'produk_toko.id = pesanan_produk.produk_toko_id', 'left')
                 ->where('pesanan_produk.pesanan_id', $id)
                 ->get()->getResultArray();
 

@@ -21,7 +21,7 @@ class PesananController extends BaseController
             ->select('pesanan.*, users.nama as nama_user, users.id as user_id, toko.id as toko_id, toko.nama as nama_toko, kurir.id as kurir_id, kurir.nama as nama_kurir')
             ->join('users', 'users.id = pesanan.user_id')
             ->join('toko', 'toko.id = pesanan.toko_id')
-            ->join('kurir', 'kurir.id = pesanan.kurir_id')
+            ->join('kurir', 'kurir.id = pesanan.kurir_id', 'left')
             ->where('toko_id',)
             ->orderBy('pesanan.created_at', 'DESC')
             ->get()->getResultArray();

@@ -74,7 +74,7 @@ Pengemasan Produk
                                             <td><?= esc($item['nama_produk_gudang']) ?></td>
                                             <td><?= esc($item['stok']) ?> <?= esc($item['satuan_stok']) ?></td>
                                             <td>
-                                                <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-show-<?= $item['id'] ?>">
+                                                <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-add-<?= $item['id'] ?>">
                                                     <i class="fas fa-cart-plus"></i>
                                                 </button>
 
@@ -117,14 +117,14 @@ Pengemasan Produk
 //    ]) ?>
 <?php //endforeach; ?>
 <!---->
-<?php //foreach ($produkMentah as $item): ?>
-<!--    --><?php //= view('components/modal', [
-//        'id' => 'modal-create-' . $item['id'],
-//        'title' => 'Tambah Pengemasan',
+<?php foreach ($produkPacking as $item): ?>
+    <?= view('components/modal', [
+        'id' => 'modal-add-' . $item['id'],
+        'title' => 'Tambah Pengemasan',
 //        'size' => 'modal-lg',
-//        'slot' => view('pages/produk-mentah/create-pengemasan', ['item' => $item, 'produkGudang' => $produkGudang])
-//    ]) ?>
-<?php //endforeach; ?>
+        'slot' => view('pages/produk-mentah/addstock-pengemasan', ['item' => $item, 'produkPacking' => $produkPacking])
+    ]) ?>
+<?php endforeach; ?>
 
 <?= $this->endSection() ?>
 

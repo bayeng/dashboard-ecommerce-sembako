@@ -20,7 +20,10 @@ class UserController extends BaseController
 
     public function index()
     {
-        $users = $this->userModel->paginate(25);
+        $users = $this->userModel
+            ->select('users.*, toko.id as toko_id, toko.nama as nama_toko')
+            ->join('toko', 'toko.id = users.toko_id', 'left')
+            ->paginate(10);
         $tokos = $this->tokoModel->findAll();
         $data = [
             'users' => $users,
