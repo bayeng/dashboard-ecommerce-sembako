@@ -85,7 +85,7 @@ class PesananController extends BaseController
             $post = fn($key) => $this->request->getPost($key);
 
             $pesanan = $this->pesananModel->insert([
-                'kode_pesanan' => '#'.uniqid(),
+                'kode_pesanan' => '#'.random_int(100000, 999999),
                 'user_id' => $post('user_id'),
                 'toko_id' => $post('toko_id'),
                 'kurir_id' => $post('kurir_id'),

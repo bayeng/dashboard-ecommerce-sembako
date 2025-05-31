@@ -84,9 +84,7 @@ $routes->group('', ['namespace' => 'App\Controllers\Web', 'filter' => 'auth'], f
     });
 
     $routes->group('toko', function ($routes) {
-        $routes->get('', function () {
-            return view('pages/dashboard/toko');
-        });
+        $routes->get('', 'DashboardController::dashboardToko');
 
         $routes->get('kategori', 'KategoriController::index');
 

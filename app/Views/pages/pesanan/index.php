@@ -71,14 +71,6 @@ Pesanan
                                                     <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modal-edit-<?= $pesan['pesanan_id'] ?>">
                                                         <i class="fas fa-edit"></i>
                                                     </button>
-
-                                                    <!-- Form untuk menghapus supplier -->
-                                                    <form action="<?= site_url('pesanan/delete/' . $pesan['pesanan_id']) ?>" method="POST" style="display:inline;" onsubmit="return confirm('Yakin ingin menghapus toko ini?')">
-                                                        <?= csrf_field() ?>
-                                                        <button type="submit" class="btn btn-danger btn-sm">
-                                                            <i class="fas fa-trash"></i>
-                                                        </button>
-                                                    </form>
                                                 </td>
                                             </tr>
                                         <?php endforeach; ?>

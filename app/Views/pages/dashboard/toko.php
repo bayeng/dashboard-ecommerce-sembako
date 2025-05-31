@@ -22,7 +22,7 @@ Dashboard Toko
                             <h4>Total Pesanan</h4>
                         </div>
                         <div class="card-body">
-                            59
+                            <?= esc($pesananCount) ?>
                         </div>
                     </div>
                 </div>
@@ -37,7 +37,7 @@ Dashboard Toko
                             <h4>Pesanan Masuk</h4>
                         </div>
                         <div class="card-body">
-                            $187,13
+                            <?= esc($pesananMasuk) ?>
                         </div>
                     </div>
                 </div>
@@ -52,20 +52,20 @@ Dashboard Toko
                             <h4>Pesanan Selesai</h4>
                         </div>
                         <div class="card-body">
-                            4,732
+                            <?= esc($pesananSelesai) ?>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        
+
         <div class="row">
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-header">
                         <h4>Pesanan</h4>
                         <div class="card-header-action">
-                            <a href="#" class="btn btn-danger">View More <i class="fas fa-chevron-right"></i></a>
+                            <a href="/toko/pesanan" class="btn btn-danger">View More <i class="fas fa-chevron-right"></i></a>
                         </div>
                     </div>
                     <div class="card-body p-0">
@@ -78,61 +78,32 @@ Dashboard Toko
                                     <th>Metode Pembayaran</th>
                                     <th>Action</th>
                                 </tr>
-                                <tr>
-                                    <td><a href="#">INV-87239</a></td>
-                                    <td class="font-weight-600">Kusnadi</td>
-                                    <td>
-                                        <div class="badge badge-warning">Unpaid</div>
-                                    </td>
-                                    <td>July 19, 2018</td>
-                                    <td>
-                                        <a href="#" class="btn btn-primary">Detail</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><a href="#">INV-48574</a></td>
-                                    <td class="font-weight-600">Hasan Basri</td>
-                                    <td>
-                                        <div class="badge badge-success">Paid</div>
-                                    </td>
-                                    <td>July 21, 2018</td>
-                                    <td>
-                                        <a href="#" class="btn btn-primary">Detail</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><a href="#">INV-76824</a></td>
-                                    <td class="font-weight-600">Muhamad Nuruzzaki</td>
-                                    <td>
-                                        <div class="badge badge-warning">Unpaid</div>
-                                    </td>
-                                    <td>July 22, 2018</td>
-                                    <td>
-                                        <a href="#" class="btn btn-primary">Detail</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><a href="#">INV-84990</a></td>
-                                    <td class="font-weight-600">Agung Ardiansyah</td>
-                                    <td>
-                                        <div class="badge badge-warning">Unpaid</div>
-                                    </td>
-                                    <td>July 22, 2018</td>
-                                    <td>
-                                        <a href="#" class="btn btn-primary">Detail</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><a href="#">INV-87320</a></td>
-                                    <td class="font-weight-600">Ardian Rahardiansyah</td>
-                                    <td>
-                                        <div class="badge badge-success">Paid</div>
-                                    </td>
-                                    <td>July 28, 2018</td>
-                                    <td>
-                                        <a href="#" class="btn btn-primary">Detail</a>
-                                    </td>
-                                </tr>
+                                <?php foreach ($pesanan as $pesan): ?>
+                                    <tr>
+                                        <td><?= esc($pesan['kode_pesanan']) ?></td>
+                                        <td><?= esc($pesan['nama_user']) ?></td>
+                                        <td><?= esc($pesan['total_harga']) ?></td>
+                                        <td><?= esc(match ($pesan['status_value']) {
+                                                1 => 'Diterima',
+                                                2 => 'Diproses',
+                                                3 => 'Dikirim',
+                                                default => 'Tidak diketahui'
+                                            }) ?></td>
+                                        <td>
+                                            <a href="<?= site_url('/toko/pesanan/' . $pesan['pesanan_id']) ?>" type="button" class="btn btn-info btn-sm">
+                                                <i class="fas fa-eye"></i>
+                                            </a>
+
+                                            <!-- Form untuk menghapus supplier -->
+                                            <form action="<?= site_url('pesanan/delete/' . $pesan['pesanan_id']) ?>" method="POST" style="display:inline;" onsubmit="return confirm('Yakin ingin menghapus toko ini?')">
+                                                <?= csrf_field() ?>
+                                                <button type="submit" class="btn btn-danger btn-sm">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
                             </table>
                         </div>
                     </div>
@@ -146,112 +117,20 @@ Dashboard Toko
                     </div>
                     <div class="card-body" id="top-5-scroll">
                         <ul class="list-unstyled list-unstyled-border">
-                            <li class="media">
-                                <img class="mr-3 rounded" width="55" src="assets/img/products/product-3-50.png" alt="product">
-                                <div class="media-body">
-                                    <div class="float-right">
-                                        <div class="font-weight-600 text-muted text-small">86 Sales</div>
-                                    </div>
-                                    <div class="media-title">oPhone S9 Limited</div>
-                                    <div class="mt-1">
-                                        <div class="budget-price">
-                                            <div class="budget-price-square bg-primary" data-width="64%"></div>
-                                            <div class="budget-price-label">$68,714</div>
+                            <?php foreach ($produks as $produk): ?>
+                                <li class="media">
+                                    <div class="media-body d-flex">
+                                        <div class="col-3 mr-3">
+                                            <img src="<?= base_url('uploads/produk/' . $produk['foto']) ?>" alt="" style="width: 70px; height: 70px; object-fit: cover;">
                                         </div>
-                                        <div class="budget-price">
-                                            <div class="budget-price-square bg-danger" data-width="43%"></div>
-                                            <div class="budget-price-label">$38,700</div>
+                                        <div>
+                                            <p class="h4 text-black"><?= esc($produk['nama']) ?></p>
+                                            <td>Rp <?= esc($produk['harga']) ?></td>
                                         </div>
                                     </div>
-                                </div>
-                            </li>
-                            <li class="media">
-                                <img class="mr-3 rounded" width="55" src="assets/img/products/product-4-50.png" alt="product">
-                                <div class="media-body">
-                                    <div class="float-right">
-                                        <div class="font-weight-600 text-muted text-small">67 Sales</div>
-                                    </div>
-                                    <div class="media-title">iBook Pro 2018</div>
-                                    <div class="mt-1">
-                                        <div class="budget-price">
-                                            <div class="budget-price-square bg-primary" data-width="84%"></div>
-                                            <div class="budget-price-label">$107,133</div>
-                                        </div>
-                                        <div class="budget-price">
-                                            <div class="budget-price-square bg-danger" data-width="60%"></div>
-                                            <div class="budget-price-label">$91,455</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="media">
-                                <img class="mr-3 rounded" width="55" src="assets/img/products/product-1-50.png" alt="product">
-                                <div class="media-body">
-                                    <div class="float-right">
-                                        <div class="font-weight-600 text-muted text-small">63 Sales</div>
-                                    </div>
-                                    <div class="media-title">Headphone Blitz</div>
-                                    <div class="mt-1">
-                                        <div class="budget-price">
-                                            <div class="budget-price-square bg-primary" data-width="34%"></div>
-                                            <div class="budget-price-label">$3,717</div>
-                                        </div>
-                                        <div class="budget-price">
-                                            <div class="budget-price-square bg-danger" data-width="28%"></div>
-                                            <div class="budget-price-label">$2,835</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="media">
-                                <img class="mr-3 rounded" width="55" src="assets/img/products/product-3-50.png" alt="product">
-                                <div class="media-body">
-                                    <div class="float-right">
-                                        <div class="font-weight-600 text-muted text-small">28 Sales</div>
-                                    </div>
-                                    <div class="media-title">oPhone X Lite</div>
-                                    <div class="mt-1">
-                                        <div class="budget-price">
-                                            <div class="budget-price-square bg-primary" data-width="45%"></div>
-                                            <div class="budget-price-label">$13,972</div>
-                                        </div>
-                                        <div class="budget-price">
-                                            <div class="budget-price-square bg-danger" data-width="30%"></div>
-                                            <div class="budget-price-label">$9,660</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="media">
-                                <img class="mr-3 rounded" width="55" src="assets/img/products/product-5-50.png" alt="product">
-                                <div class="media-body">
-                                    <div class="float-right">
-                                        <div class="font-weight-600 text-muted text-small">19 Sales</div>
-                                    </div>
-                                    <div class="media-title">Old Camera</div>
-                                    <div class="mt-1">
-                                        <div class="budget-price">
-                                            <div class="budget-price-square bg-primary" data-width="35%"></div>
-                                            <div class="budget-price-label">$7,391</div>
-                                        </div>
-                                        <div class="budget-price">
-                                            <div class="budget-price-square bg-danger" data-width="28%"></div>
-                                            <div class="budget-price-label">$5,472</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
+                                </li>
+                            <?php endforeach; ?>
                         </ul>
-                    </div>
-                    <div class="card-footer pt-3 d-flex justify-content-center">
-                        <div class="budget-price justify-content-center">
-                            <div class="budget-price-square bg-primary" data-width="20"></div>
-                            <div class="budget-price-label">Selling Price</div>
-                        </div>
-                        <div class="budget-price justify-content-center">
-                            <div class="budget-price-square bg-danger" data-width="20"></div>
-                            <div class="budget-price-label">Budget Price</div>
-                        </div>
                     </div>
                 </div>
             </div>
