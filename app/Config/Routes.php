@@ -13,6 +13,7 @@ $routes->get('/hello', function () {
 });
 $routes->get('login', 'Web\AuthController::index');
 $routes->post('auth/login', 'Web\AuthController::login');
+$routes->post('auth/logout', 'Web\AuthController::logout');
 
 
 $routes->group('', ['namespace' => 'App\Controllers\Web', 'filter' => 'auth'], function ($routes) {
@@ -21,11 +22,11 @@ $routes->group('', ['namespace' => 'App\Controllers\Web', 'filter' => 'auth'], f
         return view('pages/dashboard/index');
     });
 
-    $routes->group('auth', function ($routes) {
-        $routes->get('login', 'AuthController::index');
-        $routes->post('login', 'AuthController::login');
-        $routes->get('logout', 'AuthController::logout');
-    });
+//    $routes->group('auth', function ($routes) {
+//        $routes->get('login', 'AuthController::index');
+//        $routes->post('login', 'AuthController::login');
+//        $routes->get('logout', 'AuthController::logout');
+//    });
 
     // produk toko
     $routes->group('produk', function ($routes) {
@@ -62,6 +63,7 @@ $routes->group('', ['namespace' => 'App\Controllers\Web', 'filter' => 'auth'], f
     $routes->get('produk-mentah/pengemasan-produk/(:num)', 'ProdukMentahController::showPengemasanProduk/$1');
     $routes->post('produk-mentah/store', 'ProdukMentahController::store');
     $routes->post('produk-mentah/pengemasan-produk', 'ProdukMentahController::tambahPengemasanProduk');
+    $routes->post('produk-mentah/pengemasan-produk/tambah-stok', 'ProdukMentahController::tambahStokPengemasanProduk');
     $routes->put('produk-mentah/update/(:num)', 'ProdukMentahController::update/$1');
     $routes->post('produk-mentah/delete/(:num)', 'ProdukMentahController::delete/$1');
 
@@ -86,6 +88,11 @@ $routes->group('', ['namespace' => 'App\Controllers\Web', 'filter' => 'auth'], f
 
 
 $routes->group('api', ['namespace' => 'App\Controllers\Api'], function ($routes) {
+    //Login
+    $routes->post('auth/login', 'AuthController::login');
+    $routes->post('auth/register', 'AuthController::register');
+    $routes->post('auth/logout', 'AuthController::logout');
+
     //Kurir
     $routes->get('kurir', 'KurirController::getAllKurirByFilters');
     $routes->get('kurir/(:num)', 'KurirController::getKurirById/$1');

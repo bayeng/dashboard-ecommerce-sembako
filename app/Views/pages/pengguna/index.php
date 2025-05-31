@@ -41,9 +41,9 @@
 
                             <div class="card-body">
                                 <div class="float-left">
-                                    <form>
+                                    <form action="<?= site_url('pengguna') ?>">
                                         <div class="input-group mb-3">
-                                            <input type="text" class="form-control" placeholder="Search">
+                                            <input type="text" class="form-control" placeholder="Search" name="keyword" value="<?= esc($keyword) ?>">
                                             <div class="input-group-append">
                                                 <button class="btn btn-primary"><i class="fas fa-search"></i></button>
                                             </div>
@@ -69,7 +69,7 @@
                                                     <td><?= esc($user['nama']) ?></td>
                                                     <td><?= esc($user['username']) ?></td>
                                                     <td><?= esc($user['no_hp']) ?></td>
-                                                    <td><?= esc($user['toko_id']) ?></td>
+                                                    <td><?= esc($user['nama_toko']) ?></td>
                                                     <td>
                                                         <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-show-<?= $user['id'] ?>">
                                                             <i class="fas fa-eye"></i>

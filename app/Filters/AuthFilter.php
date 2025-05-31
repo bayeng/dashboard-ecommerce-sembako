@@ -25,6 +25,10 @@ class AuthFilter implements FilterInterface
      */
     public function before(RequestInterface $request, $arguments = null)
     {
+        if (!in_array(session()->get('role'), ['admin', 'penjual'])) {
+            session()->destroy();
+            return redirect()->to('/login')->with('error', 'anda tidak memiliki akses.');
+        }
         if (!session()->get('is_logged_in')) {
             return redirect()->to('/login')->with('error', 'Silakan login terlebih dahulu.');
         }

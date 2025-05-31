@@ -229,7 +229,7 @@
                     <i class="fas fa-cog"></i> Settings
                 </a>
                 <div class="dropdown-divider"></div>
-                <form action="<?= site_url('logout') ?>" method="post" style="display: inline;">
+                <form action="<?= site_url('auth/logout') ?>" method="post" style="display: inline;">
                     <?= csrf_field() ?>
                     <button type="submit" class="dropdown-item has-icon text-danger" style="border: none; background: none; cursor: pointer;">
                         <i class="fas fa-sign-out-alt"></i> Logout

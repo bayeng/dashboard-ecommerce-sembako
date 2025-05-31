@@ -66,7 +66,7 @@ class ProdukGudangController extends BaseController
             })
             ->where('jenis_value', 2)
             ->select('produk_gudang.*, kategori.id as id_kategori, kategori.nama as nama_kategori')
-            ->join('kategori', 'kategori.id = produk_gudang.kategori_id')
+            ->join('kategori', 'kategori.id = produk_gudang.kategori_id', 'left')
             ->orderBy('id', 'DESC')
             ->paginate(10);
 
@@ -76,12 +76,14 @@ class ProdukGudangController extends BaseController
         $supplier = $this->supllierModel->findAll();
 
         $kategori = $this->kategoriModel->findAll();
+
         return view('pages/produk-gudang/index', [
             'produkMentah' => $produkMentah,
             'produkGudang' => $produkGudang,
             'kategori' => $kategori,
             'supplier' => $supplier,
-            'pager' => $this->produkGudangModel->pager
+            'pager' => $this->produkGudangModel->pager,
+            'keyword' => $keyword,
         ]);
     }
 

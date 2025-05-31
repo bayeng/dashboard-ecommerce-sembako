@@ -142,7 +142,7 @@ class ProdukMentahController extends BaseController
 
         $produkPacking = $this->productPackingModel
             ->select('produk_packing.*, pg.id as id_produk_gudang, pg.nama as nama_produk_gudang, pg.foto as foto_produk_gudang')
-            ->join('produk_gudang pg', 'pg.id = produk_packing.produk_gudang_id')
+            ->join('produk_gudang pg', 'pg.id = produk_packing.produk_gudang_id', 'left')
             ->where('produk_mentah_id', $id)
             ->paginate(10);
 
@@ -183,15 +183,33 @@ class ProdukMentahController extends BaseController
         return redirect()->to('/produk-mentah/' . '/pengemasan-produk/' . $data['produk_mentah_id'] )->with('success', 'Produk pengemasan berhasil ditambahkan');
     }
 
-    public function tambahStokPengemasanProduk($id)
+    public function tambahStokPengemasanProduk()
     {
-        $produkPacking = $this->productPackingModel->find($id);
+        $produkPacking = $this->productPackingModel
+            ->where('id', $this->request->getPost('produk_packing_id'))
+            ->first();
+
         if (!$produkPacking) {
             return redirect()->to('/produk-mentah')->with('error', 'Produk pengemasan tidak ditemukan');
         }
 
-        $produkPacking->stok += $this->request->getPost('stok');
-        $this->productPackingModel->update($id, $produkPacking);
+        $produkGudang = $this->produkGudangModel
+            ->where('id', $produkPacking['produk_gudang_id'])
+            ->first();
+
+        if (!$produkGudang) {
+            return redirect()->to('/produk-mentah')->with('error', 'Produk gudang tidak ditemukan');
+        }
+
+
+//        dd($this->request->getPost());
+        $produkGudang['stok'] += intval($this->request->getPost('stok'));
+        $this->productPackingModel->insert([
+            'produk_mentah_id' => $produkPacking['produk_mentah_id'],
+            'produk_gudang_id' => $produkPacking['produk_gudang_id'],
+            'stok' => $this->request->getPost('stok'),
+            'satuan_stok' => $produkPacking['satuan_stok'],
+        ]);
 
         return redirect()->to('/produk-mentah/' . '/pengemasan-produk/' . $produkPacking['produk_mentah_id'])->with('success', 'Stok produk pengemasan berhasil ditambahkan');
     }

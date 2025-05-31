@@ -21,6 +21,12 @@ Login
                         </div>
 
                         <div class="card-body">
+                            <!-- Tampilkan pesan error dari session (jika ada) -->
+                            <?php if (session()->has('error')) : ?>
+                                <div class="alert alert-danger">
+                                    <?= session('error') ?>
+                                </div>
+                            <?php endif; ?>
                             <form method="POST" action="/auth/login" class="needs-validation" novalidate="">
                                 <div class="form-group">
                                     <label for="name">Username</label>
