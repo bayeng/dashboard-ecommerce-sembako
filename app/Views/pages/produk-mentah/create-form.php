@@ -1,4 +1,4 @@
-<form action="<?= site_url('produk-mentah/store'); ?>" method="POST" enctype="multipart/form-data">
+<form action="<?= site_url('/admin/produk-mentah/store'); ?>" method="POST" enctype="multipart/form-data">
     <?= csrf_field(); ?>
 
     <div class="form-group">

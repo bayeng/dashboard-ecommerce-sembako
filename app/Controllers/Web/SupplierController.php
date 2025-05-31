@@ -48,7 +48,7 @@ class SupplierController extends BaseController
             'no_rekening' => $this->request->getPost('no_rekening'),
         ]);
 
-        return redirect()->to('/supplier')->with('success', 'Supplier berhasil ditambahkan');
+        return redirect()->to('/admin/supplier')->with('success', 'Supplier berhasil ditambahkan');
     }
 
     public function update($id)
@@ -75,13 +75,13 @@ class SupplierController extends BaseController
             'no_rekening' => $this->request->getPost('no_rekening'),
         ]);
 
-        return redirect()->to('/supplier')->with('success', 'Data supplier berhasil diperbarui');
+        return redirect()->to('/admin/supplier')->with('success', 'Data supplier berhasil diperbarui');
     }
 
     public function delete($id)
     {
         $this->supplierModel->delete($id);
-        return redirect()->to('/supplier')->with('success', 'Supplier berhasil dihapus');
+        return redirect()->to('/admin/supplier')->with('success', 'Supplier berhasil dihapus');
     }
 
 

@@ -1,4 +1,4 @@
-<form action="<?= site_url('supplier/update/' . $supplier['id']) ?>" method="POST">
+<form action="<?= site_url('/admin/supplier/update/' . $supplier['id']) ?>" method="POST">
     <?= csrf_field() ?>
     <input type="hidden" name="_method" value="PUT">
 

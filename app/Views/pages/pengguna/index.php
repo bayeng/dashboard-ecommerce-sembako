@@ -80,7 +80,7 @@
                                                         </button>
 
                                                         <!-- Form untuk menghapus supplier -->
-                                                        <form action="<?= site_url('pengguna/delete/' . $user['id']) ?>" method="POST" style="display:inline;" onsubmit="return confirm('Yakin ingin menghapus toko ini?')">
+                                                        <form action="<?= site_url('/admin/pengguna/delete/' . $user['id']) ?>" method="POST" style="display:inline;" onsubmit="return confirm('Yakin ingin menghapus toko ini?')">
                                                             <?= csrf_field() ?>
                                                             <button type="submit" class="btn btn-danger btn-sm">
                                                                 <i class="fas fa-trash"></i>

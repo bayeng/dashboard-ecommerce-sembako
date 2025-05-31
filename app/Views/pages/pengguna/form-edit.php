@@ -1,4 +1,4 @@
-<form action="<?= site_url('pengguna/update/' . $user['id']); ?>" method="POST">
+<form action="<?= site_url('/admin/pengguna/update/' . $user['id']); ?>" method="POST">
     <?= csrf_field(); ?>
     <input type="hidden" name="_method" value="PUT">
 

@@ -20,15 +20,7 @@ $routes->group('', ['namespace' => 'App\Controllers\Web', 'filter' => 'auth'], f
 
     $routes->group('admin', function ($routes) {
         // dashboard
-        $routes->get('/', function () {
-            return view('pages/dashboard/admin');
-        });
-
-        //    $routes->group('auth', function ($routes) {
-        //        $routes->get('login', 'AuthController::index');
-        //        $routes->post('login', 'AuthController::login');
-        //        $routes->get('logout', 'AuthController::logout');
-        //    });
+        $routes->get('/', 'DashboardController::dashboardAdmin');
 
         // user
         $routes->group('pengguna', function ($routes) {

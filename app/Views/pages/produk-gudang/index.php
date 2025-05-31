@@ -41,7 +41,7 @@ Produk Gudang
 
                         <div class="card-body">
                             <div class="float-left">
-                                <form method="get" action="<?= base_url('produk-gudang') ?>">
+                                <form method="get" action="<?= base_url('/admin/produk-gudang') ?>">
                                     <div class="input-group mb-3">
                                         <input name="keyword" type="text" class="form-control mr-3" placeholder="Search" value="<?= esc($keyword) ?>">
                                         <select name="kategori_id" class="form-control mr-3" style="max-width: 180px;">
@@ -92,7 +92,7 @@ Produk Gudang
                                                 </button>
 
                                                 <!-- Form untuk menghapus supplier -->
-                                                <form action="<?= site_url('produk-gudang/delete/' . $item['id']) ?>" method="POST" style="display:inline;" onsubmit="return confirm('Yakin ingin menghapus supplier ini?')">
+                                                <form action="<?= site_url('/admin/produk-gudang/delete/' . $item['id']) ?>" method="POST" style="display:inline;" onsubmit="return confirm('Yakin ingin menghapus supplier ini?')">
                                                     <?= csrf_field() ?>
                                                     <button type="submit" class="btn btn-danger btn-sm">
                                                         <i class="fas fa-trash"></i>

@@ -85,26 +85,18 @@ class ProdukMentahController extends BaseController
             'satuan_stok' => $this->request->getPost('satuan_stok'),
         ]);
 
-        return redirect()->to('/produk-mentah')->with('success', 'Produk mentah berhasil ditambahkan');
+        return redirect()->to('/admin/produk-mentah')->with('success', 'Produk mentah berhasil ditambahkan');
     }
 
     public function update($id)
     {
 
         $foto = $this->request->getFile('foto');
-        $filename = $foto->getRandomName();
-        if (!is_dir('uploads/produk-mentah')) {
-            mkdir('uploads/produk-mentah', 0777, true);
-        }
 
-        if (!$foto->move('uploads/produk-mentah', $filename)) {
-            return redirect()->to('index')->with('error', 'Gagal mengunggah foto');
-        }
-
-        $data = [
+        if (!$foto->isValid()) {
+            $data = [
             'nama' => $this->request->getPost('nama'),
             'supplier_id' => $this->request->getPost('supplier_id'),
-            'foto' => $filename,
             'jenis_value' => 1,
             'harga' => $this->request->getPost('harga'),
             'stok' => $this->request->getPost('stok'),
@@ -112,15 +104,37 @@ class ProdukMentahController extends BaseController
         ];
 
         $this->produkMentahModel->update($id, $data);
+        } else {
+            $filename = $foto->getRandomName();
+            if (!is_dir('uploads/produk-mentah')) {
+                mkdir('uploads/produk-mentah', 0777, true);
+            }
+    
+            if (!$foto->move('uploads/produk-mentah', $filename)) {
+                return redirect()->to('index')->with('error', 'Gagal mengunggah foto');
+            }
+    
+            $data = [
+                'nama' => $this->request->getPost('nama'),
+                'supplier_id' => $this->request->getPost('supplier_id'),
+                'foto' => $filename,
+                'jenis_value' => 1,
+                'harga' => $this->request->getPost('harga'),
+                'stok' => $this->request->getPost('stok'),
+                'satuan_stok' => $this->request->getPost('satuan_stok'),
+            ];
+    
+            $this->produkMentahModel->update($id, $data);
+        }
 
-        return redirect()->to('/produk-mentah')->with('success', 'Produk mentah berhasil diupdate');
+        return redirect()->to('/admin/produk-mentah')->with('success', 'Produk mentah berhasil diupdate');
     }
 
     public function delete($id)
     {
         $produk = $this->produkMentahModel->find($id);
         if (!$produk) {
-            return redirect()->to('/produk-mentah')->with('error', 'Produk mentah tidak ditemukan');
+            return redirect()->to('/admin/produk-mentah')->with('error', 'Produk mentah tidak ditemukan');
         }
 
         if (file_exists('uploads/produk-mentah/' . $produk['foto'])) {
@@ -129,7 +143,7 @@ class ProdukMentahController extends BaseController
 
         $this->produkMentahModel->delete($id);
 
-        return redirect()->to('/produk-mentah')->with('success', 'Produk mentah berhasil dihapus');
+        return redirect()->to('/admin/produk-mentah')->with('success', 'Produk mentah berhasil dihapus');
     }
 
 
@@ -148,7 +162,7 @@ class ProdukMentahController extends BaseController
 
 
         if (!$produkMentah) {
-            return redirect()->to('/produk-mentah')->with('error', 'Produk mentah tidak ditemukan');
+            return redirect()->to('/admin/produk-mentah')->with('error', 'Produk mentah tidak ditemukan');
         }
 
         return view('pages/produk-mentah/pengemasan-produk', [
@@ -175,12 +189,12 @@ class ProdukMentahController extends BaseController
             ->first();
 
         if ($cek) {
-            return redirect()->to('/produk-mentah/' . '/pengemasan-produk/' . $data['produk_mentah_id'])->with('error', 'Produk pengemasan sudah ada');
+            return redirect()->to('/admin/produk-mentah/' . '/pengemasan-produk/' . $data['produk_mentah_id'])->with('error', 'Produk pengemasan sudah ada');
         }
 
         $this->productPackingModel->insert($data);
 
-        return redirect()->to('/produk-mentah/' . '/pengemasan-produk/' . $data['produk_mentah_id'] )->with('success', 'Produk pengemasan berhasil ditambahkan');
+        return redirect()->to('/admin/produk-mentah/' . '/pengemasan-produk/' . $data['produk_mentah_id'] )->with('success', 'Produk pengemasan berhasil ditambahkan');
     }
 
     public function tambahStokPengemasanProduk()
@@ -190,7 +204,7 @@ class ProdukMentahController extends BaseController
             ->first();
 
         if (!$produkPacking) {
-            return redirect()->to('/produk-mentah')->with('error', 'Produk pengemasan tidak ditemukan');
+            return redirect()->to('/admin/produk-mentah')->with('error', 'Produk pengemasan tidak ditemukan');
         }
 
         $produkGudang = $this->produkGudangModel
@@ -198,7 +212,7 @@ class ProdukMentahController extends BaseController
             ->first();
 
         if (!$produkGudang) {
-            return redirect()->to('/produk-mentah')->with('error', 'Produk gudang tidak ditemukan');
+            return redirect()->to('/admin/produk-mentah')->with('error', 'Produk gudang tidak ditemukan');
         }
 
 
@@ -211,7 +225,7 @@ class ProdukMentahController extends BaseController
             'satuan_stok' => $produkPacking['satuan_stok'],
         ]);
 
-        return redirect()->to('/produk-mentah/' . '/pengemasan-produk/' . $produkPacking['produk_mentah_id'])->with('success', 'Stok produk pengemasan berhasil ditambahkan');
+        return redirect()->to('/admin/produk-mentah/' . '/pengemasan-produk/' . $produkPacking['produk_mentah_id'])->with('success', 'Stok produk pengemasan berhasil ditambahkan');
     }
 
 }

@@ -1,4 +1,4 @@
-<form action="<?= site_url('pengguna/store'); ?>" method="POST">
+<form action="<?= site_url('/admin/pengguna/store'); ?>" method="POST">
     <?= csrf_field(); ?>
 
     <div class="form-group">

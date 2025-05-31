@@ -1,4 +1,4 @@
-<form action="<?= site_url('toko/update/' . $toko['id']); ?>" method="POST" enctype="multipart/form-data">
+<form action="<?= site_url('/admin/toko/update/' . $toko['id']); ?>" method="POST" enctype="multipart/form-data">
     <?= csrf_field(); ?>
     <input type="hidden" name="_method" value="PUT">
 

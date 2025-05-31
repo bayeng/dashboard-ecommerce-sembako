@@ -15,6 +15,7 @@ class ProdukGudangController extends BaseController
     protected $produkGudangModel;
     protected $kategoriModel;
     protected $produkMasukModel;
+    protected $supllierModel;
 
 
     public function __construct()
@@ -120,35 +121,47 @@ class ProdukGudangController extends BaseController
             'satuan_stok' => $this->request->getPost('satuan_stok'),
         ]);
 
-        return redirect()->to('/produk-gudang')->with('success', 'Data ditambahkan.');
+        return redirect()->to('/admin/produk-gudang')->with('success', 'Data ditambahkan.');
     }
 
 
     public function update($id)
     {
         $foto = $this->request->getFile('foto');
-        $filename = $foto->getRandomName();
-        if (!is_dir('uploads/produk-gudang')) {
-            mkdir('uploads/produk-gudang', 0777, true);
+
+        if (!$foto->isValid()) {
+            $data = [
+                'nama' => $this->request->getPost('nama'),
+                'kode' => $this->request->getPost('kode'),
+                'harga' => $this->request->getPost('harga'),
+                'stok' => $this->request->getPost('stok'),
+                'kategori_id' => $this->request->getPost('kategori_id'),
+            ];
+
+            $this->produkGudangModel->update($id, $data);
+        } else {
+            $filename = $foto->getRandomName();
+            if (!is_dir('uploads/produk-gudang')) {
+                mkdir('uploads/produk-gudang', 0777, true);
+            }
+    
+            if (!$foto->move('uploads/produk-gudang', $filename)) {
+                return redirect()->to('index')->with('error', 'Gagal mengunggah foto');
+            }
+    
+            $data = [
+                'nama' => $this->request->getPost('nama'),
+                'kode' => $this->request->getPost('kode'),
+                'harga' => $this->request->getPost('harga'),
+                'stok' => $this->request->getPost('stok'),
+                'kategori_id' => $this->request->getPost('kategori_id'),
+                'foto' => $filename
+            ];
+    
+            $this->produkGudangModel->update($id, $data);
         }
 
-        if (!$foto->move('uploads/produk-gudang', $filename)) {
-            return redirect()->to('index')->with('error', 'Gagal mengunggah foto');
-        }
-
-        $data = [
-            'nama' => $this->request->getPost('nama'),
-            'kode' => $this->request->getPost('kode'),
-            'harga' => $this->request->getPost('harga'),
-            'stok' => $this->request->getPost('stok'),
-            'kategori_id' => $this->request->getPost('kategori_id'),
-            'produk_mentah_id' => $this->request->getPost('produk_mentah_id'),
-            'foto' => $filename
-        ];
-
-        $this->produkGudangModel->update($id, $data);
-
-        return redirect()->to('/produk-gudang')->with('success', 'Data diperbarui.');
+        return redirect()->to('/admin/produk-gudang')->with('success', 'Data diperbarui.');
     }
 
     public function delete($id)
@@ -156,7 +169,7 @@ class ProdukGudangController extends BaseController
         $produk = $this->produkGudangModel->find($id);
 
         if (!$produk) {
-            return redirect()->to('/produk-gudang')->with('error', 'Data tidak ditemukan');
+            return redirect()->to('/admin/produk-gudang')->with('error', 'Data tidak ditemukan');
         }
 
         // Hapus file foto jika ada
@@ -170,6 +183,6 @@ class ProdukGudangController extends BaseController
         // Hapus data dari database
         $this->produkGudangModel->delete($id);
 
-        return redirect()->to('/produk-gudang')->with('success', 'Data berhasil dihapus');
+        return redirect()->to('/admin/produk-gudang')->with('success', 'Data berhasil dihapus');
     }
 }

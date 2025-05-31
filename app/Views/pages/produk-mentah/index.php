@@ -75,7 +75,7 @@ Produk Mentah
                                             <td><?= esc($item['nama_supplier']) ?></td>
                                             <td><?= esc($item['stok']) ?> <?= esc($item['satuan_stok']) ?></td>
                                             <td>
-                                                <a href="<?= base_url('produk-mentah/pengemasan-produk/' . $item['id']) ?>" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="Pengemasan Produk">Kemas</a>
+                                                <a href="<?= base_url('/admin/produk-mentah/pengemasan-produk/' . $item['id']) ?>" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="Pengemasan Produk">Kemas</a>
                                                 <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-show-<?= $item['id'] ?>">
                                                     <i class="fas fa-eye"></i>
                                                 </button>
@@ -85,7 +85,7 @@ Produk Mentah
                                                 </button>
 
                                                 <!-- Form untuk menghapus supplier -->
-                                                <form action="<?= site_url('produk-mentah/delete/' . $item['id']) ?>" method="POST" style="display:inline;" onsubmit="return confirm('Yakin ingin menghapus supplier ini?')">
+                                                <form action="<?= site_url('/admin/produk-mentah/delete/' . $item['id']) ?>" method="POST" style="display:inline;" onsubmit="return confirm('Yakin ingin menghapus supplier ini?')">
                                                     <?= csrf_field() ?>
                                                     <button type="submit" class="btn btn-danger btn-sm">
                                                         <i class="fas fa-trash"></i>

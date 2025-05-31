@@ -1,4 +1,4 @@
-<form action="<?= site_url('produk-mentah/pengemasan-produk'); ?>" method="POST" enctype="multipart/form-data">
+<form action="<?= site_url('/admin/produk-mentah/pengemasan-produk'); ?>" method="POST" enctype="multipart/form-data">
     <?= csrf_field(); ?>
 
     <input type="text" hidden="hidden" name="produk_mentah_id" value="<?= $produkMentah['id'] ?>">

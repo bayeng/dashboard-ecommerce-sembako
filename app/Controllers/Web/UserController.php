@@ -53,9 +53,9 @@ class UserController extends BaseController
         ];
 
         if ($this->userModel->insert($data)) {
-            return redirect()->to('/pengguna')->with('success', 'Pengguna berhasil ditambahkan');
+            return redirect()->to('/admin/pengguna')->with('success', 'Pengguna berhasil ditambahkan');
         } else {
-            return redirect()->to('/pengguna')->with('error', 'Pengguna gagal ditambahkan');
+            return redirect()->to('/admin/pengguna')->with('error', 'Pengguna gagal ditambahkan');
         }
     }
 
@@ -71,18 +71,18 @@ class UserController extends BaseController
         ];
 
         if ($this->userModel->update($id, $data)) {
-            return redirect()->to('/pengguna')->with('success', 'Pengguna berhasil diupdate');
+            return redirect()->to('/admin/pengguna')->with('success', 'Pengguna berhasil diupdate');
         } else {
-            return redirect()->to('/pengguna')->with('error', 'Pengguna gagal diupdate');
+            return redirect()->to('/admin/pengguna')->with('error', 'Pengguna gagal diupdate');
         }
     }
 
     public function delete($id)
     {
         if ($this->userModel->delete($id)) {
-            return redirect()->to('/pengguna')->with('success', 'Pengguna berhasil dihapus');
+            return redirect()->to('/admin/pengguna')->with('success', 'Pengguna berhasil dihapus');
         } else {
-            return redirect()->to('/pengguna')->with('error', 'Pengguna gagal dihapus');
+            return redirect()->to('/admin/pengguna')->with('error', 'Pengguna gagal dihapus');
         }
     }
 }

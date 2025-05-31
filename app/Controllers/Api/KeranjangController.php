@@ -19,7 +19,7 @@ class KeranjangController extends BaseController
         try {
             $get = fn($key) => $this->request->getGet($key);
             $keranjang = $this->keranjangModel
-                ->select('keranjang.*, produk_toko.id as produk_id, produk_toko.nama as produk, produk_toko.harga as harga, produk_toko.gambar as gambar, users.id as user_id, users.nama as nama_user')
+                ->select('keranjang.*, produk_toko.id as produk_id, produk_toko.nama as produk, produk_toko.harga as harga, produk_toko.foto as gambar, users.id as user_id, users.nama as nama_user')
                 ->join('produk_toko', 'produk_toko.id = keranjang.produk_toko_id')
                 ->where('keranjang.user_id', $get('user_id'))
                 ->paginate($get('rowPerPage') ?? 10);
@@ -39,7 +39,7 @@ class KeranjangController extends BaseController
     {
         try {
             $keranjang = $this->keranjangModel
-                ->select('keranjang.*, produk_toko.id as produk_id, produk_toko.nama as produk, produk_toko.harga as harga, produk_toko.gambar as gambar, users.id as user_id, users.nama as nama_user')
+                ->select('keranjang.*, produk_toko.id as produk_id, produk_toko.nama as produk, produk_toko.harga as harga, produk_toko.foto as gambar, users.id as user_id, users.nama as nama_user')
                 ->join('produk_toko', 'produk_toko.id = keranjang.produk_toko_id')
                 ->where('keranjang.id', $id)
                 ->first();

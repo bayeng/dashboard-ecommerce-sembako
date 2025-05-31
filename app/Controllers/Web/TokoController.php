@@ -48,17 +48,17 @@ class TokoController extends BaseController
             'foto' => $filename
         ]);
 
-        return redirect()->to('/toko')->with('success', 'Toko berhasil ditambahkan');
+        return redirect()->to('/admin/toko')->with('success', 'Toko berhasil ditambahkan');
     }
 
     public function update($id) {
         if ($this->request->getMethod() !== 'PUT') {
-            return redirect('/toko');
+            return redirect('/admin/toko');
         }
 
         $toko = $this->tokoModel->find($id);
         if (!$toko) {
-            return redirect()->to('/toko')->with('error', 'Toko tidak ditemukan');
+            return redirect()->to('/admin/toko')->with('error', 'Toko tidak ditemukan');
         }
 
         $nama = $this->request->getPost('nama');
@@ -71,7 +71,7 @@ class TokoController extends BaseController
                 mkdir('uploads/toko', 0777, true);
             }
             if (!$foto->move('uploads/toko', $filename)) {
-                return redirect()->to('/toko')->with('error', 'Gagal mengunggah foto');
+                return redirect()->to('/admin/toko')->with('error', 'Gagal mengunggah foto');
             }
             if (file_exists('uploads/toko/' . $toko['foto'])) {
                 unlink('uploads/toko/' . $toko['foto']);
@@ -86,13 +86,13 @@ class TokoController extends BaseController
             'foto' => $filename
         ]);
 
-        return redirect()->to('toko')->with('success', 'Toko berhasil diperbarui');
+        return redirect()->to('/admin/toko')->with('success', 'Toko berhasil diperbarui');
     }
 
     public function delete($id) {
         $toko = $this->tokoModel->find($id);
         if (!$toko) {
-            return redirect()->to('/toko')->with('error', 'Toko tidak ditemukan');
+            return redirect()->to('/admin/toko')->with('error', 'Toko tidak ditemukan');
         }
 
         if (file_exists('uploads/toko/' . $toko['foto'])) {
@@ -101,6 +101,6 @@ class TokoController extends BaseController
 
         $this->tokoModel->delete($id);
 
-        return redirect()->to('/toko')->with('success', 'Toko berhasil dihapus');
+        return redirect()->to('/admin/toko')->with('success', 'Toko berhasil dihapus');
     }
 }

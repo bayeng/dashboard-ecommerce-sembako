@@ -1,4 +1,4 @@
-<form action="<?= site_url('toko/store'); ?>" method="POST" enctype="multipart/form-data">
+<form action="<?= site_url('/admin/toko/store'); ?>" method="POST" enctype="multipart/form-data">
     <?= csrf_field(); ?>
 
     <div class="form-group">

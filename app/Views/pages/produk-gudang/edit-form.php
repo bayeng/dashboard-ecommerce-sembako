@@ -1,4 +1,4 @@
-<form action="<?= site_url('produk-mentah/update/' . $item['id']); ?>" method="POST" enctype="multipart/form-data">
+<form action="<?= site_url('/admin/produk-gudang/update/' . $item['id']); ?>" method="POST" enctype="multipart/form-data">
     <?= csrf_field(); ?>
 
     <input type="hidden" name="_method" value="PUT">
