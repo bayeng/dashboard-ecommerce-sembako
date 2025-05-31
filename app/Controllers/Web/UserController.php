@@ -20,12 +20,21 @@ class UserController extends BaseController
 
     public function index()
     {
+        $request = fn($key) => $this->request->getGet($key);
         $users = $this->userModel
             ->select('users.*, toko.id as toko_id, toko.nama as nama_toko')
             ->join('toko', 'toko.id = users.toko_id', 'left')
+            ->when($request('keyword') !== null, function ($query) use ($request) {
+                return $query->groupStart()
+                    ->like('users.username', $request('keyword'))
+                    ->orLike('users.nama', $request('keyword'))
+                    ->groupEnd();
+            })
+            ->orderBy('users.created_at', 'DESC')
             ->paginate(10);
         $tokos = $this->tokoModel->findAll();
         $data = [
+            'keyword' => $request('keyword'),
             'users' => $users,
             'tokos' => $tokos,
             'pager' => $this->userModel->pager,

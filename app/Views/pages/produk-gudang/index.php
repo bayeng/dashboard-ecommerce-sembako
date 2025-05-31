@@ -43,7 +43,7 @@ Produk Gudang
                             <div class="float-left">
                                 <form method="get" action="<?= base_url('produk-gudang') ?>">
                                     <div class="input-group mb-3">
-                                        <input name="keyword" type="text" class="form-control mr-3" placeholder="Search">
+                                        <input name="keyword" type="text" class="form-control mr-3" placeholder="Search" value="<?= esc($keyword) ?>">
                                         <select name="kategori_id" class="form-control mr-3" style="max-width: 180px;">
                                             <option value="">Semua Kategori</option>
                                             <?php foreach ($kategori as $k): ?>

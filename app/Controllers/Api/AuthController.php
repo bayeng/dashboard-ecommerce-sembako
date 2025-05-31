@@ -35,7 +35,7 @@ class AuthController extends BaseController
             'nama'     => $this->request->getVar('nama'),
             'username' => $this->request->getVar('username'),
             'password' => password_hash($this->request->getVar('password'), PASSWORD_DEFAULT),
-            'role'     => 'user',
+            'role'     => $this->request->getVar('role') ? $this->request->getVar('role') : 'user',
         ];
 
         $this->userModel->save($data);
@@ -59,7 +59,7 @@ class AuthController extends BaseController
             $payload = [
                 'iat' => time(),
                 'exp' => time() + (60 * 60), // 1 jam
-                'uid' => $user['id'],
+                'user_id' => $user['id'],
                 'nama' => $user['nama'],
                 'username' => $user['username'],
                 'role' => $user['role'],

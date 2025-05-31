@@ -13,6 +13,7 @@ $routes->get('/hello', function () {
 });
 $routes->get('login', 'Web\AuthController::index');
 $routes->post('auth/login', 'Web\AuthController::login');
+$routes->post('auth/logout', 'Web\AuthController::logout');
 
 
 $routes->group('', ['namespace' => 'App\Controllers\Web', 'filter' => 'auth'], function ($routes) {
@@ -90,6 +91,7 @@ $routes->group('api', ['namespace' => 'App\Controllers\Api'], function ($routes)
     //Login
     $routes->post('auth/login', 'AuthController::login');
     $routes->post('auth/register', 'AuthController::register');
+    $routes->post('auth/logout', 'AuthController::logout');
 
     //Kurir
     $routes->get('kurir', 'KurirController::getAllKurirByFilters');

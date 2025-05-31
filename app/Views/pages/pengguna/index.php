@@ -41,9 +41,9 @@
 
                             <div class="card-body">
                                 <div class="float-left">
-                                    <form>
+                                    <form action="<?= site_url('pengguna') ?>">
                                         <div class="input-group mb-3">
-                                            <input type="text" class="form-control" placeholder="Search">
+                                            <input type="text" class="form-control" placeholder="Search" name="keyword" value="<?= esc($keyword) ?>">
                                             <div class="input-group-append">
                                                 <button class="btn btn-primary"><i class="fas fa-search"></i></button>
                                             </div>

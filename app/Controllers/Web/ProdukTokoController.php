@@ -20,7 +20,9 @@ class ProdukTokoController extends BaseController
 
     public function index()
     {
-        $produks = $this->produkTokoModel->paginate(25);
+        $produks = $this->produkTokoModel
+            ->where('toko_id', session()->get('toko_id'))
+            ->paginate(25);
         $kategoris = $this->kategoriModel->findAll();
         $data = [
             'title' => 'Produk Toko',

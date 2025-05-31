@@ -76,12 +76,14 @@ class ProdukGudangController extends BaseController
         $supplier = $this->supllierModel->findAll();
 
         $kategori = $this->kategoriModel->findAll();
+
         return view('pages/produk-gudang/index', [
             'produkMentah' => $produkMentah,
             'produkGudang' => $produkGudang,
             'kategori' => $kategori,
             'supplier' => $supplier,
-            'pager' => $this->produkGudangModel->pager
+            'pager' => $this->produkGudangModel->pager,
+            'keyword' => $keyword,
         ]);
     }
 
