@@ -62,7 +62,7 @@ class PesananController extends BaseController
                     'error' => 'Pesanan tidak ditemukan'
                 ])->setStatusCode(404);
             }
-            $pesanan['produk'] = $this->pesananModel
+            $pesanan['produk'] = $this->pesnananProdukModel
                 ->select('pesanan_produk.*, produk_toko.id as produk_id, produk_toko.nama as produk, produk_toko.gambar as gambar')
                 ->join('produk_toko', 'produk_toko.id = pesanan_produk.produk_toko_id', 'left')
                 ->where('pesanan_produk.pesanan_id', $id)
@@ -83,7 +83,9 @@ class PesananController extends BaseController
     {
         try {
             $post = fn($key) => $this->request->getPost($key);
+
             $pesanan = $this->pesananModel->insert([
+                'kode_pesanan' => '#'.uniqid(),
                 'user_id' => $post('user_id'),
                 'toko_id' => $post('toko_id'),
                 'kurir_id' => $post('kurir_id'),
@@ -97,7 +99,7 @@ class PesananController extends BaseController
             ]);
 
             $keranjang = $this->keranjangModel
-                ->select('keranjang.*, produk_toko.id as produk_toko_id, produk_toko.nama as nama_produk, produk_toko.harga as harga, produk_toko.gambar as gambar')
+                ->select('keranjang.*, produk_toko.id as produk_toko_id, produk_toko.nama as nama_produk, produk_toko.harga as harga, produk_toko.foto as gambar')
                 ->join('produk_toko', 'produk_toko.id = keranjang.produk_toko_id')
                 ->where('user_id', $post('user_id'))->get()->getResultArray();
 
@@ -105,8 +107,9 @@ class PesananController extends BaseController
                 $this->pesnananProdukModel->insert([
                     'pesanan_id' => $this->pesananModel->getInsertID(),
                     'produk_toko_id' => $item['produk_toko_id'],
+                    'toko_id' => $post('toko_id'),
                     'jumlah' => $item['jumlah'],
-                    'harga' => $item['harga'] * $item['harga']
+                    'harga' => $item['jumlah'] * $item['harga']
                 ]);
             }
             $this->keranjangModel->where('user_id', $post('user_id'))->delete();

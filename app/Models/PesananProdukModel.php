@@ -12,7 +12,9 @@ class PesananProdukModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = false;
-    protected $allowedFields    = [];
+    protected $allowedFields    = [
+        'pesanan_id', 'produk_toko_id', 'jumlah', 'harga', 'toko_id'
+    ];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;

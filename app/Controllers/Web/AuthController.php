@@ -25,34 +25,36 @@ class AuthController extends BaseController
         return view('auth/login', $data);
     }
 
-    public function login() {
+    public function login()
+    {
         $username = $this->request->getPost('username');
         $password = $this->request->getPost('password');
 
+        if (!$username || !$password) {
+            return redirect()->back()->with('error', 'Username dan Password wajib diisi.');
+        }
+
         $user = $this->userModel->where('username', $username)->first();
 
-        if (!$user) {
+        if (! $user || ! password_verify($password, $user['password'])) {
             return redirect()->back()->with('error', 'Username atau password salah.');
         }
-    
-        if (!password_verify($password, $user['password'])) {
-            return redirect()->back()->with('error', 'Username atau password salah.');
-        }
-    
-        $sessionData = [
-            'user_id' => $user['id'],
-            'username' => $user['username'],
-            'role' => $user['role'],
-            'toko_id' => $user['toko_id'],
-            'nama' => $user['nama'],
+
+        session()->set([
+            'user_id'      => $user['id'],
+            'username'     => $user['username'],
+            'role'         => $user['role'],
+            'toko_id'      => $user['toko_id'],
+            'nama'         => $user['nama'],
             'is_logged_in' => true,
-        ];
-        session()->set($sessionData);
-    
-        return redirect()->to('/')->with('success', 'Login berhasil.');
+        ]);
+
+        return redirect()->to($user['role'] === 'admin' ? '/admin' : '/toko')->with('success', 'Login berhasil.');
     }
 
-    public function logout() {
+
+    public function logout()
+    {
         session()->destroy();
         return redirect()->to('/login')->with('success', 'Logout berhasil.');
     }

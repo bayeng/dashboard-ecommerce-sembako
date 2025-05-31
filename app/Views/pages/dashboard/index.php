@@ -79,7 +79,7 @@
   <div class="glass-card">
     <p>Selamat Datang</p>
     <h1>Dashboard E-Commerce</h1>
-    <a href="/auth/login" class="btn btn-outline-light btn-custom mt-4">Masuk</a>
+    <a href="/login" class="btn btn-outline-light btn-custom mt-4">Masuk</a>
   </div>
 
   <script src="<?= base_url('assets/modules/bootstrap/js/bootstrap.min.js') ?>"></script>

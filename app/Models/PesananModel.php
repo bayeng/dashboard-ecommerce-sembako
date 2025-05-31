@@ -12,7 +12,9 @@ class PesananModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = true;
     protected $protectFields    = false;
-    protected $allowedFields    = [];
+    protected $allowedFields    = [
+        'id', 'user_id', 'toko_id', 'kurir_id', 'status', 'status_value', 'metode_pembayaran', 'total_harga', 'alamat_pengiriman', 'lat', 'lng', 'catatan', 'created_at', 'updated_at', 'deleted_at'
+    ];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;

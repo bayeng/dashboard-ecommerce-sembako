@@ -5,8 +5,8 @@ use CodeIgniter\Router\RouteCollection;
 /**
  * @var RouteCollection $routes
  */
-$routes->get('/', function (){
-    return view('pages/hello-world');
+$routes->get('/', function () {
+    return view('pages/dashboard/index');
 });
 $routes->get('/hello', function () {
     return view('pages/hello-world');
@@ -17,73 +17,93 @@ $routes->post('auth/logout', 'Web\AuthController::logout');
 
 
 $routes->group('', ['namespace' => 'App\Controllers\Web', 'filter' => 'auth'], function ($routes) {
-    // dashboard
-    $routes->get('/', function() {
-        return view('pages/dashboard/index');
+
+    $routes->group('admin', function ($routes) {
+        // dashboard
+        $routes->get('/', function () {
+            return view('pages/dashboard/admin');
+        });
+
+        //    $routes->group('auth', function ($routes) {
+        //        $routes->get('login', 'AuthController::index');
+        //        $routes->post('login', 'AuthController::login');
+        //        $routes->get('logout', 'AuthController::logout');
+        //    });
+
+        // user
+        $routes->group('pengguna', function ($routes) {
+            $routes->get('', 'UserController::index');
+            $routes->post('store', 'UserController::store');
+            $routes->put('update/(:num)', 'UserController::update/$1');
+            $routes->post('delete/(:num)', 'UserController::delete/$1');
+        });
+
+        // toko
+        $routes->group('toko', function ($routes) {
+            $routes->get('', 'TokoController::index');
+            $routes->post('store', 'TokoController::store');
+            $routes->put('update/(:num)', 'TokoController::update/$1');
+            $routes->post('delete/(:num)', 'TokoController::delete/$1');
+        });
+
+        // Supplier
+        $routes->get('supplier', 'SupplierController::index');
+        $routes->post('supplier/store', 'SupplierController::store');
+        $routes->put('supplier/update/(:num)', 'SupplierController::update/$1');
+        $routes->post('supplier/delete/(:num)', 'SupplierController::delete/$1');
+
+        // Produk Mentah
+        $routes->get('produk-mentah', 'ProdukMentahController::index');
+        $routes->get('produk-mentah/pengemasan-produk/(:num)', 'ProdukMentahController::showPengemasanProduk/$1');
+        $routes->post('produk-mentah/store', 'ProdukMentahController::store');
+        $routes->post('produk-mentah/pengemasan-produk', 'ProdukMentahController::tambahPengemasanProduk');
+        $routes->post('produk-mentah/pengemasan-produk/tambah-stok', 'ProdukMentahController::tambahStokPengemasanProduk');
+        $routes->put('produk-mentah/update/(:num)', 'ProdukMentahController::update/$1');
+        $routes->post('produk-mentah/delete/(:num)', 'ProdukMentahController::delete/$1');
+
+        // Pengemasan Produk
+        $routes->get('pengemasan-produk', 'PengemasanProdukController::index');
+        $routes->post('pengemasan-produk/store', 'PengemasanProdukController::store');
+        $routes->put('pengemasan-produk/update/(:num)', 'PengemasanProdukController::update/$1');
+        $routes->post('pengemasan-produk/delete/(:num)', 'PengemasanProdukController::delete/$1');
+
+        // Produk Gudang
+        $routes->get('produk-gudang', 'ProdukGudangController::index');
+        $routes->post('produk-gudang/store', 'ProdukGudangController::store');
+        $routes->put('produk-gudang/update/(:num)', 'ProdukGudangController::update/$1');
+        $routes->post('produk-gudang/delete/(:num)', 'ProdukGudangController::delete/$1');
+
+        // Kategori
+        $routes->get('kategori', 'KategoriController::index');
     });
 
-//    $routes->group('auth', function ($routes) {
-//        $routes->get('login', 'AuthController::index');
-//        $routes->post('login', 'AuthController::login');
-//        $routes->get('logout', 'AuthController::logout');
-//    });
-
-    // produk toko
-    $routes->group('produk', function ($routes) {
-        $routes->get('', 'ProdukTokoController::index');
-        $routes->post('store', 'ProdukTokoController::store');
-        $routes->put('update/(:num)', 'ProdukTokoController::update/$1');
-        $routes->post('delete/(:num)', 'ProdukTokoController::delete/$1');
+    $routes->group('kategori', function ($routes) {
+        $routes->post('store', 'KategoriController::store');
+        $routes->put('update/(:num)', 'KategoriController::update/$1');
+        $routes->post('delete/(:num)', 'KategoriController::delete/$1');
     });
 
-    // user
-    $routes->group('pengguna', function ($routes) {
-        $routes->get('', 'UserController::index');
-        $routes->post('store', 'UserController::store');
-        $routes->put('update/(:num)', 'UserController::update/$1');
-        $routes->post('delete/(:num)', 'UserController::delete/$1');
-    });
-
-    // toko
     $routes->group('toko', function ($routes) {
-        $routes->get('', 'TokoController::index');
-        $routes->post('store', 'TokoController::store');
-        $routes->put('update/(:num)', 'TokoController::update/$1');
-        $routes->post('delete/(:num)', 'TokoController::delete/$1');
+        $routes->get('', function () {
+            return view('pages/dashboard/toko');
+        });
+
+        $routes->get('kategori', 'KategoriController::index');
+
+        $routes->group('produk', function ($routes) {
+            $routes->get('', 'ProdukTokoController::index');
+            $routes->post('store', 'ProdukTokoController::store');
+            $routes->put('update/(:num)', 'ProdukTokoController::update/$1');
+            $routes->post('delete/(:num)', 'ProdukTokoController::delete/$1');
+        });
+
+        $routes->group('pesanan', function ($routes) {
+            $routes->get('', 'PesananController::index', ['as' => 'pesanan.index']);
+            $routes->get('(:num)', 'PesananController::show/$1', ['as' => 'pesanan.show']);
+            $routes->put('update/(:num)', 'PesananController::update/$1', ['as' => 'pesanan.update']);
+            $routes->post('delete/(:num)', 'PesananController::delete/$1', ['as' => 'pesanan.delete']);
+        });
     });
-
-    // Supplier
-    $routes->get('supplier', 'SupplierController::index');
-    $routes->post('supplier/store', 'SupplierController::store');
-    $routes->put('supplier/update/(:num)', 'SupplierController::update/$1');
-    $routes->post('supplier/delete/(:num)', 'SupplierController::delete/$1');
-
-    // Produk Mentah
-    $routes->get('produk-mentah', 'ProdukMentahController::index');
-    $routes->get('produk-mentah/pengemasan-produk/(:num)', 'ProdukMentahController::showPengemasanProduk/$1');
-    $routes->post('produk-mentah/store', 'ProdukMentahController::store');
-    $routes->post('produk-mentah/pengemasan-produk', 'ProdukMentahController::tambahPengemasanProduk');
-    $routes->post('produk-mentah/pengemasan-produk/tambah-stok', 'ProdukMentahController::tambahStokPengemasanProduk');
-    $routes->put('produk-mentah/update/(:num)', 'ProdukMentahController::update/$1');
-    $routes->post('produk-mentah/delete/(:num)', 'ProdukMentahController::delete/$1');
-
-    // Pengemasan Produk
-    $routes->get('pengemasan-produk', 'PengemasanProdukController::index');
-    $routes->post('pengemasan-produk/store', 'PengemasanProdukController::store');
-    $routes->put('pengemasan-produk/update/(:num)', 'PengemasanProdukController::update/$1');
-    $routes->post('pengemasan-produk/delete/(:num)', 'PengemasanProdukController::delete/$1');
-
-    // Produk Gudang
-    $routes->get('produk-gudang', 'ProdukGudangController::index');
-    $routes->post('produk-gudang/store', 'ProdukGudangController::store');
-    $routes->put('produk-gudang/update/(:num)', 'ProdukGudangController::update/$1');
-    $routes->post('produk-gudang/delete/(:num)', 'ProdukGudangController::delete/$1');
-
-    // Kategori
-    $routes->get('kategori-gudang', 'KategoriController::index');
-    $routes->post('kategori-gudang/store', 'KategoriController::store');
-    $routes->put('kategori-gudang/update/(:num)', 'KategoriController::update/$1');
-    $routes->post('kategori-gudang/delete/(:num)', 'KategoriController::delete/$1');
 });
 
 
@@ -108,5 +128,12 @@ $routes->group('api', ['namespace' => 'App\Controllers\Api'], function ($routes)
     $routes->post('keranjang', 'KeranjangController::createKeranjangUser');
     $routes->put('keranjang/(:num)', 'KeranjangController::updateKeranjangUser/$1');
     $routes->post('keranjang/delete/(:num)', 'KeranjangController::deleteKeranjangUser/$1');
-});
 
+    $routes->group('pesanan', function ($routes) {
+        $routes->get('', 'PesananController::getPesananByUser');
+        $routes->get('(:num)', 'PesananController::getPesananById/$1');
+        $routes->post('', 'PesananController::createPesanan');
+        $routes->put('(:num)', 'PesananController::updatePesanan/$1');
+        $routes->post('delete/(:num)', 'PesananController::deletePesanan/$1');
+    });
+});

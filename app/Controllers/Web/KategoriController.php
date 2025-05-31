@@ -16,23 +16,46 @@ class KategoriController extends BaseController
     }
 
     // CREATE
-    public function store()
+    public function index()
     {
+        $role = session()->get('role');
+        $tokoId = session()->get('toko_id');
+
+        if ($role === 'admin') {
+            $kategori = $this->kategoriModel
+                ->where('toko_id', null)
+                ->paginate(10);
+        } elseif ($role === 'penjual') {
+            $kategori = $this->kategoriModel
+                ->where('toko_id', $tokoId)
+                ->paginate(10);
+        } else {
+            return redirect()->to('/login')->with('error', 'Akses tidak diizinkan.');
+        }
+
+        return view('pages/kategori/kategori-gudang', [
+            'kategori' => $kategori,
+            'pager'    => $this->kategoriModel->pager
+        ]);
+    }
+
+    // READ (semua data)
+    public function store()
+    {   
+        $tokoId = session()->get('toko_id');
+
         $data = [
             'nama' => $this->request->getPost('nama'),
-            'toko_id' => $this->request->getPost('toko_id'),
+            'toko_id' => $tokoId
         ];
 
         $this->kategoriModel->insert($data);
 
-        return redirect()->to('kategori-gudang')->with('success', 'Kategori berhasil ditambahkan');
-    }
-
-    // READ (semua data)
-    public function index()
-    {
-        $kategori = $this->kategoriModel->paginate(10);
-        return view('pages/kategori/kategori-gudang', ['kategori' => $kategori, 'pager' => $this->kategoriModel->pager]);
+        if (session()->get('role') === 'penjual') {
+            return redirect()->to('toko/kategori')->with('success', 'Kategori berhasil ditambahkan');
+        } else if (session()->get('role') === 'admin') {
+            return redirect()->to('admin/kategori')->with('success', 'Kategori berhasil ditambahkan');
+        }
     }
 
     // READ (by id)
@@ -40,7 +63,7 @@ class KategoriController extends BaseController
     {
         $kategori = $this->kategoriModel->find($id);
         if (!$kategori) {
-            return ;
+            return;
         }
         return;
     }
@@ -55,7 +78,11 @@ class KategoriController extends BaseController
 
         $this->kategoriModel->update($id, $data);
 
-        return redirect()->to('kategori-gudang')->with('success', 'Kategori berhasil diperbarui');
+        if (session()->get('role') === 'penjual') {
+            return redirect()->to('toko/kategori')->with('success', 'Kategori berhasil ditambahkan');
+        } else if (session()->get('role') === 'admin') {
+            return redirect()->to('admin/kategori')->with('success', 'Kategori berhasil ditambahkan');
+        }
     }
 
     // DELETE
@@ -67,6 +94,10 @@ class KategoriController extends BaseController
 
         $this->kategoriModel->delete($id);
 
-        return redirect()->to('kategori-gudang')->with('success', 'Kategori berhasil dihapus');
+        if (session()->get('role') === 'penjual') {
+            return redirect()->to('toko/kategori')->with('success', 'Kategori berhasil ditambahkan');
+        } else if (session()->get('role') === 'admin') {
+            return redirect()->to('admin/kategori')->with('success', 'Kategori berhasil ditambahkan');
+        }
     }
 }

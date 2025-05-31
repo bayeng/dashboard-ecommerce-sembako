@@ -36,7 +36,7 @@ class ProdukTokoController extends BaseController
 
     public function store()
     {
-        $toko_id = 2;
+        $toko_id = session()->get('toko_id');
 
         $nama = $this->request->getPost('nama');
         $harga = $this->request->getPost('harga');
@@ -70,14 +70,14 @@ class ProdukTokoController extends BaseController
             'toko_id' => $toko_id,
             'foto' => $filename
         ]);
-        return redirect()->to('/produk')->with('success', 'Produk berhasil ditambahkan');
+        return redirect()->to('/toko/produk')->with('success', 'Produk berhasil ditambahkan');
     }
 
     public function update($id)
     {
         $produk = $this->produkTokoModel->find($id);
         if (!$produk) {
-            return redirect()->to('/produk')->with('error', 'Produk tidak ditemukan');
+            return redirect()->to('/toko/produk')->with('error', 'Produk tidak ditemukan');
         }
 
         $nama = $this->request->getPost('nama');
@@ -95,7 +95,7 @@ class ProdukTokoController extends BaseController
             }
 
             if (!$foto->move('uploads/produk', $filename)) {
-                return redirect()->to('/produk')->with('error', 'Gagal mengunggah foto');
+                return redirect()->to('/toko/produk')->with('error', 'Gagal mengunggah foto');
             }
         } else {
             $filename = $produk['foto'];
@@ -110,14 +110,14 @@ class ProdukTokoController extends BaseController
             'foto' => $filename
         ]);
 
-        return redirect()->to('/produk')->with('success', 'Produk berhasil diperbarui');
+        return redirect()->to('/toko/produk')->with('success', 'Produk berhasil diperbarui');
     }
     
     public function delete($id)
     {
         $produk = $this->produkTokoModel->find($id);
         if (!$produk) {
-            return redirect()->to('/produk')->with('error', 'Produk tidak ditemukan');
+            return redirect()->to('/toko/produk')->with('error', 'Produk tidak ditemukan');
         }
 
         if (file_exists('uploads/produk/' . $produk['foto'])) {
@@ -125,6 +125,6 @@ class ProdukTokoController extends BaseController
         }
 
         $this->produkTokoModel->delete($id);
-        return redirect()->to('/produk')->with('success', 'Produk berhasil dihapus');
+        return redirect()->to('/toko/produk')->with('success', 'Produk berhasil dihapus');
     }
 }

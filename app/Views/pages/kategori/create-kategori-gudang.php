@@ -1,4 +1,4 @@
-<form action="<?= site_url('kategori-gudang/store'); ?>" method="POST">
+<form action="<?= site_url('kategori/store'); ?>" method="POST">
     <?= csrf_field(); ?>
 
     <div class="form-group">

@@ -1,7 +1,7 @@
 <?= $this->extend('layouts/main') ?>
 
 <?= $this->section('title') ?>
-Dashboard Toko
+Dashboard Admin
 <?= $this->endSection() ?>
 
 <?= $this->section('style') ?>
