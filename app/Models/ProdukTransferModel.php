@@ -6,13 +6,15 @@ use CodeIgniter\Model;
 
 class ProdukTransferModel extends Model
 {
-    protected $table            = 'produktransfers';
+    protected $table            = 'produk_transfer';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = [];
+    protected $allowedFields    = [
+        'kuantiti', 'harga', 'produk_gudang_id', 'produk_toko_id'
+    ];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;

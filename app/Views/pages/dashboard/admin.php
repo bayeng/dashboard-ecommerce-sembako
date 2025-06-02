@@ -63,9 +63,9 @@ Dashboard Admin
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4>Permintaan Produk</h4>
+                        <h4>Produk</h4>
                         <div class="card-header-action">
-                            <a href="/admin/produk-gudang" class="btn btn-danger">View More <i class="fas fa-chevron-right"></i></a>
+                            <a href="/admin/produk-gudang" class="btn btn-danger">Lebih Banyak <i class="fas fa-chevron-right"></i></a>
                         </div>
                     </div>
                     <div class="card-body p-0">
@@ -78,7 +78,6 @@ Dashboard Admin
                                         <th>Nama Produk</th>
                                         <th>Nama Toko</th>
                                         <th>Qty</th>
-                                        <th>Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -93,10 +92,7 @@ Dashboard Admin
                                             </td>
                                             <td><?= esc($item['nama']) ?></td>
                                             <td><?= esc($item['harga']) ?></td>
-                                            <td><?= esc($item['harga']) ?></td>
-                                            <td>
-                                                <a href="/admin/produk-gudang/<?= $item['id'] ?>" class="btn btn-info">Detail</a>
-                                            </td>
+                                            <td><?= esc($item['stok']) ?></td>
                                         </tr>
                                     <?php endforeach; ?>
                                 </tbody>

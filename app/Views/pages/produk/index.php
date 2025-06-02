@@ -26,16 +26,7 @@
                             <div class="card-header">
                                 <h4>List Produk</h4>
                                 <div class="card-header-action">
-                                    <form>
-                                        <div class="input-group">
-                                            <div class="input-group-btn">
-                                                <!-- Tombol untuk membuka modal -->
-                                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-create">
-                                                    Tambah
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </form>
+                                    
                                 </div>
                             </div>
 
@@ -73,9 +64,6 @@
                                                         <img src="<?= base_url('uploads/produk/' . $produk['foto']) ?>" alt="" style="width: 50px; height: 50px; object-fit: cover;">
                                                     </td>
                                                     <td class="text-center w-25">
-                                                        <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal-edit-<?= $produk['id'] ?>">
-                                                            Minta Produk
-                                                        </button>
 
                                                         <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-show-<?= $produk['id'] ?>">
                                                             <i class="fas fa-eye"></i>
