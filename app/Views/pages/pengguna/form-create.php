@@ -30,10 +30,10 @@
         <label for="role">Role</label>
         <select class="form-control" id="role" name="role" required>
             <option value="">Pilih Role</option>
-            <option value="admin">Pengguna</option>
-            <option value="user">Pegawai Toko</option>
-            <option value="user">Supplier</option>
-            <option value="user">Admin</option>
+            <option value="user">Pengguna</option>
+            <option value="penjual">Pegawai Toko</option>
+            <option value="supplier">Supplier</option>
+            <option value="admin">Admin</option>
         </select>
     </div>
 

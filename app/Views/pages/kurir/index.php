@@ -1,7 +1,7 @@
 <?= $this->extend('layouts/main') ?>
 
 <?= $this->section('title') ?>
-Produk Mentah
+Kurir
 <?= $this->endSection() ?>
 
 <?= $this->section('style') ?>
@@ -12,10 +12,10 @@ Produk Mentah
 <div class="main-content">
     <section class="section">
         <div class="section-header">
-            <h1>Produk Mentah</h1>
+            <h1>Kurir</h1>
             <div class="section-header-breadcrumb">
                 <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
-                <div class="breadcrumb-item"><a href="#">Produk Mentah</a></div>
+                <div class="breadcrumb-item"><a href="#">Kurir</a></div>
             </div>
         </div>
 
@@ -24,7 +24,7 @@ Produk Mentah
                 <div class="col-12 col-md-12 col-lg-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4>List Produk Mentah</h4>
+                            <h4>List Kurir</h4>
                             <div class="card-header-action">
                                 <form>
                                     <div class="input-group">
@@ -40,42 +40,31 @@ Produk Mentah
                         </div>
 
                         <div class="card-body">
-                            <div class="float-left">
-                                <form>
-                                    <div class="input-group mb-3">
-                                        <input type="text" class="form-control" placeholder="Search">
-                                        <div class="input-group-append">
-                                            <button class="btn btn-primary"><i class="fas fa-search"></i></button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
                             <div class="table-responsive">
                                 <table class="table-striped table" id="sortable-table">
                                     <thead>
                                     <tr>
                                         <th class="text-center">No</th>
                                         <th>Foto</th>
-                                        <th>Nama Produk</th>
-                                        <th>Nama Supplier</th>
-                                        <th>Kuantiti</th>
+                                        <th>Nama</th>
+                                        <th>No. HP</th>
+                                        <th>Alamat</th>
                                         <th>Aksi</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <?php $no = 1; foreach ($produkMentah as $item): ?>
+                                    <?php $no = 1; foreach ($kurir as $item): ?>
                                         <tr>
                                             <td class="text-center"><?= $no++ ?></td>
                                             <td>
                                                 <?php if (!empty($item['foto'])): ?>
-                                                    <img src="<?= base_url('uploads/produk-mentah/' . $item['foto']) ?>" width="100px" height="100px" alt="">
+                                                    <img src="<?= base_url('uploads/kurir/' . $item['foto']) ?>" width="100px" height="100px" alt="">
                                                 <?php endif; ?>
                                             </td>
                                             <td><?= esc($item['nama']) ?></td>
-                                            <td><?= esc($item['nama_supplier']) ?></td>
-                                            <td><?= esc($item['stok']) ?> <?= esc($item['satuan_stok']) ?></td>
+                                            <td><?= esc($item['no_hp']) ?></td>
+                                            <td><?= esc($item['alamat']) ?></td>
                                             <td>
-                                                <a href="<?= base_url('/admin/produk-mentah/pengemasan-produk/' . $item['id']) ?>" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="Pengemasan Produk">Kemas</a>
                                                 <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-show-<?= $item['id'] ?>">
                                                     <i class="fas fa-eye"></i>
                                                 </button>
@@ -85,7 +74,7 @@ Produk Mentah
                                                 </button>
 
                                                 <!-- Form untuk menghapus supplier -->
-                                                <form action="<?= site_url('/admin/produk-mentah/delete/' . $item['id']) ?>" method="POST" style="display:inline;" onsubmit="return confirm('Yakin ingin menghapus supplier ini?')">
+                                                <form action="<?= site_url('/admin/kurir/delete/' . $item['id']) ?>" method="POST" style="display:inline;" onsubmit="return confirm('Yakin ingin menghapus supplier ini?')">
                                                     <?= csrf_field() ?>
                                                     <button type="submit" class="btn btn-danger btn-sm">
                                                         <i class="fas fa-trash"></i>
@@ -109,26 +98,26 @@ Produk Mentah
 </div>
 <?= view('components/modal', [
     'id' => 'modal-create',
-    'title' => 'Tambah Produk Mentah',
-//        'size' => 'modal-lg', // opsional
-    'slot' => view('pages/produk-mentah/create-form', ['supplier' => $supplier])
+    'title' => 'Tambah Kurir',
+    //    'size' => 'modal-lg', // opsional
+    'slot' => view('pages/kurir/create-form')
 ]) ?>
 
-<?php foreach ($produkMentah as $item): ?>
+<?php foreach ($kurir as $item): ?>
     <?= view('components/modal', [
         'id' => 'modal-edit-' . $item['id'],
-        'title' => 'Edit Produk Mentah',
+        'title' => 'Edit Kurir',
         'size' => 'modal-lg',
-        'slot' => view('pages/produk-mentah/edit-form', ['kategori' => $item, 'supplier' => $supplier])
+        'slot' => view('pages/kurir/edit-form', ['item' => $item])
     ]) ?>
 <?php endforeach; ?>
 
-<?php foreach ($produkMentah as $item): ?>
+<?php foreach ($kurir as $item): ?>
     <?= view('components/modal', [
         'id' => 'modal-show-' . $item['id'],
-        'title' => 'detail Produk Mentah',
+        'title' => 'Detail Kurir',
         'size' => 'modal-lg',
-        'slot' => view('pages/produk-mentah/show', ['item' => $item, 'supplier' => $supplier])
+        'slot' => view('pages/kurir/show', ['$item' => $item])
     ]) ?>
 <?php endforeach; ?>
 

@@ -58,9 +58,8 @@
                                             <th>Nama Produk</th>
                                             <th>Harga</th>
                                             <th>Stok</th>
-                                            <th>Kategori</th>
                                             <th>Foto</th>
-                                            <th>Aksi</th>
+                                            <th class="text-center">Aksi</th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -70,11 +69,14 @@
                                                     <td><?= esc($produk['nama']) ?></td>
                                                     <td><?= esc($produk['harga']) ?></td>
                                                     <td><?= esc($produk['stok']) ?></td>
-                                                    <td><?= esc($produk['kategori_id']) ?></td>
                                                     <td>
                                                         <img src="<?= base_url('uploads/produk/' . $produk['foto']) ?>" alt="" style="width: 50px; height: 50px; object-fit: cover;">
                                                     </td>
-                                                    <td>
+                                                    <td class="text-center w-25">
+                                                        <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal-edit-<?= $produk['id'] ?>">
+                                                            Minta Produk
+                                                        </button>
+
                                                         <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-show-<?= $produk['id'] ?>">
                                                             <i class="fas fa-eye"></i>
                                                         </button>
@@ -110,7 +112,7 @@
     <?= view('components/modal', [
         'id' => 'modal-create',
         'title' => 'Tambah Produk',
-        'slot' => view('pages/produk/form-create')
+        'slot' => view('pages/produk/form-create', ['kategoris' => $kategoris, 'produkGudangs' => $produkGudangs])
     ]) ?>
 
     <?php foreach ($produks as $produk): ?>

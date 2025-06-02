@@ -6,16 +6,19 @@ use App\Controllers\BaseController;
 use CodeIgniter\HTTP\ResponseInterface;
 use App\Models\ProdukTokoModel;
 use App\Models\KategoriModel;
+use App\Models\ProdukGudangModel;
 
 class ProdukTokoController extends BaseController
 {
     protected $produkTokoModel;
     protected $kategoriModel;
+    protected $produkGudangModel;
 
     public function __construct()
     {
         $this->produkTokoModel = new ProdukTokoModel();
         $this->kategoriModel = new KategoriModel();
+        $this->produkGudangModel = new ProdukGudangModel();
     }
 
     public function index()
@@ -24,11 +27,13 @@ class ProdukTokoController extends BaseController
             ->where('toko_id', session()->get('toko_id'))
             ->paginate(25);
         $kategoris = $this->kategoriModel->findAll();
+        $produkGudangs = $this->produkGudangModel->where('jenis_value', 2)->findAll();
         $data = [
             'title' => 'Produk Toko',
             'pager' => $this->produkTokoModel->pager,
             'produks' => $produks,
             'kategoris' => $kategoris,
+            'produkGudangs' => $produkGudangs
         ];
 
         return view('pages/produk/index', $data);

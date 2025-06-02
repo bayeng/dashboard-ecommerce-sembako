@@ -39,6 +39,11 @@
 
     <div class="form-group">
         <label for="foto" class="form-label">Foto</label>
+        <?php if (!empty($produk['foto'])): ?>
+            <div class="mb-2">
+                <img src="<?= base_url('uploads/produk/' . $produk['foto']) ?>" alt="Foto Produk" width="100">
+            </div>
+        <?php endif; ?>
         <input type="file" class="form-control" id="foto" name="foto" value="<?= base_url('/uploads/produk/' . $produk['nama']) ?>">
     </div>
 

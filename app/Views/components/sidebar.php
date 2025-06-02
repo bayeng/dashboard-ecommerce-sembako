@@ -10,11 +10,16 @@
         <ul class="sidebar-menu">
             <?php if ($role === 'admin'): ?>
                 <li class="nav"><a class="nav-link" href="/admin"><i class="fa fa-home"></i> Dashboard</a></li>
+                <li class="dropdown">
+                    <a href="#" class="nav-link has-dropdown"><i class="fa fa-box"></i> <span>Produk</span></a></a>
+                    <ul class="dropdown-menu">
+                        <li class="nav"><a class="nav-link" href="/admin/produk-gudang"><i class="fa fa-box"></i> <span>Produk</span></a></li>
+                        <li class="nav"><a class="nav-link" href="/admin/kategori"><i class="fa fa-tag"></i> <span>Kategori</span></a></li>
+                    </ul>
+                </li>
                 <li class="nav"><a class="nav-link" href="/admin/toko"><i class="fa fa-store"></i> <span>Toko</span></a></li>
                 <li class="nav"><a class="nav-link" href="/admin/supplier"><i class="fa fa-truck"></i> <span>Supplier</span></a></li>
-                <li class="nav"><a class="nav-link" href="/admin/produk-mentah"><i class="fa fa-box-open"></i> <span>Produk Mentah</span></a></li>
-                <li class="nav"><a class="nav-link" href="/admin/produk-gudang"><i class="fa fa-box"></i> <span>Produk Gudang</span></a></li>
-                <li class="nav"><a class="nav-link" href="/admin/kategori"><i class="fa fa-tag"></i> <span>Kategori Produk</span></a></li>
+                <li class="nav"><a class="nav-link" href="/admin/kurir"><i class="fa fa-paper-plane"></i> <span>Kurir</span></a></li>
                 <li class="nav"><a class="nav-link" href="/admin/pengguna"><i class="fa fa-user"></i> <span>Pengguna</span></a></li>
             <?php endif; ?>
             <?php if ($role === 'penjual'): ?>

@@ -24,9 +24,15 @@ class ProdukTransfer extends Migration
             ],
             'produk_gudang_id' => [
                 'type' => 'INT',
+                'null' => true,
             ],
             'produk_toko_id' => [
                 'type' => 'INT',
+                'null' => true,
+            ],
+            'status' => [
+                'type' => 'ENUM',
+                'constraint' => ['diproses', 'selesai'],
             ],
             'created_at' => [
                 'type' => 'DATETIME',

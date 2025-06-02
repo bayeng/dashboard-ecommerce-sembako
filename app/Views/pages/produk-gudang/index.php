@@ -40,9 +40,9 @@ Produk Gudang
                         </div>
 
                         <div class="card-body">
-                            <div class="float-left">
+                            <div class="float-left d-flex justify-content-between w-100 mb-3">
                                 <form method="get" action="<?= base_url('/admin/produk-gudang') ?>">
-                                    <div class="input-group mb-3">
+                                    <div class="input-group">
                                         <input name="keyword" type="text" class="form-control mr-3" placeholder="Search" value="<?= esc($keyword) ?>">
                                         <select name="kategori_id" class="form-control mr-3" style="max-width: 180px;">
                                             <option value="">Semua Kategori</option>
@@ -57,6 +57,8 @@ Produk Gudang
                                         </div>
                                     </div>
                                 </form>
+
+                                <a href="/admin/produk-mentah" class="btn btn-primary">Produk Mentah</a>
                             </div>
                             <div class="table-responsive">
                                 <table class="table-striped table" id="sortable-table">

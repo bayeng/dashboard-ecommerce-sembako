@@ -32,7 +32,7 @@ class Users extends Migration
             ],
             'role' => [
                 'type' => 'ENUM',
-                'constraint' => ['admin', 'supplier', 'penjual', 'user'],
+                'constraint' => ['admin', 'supplier', 'penjual', 'kurir', 'user'],
             ],
             'no_hp' => [
                 'type' => 'VARCHAR',

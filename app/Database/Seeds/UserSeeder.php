@@ -25,22 +25,22 @@ class UserSeeder extends Seeder
                 'no_hp'    => 'no hp penjual',
                 'toko_id'  => 1,
             ],
-            [
-                'username' => 'penjual2',
-                'password' => password_hash('penjual', PASSWORD_DEFAULT),
-                'role'     => 'penjual',
-                'alamat'   => 'alamat penjual 2',
-                'no_hp'    => 'no hp penjual 2',
-                'toko_id'  => 2,
-            ],
-            [
-                'username' => 'penjual3',
-                'password' => password_hash('penjual', PASSWORD_DEFAULT),
-                'role'     => 'penjual',
-                'alamat'   => 'alamat penjual 3',
-                'no_hp'    => 'no hp penjual 3',
-                'toko_id'  => 3,
-            ],
+            // [
+            //     'username' => 'penjual2',
+            //     'password' => password_hash('penjual', PASSWORD_DEFAULT),
+            //     'role'     => 'penjual',
+            //     'alamat'   => 'alamat penjual 2',
+            //     'no_hp'    => 'no hp penjual 2',
+            //     'toko_id'  => 2,
+            // ],
+            // [
+            //     'username' => 'penjual3',
+            //     'password' => password_hash('penjual', PASSWORD_DEFAULT),
+            //     'role'     => 'penjual',
+            //     'alamat'   => 'alamat penjual 3',
+            //     'no_hp'    => 'no hp penjual 3',
+            //     'toko_id'  => 3,
+            // ],
         ];
 
         $this->db->table('users')->insertBatch($data);

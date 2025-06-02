@@ -22,7 +22,7 @@ class UserController extends BaseController
     {
         $request = fn($key) => $this->request->getGet($key);
         $users = $this->userModel
-            ->select('users.*, toko.id as toko_id, toko.nama as nama_toko')
+            ->select('users.*, users.role as role, toko.id as toko_id, toko.nama as nama_toko')
             ->join('toko', 'toko.id = users.toko_id', 'left')
             ->when($request('keyword') !== null, function ($query) use ($request) {
                 return $query->groupStart()
