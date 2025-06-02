@@ -38,6 +38,13 @@ $routes->group('', ['namespace' => 'App\Controllers\Web', 'filter' => 'auth'], f
             $routes->post('delete/(:num)', 'TokoController::delete/$1');
         });
 
+        $routes->group('detail-toko', function ($routes) {
+            $routes->get('(:num)', 'ProductTransferController::show/$1');
+            $routes->post('store', 'ProductTransferController::store');
+            $routes->put('update/(:num)', 'ProductTransferController::update/$1');
+            $routes->post('delete/(:num)', 'ProductTransferController::delete/$1');
+        });
+
         // Supplier
         $routes->get('supplier', 'SupplierController::index');
         $routes->post('supplier/store', 'SupplierController::store');

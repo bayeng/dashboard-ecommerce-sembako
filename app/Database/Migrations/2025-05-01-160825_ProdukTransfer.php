@@ -30,10 +30,6 @@ class ProdukTransfer extends Migration
                 'type' => 'INT',
                 'null' => true,
             ],
-            'status' => [
-                'type' => 'ENUM',
-                'constraint' => ['diproses', 'selesai'],
-            ],
             'created_at' => [
                 'type' => 'DATETIME',
                 'null' => true,
