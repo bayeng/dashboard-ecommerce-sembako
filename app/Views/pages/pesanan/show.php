@@ -39,7 +39,7 @@ Detail Pesanan
                                         </tr>
                                         <tr>
                                             <td>Total Harga</td>
-                                            <td>: Rp. <?= esc($pesanan['total_harga']) ?>
+                                            <td>: Rp. <?= esc(number_format($pesanan['total_harga'])) ?>
                                             </td>
                                         </tr>
                                         <tr>
@@ -90,7 +90,7 @@ Detail Pesanan
                                                 <tr>
                                                     <td><?= esc($produk['produk']) ?></td>
                                                     <td><?= esc($produk['qty']) ?></td>
-                                                    <td>Rp. <?= esc($produk['harga']) ?></td>
+                                                    <td>Rp. <?= esc(number_format($produk['harga'])) ?></td>
                                                 </tr>
                                             <?php endforeach; ?>
                                         </tbody>

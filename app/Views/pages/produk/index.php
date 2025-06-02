@@ -32,11 +32,11 @@
 
                             <div class="card-body">
                                 <div class="float-left">
-                                    <form>
+                                    <form action="<?= base_url('toko/produk') ?>">
                                         <div class="input-group mb-3">
-                                            <input type="text" class="form-control" placeholder="Search">
+                                            <input type="text" class="form-control" name="keyword" placeholder="Search">
                                             <div class="input-group-append">
-                                                <button class="btn btn-primary"><i class="fas fa-search"></i></button>
+                                                <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i></button>
                                             </div>
                                         </div>
                                     </form>
@@ -58,7 +58,7 @@
                                                 <tr>
                                                     <td><?= esc($produk['kode']) ?></td>
                                                     <td><?= esc($produk['nama']) ?></td>
-                                                    <td><?= esc($produk['harga']) ?></td>
+                                                    <td>Rp. <?= esc(number_format($produk['harga'])) ?></td>
                                                     <td><?= esc($produk['stok']) ?></td>
                                                     <td>
                                                         <img src="<?= base_url('uploads/produk/' . $produk['foto']) ?>" alt="" style="width: 50px; height: 50px; object-fit: cover;">

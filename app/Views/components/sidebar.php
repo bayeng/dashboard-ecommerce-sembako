@@ -21,12 +21,13 @@
                 <li class="nav"><a class="nav-link" href="/admin/supplier"><i class="fa fa-truck"></i> <span>Supplier</span></a></li>
                 <li class="nav"><a class="nav-link" href="/admin/kurir"><i class="fa fa-paper-plane"></i> <span>Kurir</span></a></li>
                 <li class="nav"><a class="nav-link" href="/admin/pengguna"><i class="fa fa-user"></i> <span>Pengguna</span></a></li>
-            <?php endif; ?>
-            <?php if ($role === 'penjual'): ?>
-                <li class="nav"><a class="nav-link" href="/toko"><i class="fa fa-home"></i>Dashboard</a></li>
-                <li class="nav"><a class="nav-link" href="/toko/pesanan"><i class="fa fa-inbox"></i> <span>Pesanan</span></a></li>
-                <li class="nav"><a class="nav-link" href="/toko/produk"><i class="fa fa-box"></i> <span>Produk</span></a></li>
-                <li class="nav"><a class="nav-link" href="/toko/kategori"><i class="fa fa-tag"></i> <span>Kategori</span></a></li>
+                <?php endif; ?>
+                <?php if ($role === 'penjual'): ?>
+                    <li class="nav"><a class="nav-link" href="/toko"><i class="fa fa-home"></i>Dashboard</a></li>
+                    <li class="nav"><a class="nav-link" href="/toko/pesanan"><i class="fa fa-inbox"></i> <span>Pesanan</span></a></li>
+                    <li class="nav"><a class="nav-link" href="/toko/produk"><i class="fa fa-box"></i> <span>Produk</span></a></li>
+                    <li class="nav"><a class="nav-link" href="/toko/kategori"><i class="fa fa-tag"></i> <span>Kategori</span></a></li>
+                    <li class="nav"><a class="nav-link" href="/toko/kurir"><i class="fa fa-paper-plane"></i> <span>Kurir</span></a></li>
             <?php endif; ?>
     </aside>
 </div>

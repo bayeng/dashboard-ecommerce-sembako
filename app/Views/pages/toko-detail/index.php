@@ -23,6 +23,10 @@ Toko
             <div class="alert alert-danger">
                 <?= session('error') ?>
             </div>
+        <?php elseif (session()->has('success')) : ?>
+            <div class="alert alert-info">
+                <?= session('success') ?>
+            </div>
         <?php endif; ?>
 
         <div class="section-body">
@@ -47,9 +51,9 @@ Toko
 
                         <div class="card-body">
                             <div class="float-left">
-                                <form>
+                                <form action="<?= base_url('admin/detail-toko'. '/' . $toko['id']) ?>">
                                     <div class="input-group mb-3">
-                                        <input type="text" class="form-control" placeholder="Search">
+                                        <input type="text" class="form-control" name="keyword" placeholder="Search">
                                         <div class="input-group-append">
                                             <button class="btn btn-primary"><i class="fas fa-search"></i></button>
                                         </div>
@@ -77,7 +81,7 @@ Toko
                                                 <td><?= esc($toko['kode']) ?></td>
                                                 <td><?= esc($toko['nama']) ?></td>
                                                 <td><?= esc($toko['stok']) ?></td>
-                                                <td>Rp. <?= esc($toko['harga']) ?></td>
+                                                <td>Rp. <?= number_format((int) $toko['harga']) ?></td>
                                                 <td>
                                                     <img src="<?= base_url('uploads/produk/' . $toko['foto']) ?>" alt="" style="width: 50px; height: 50px; object-fit: cover;">
                                                 </td>

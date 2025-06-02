@@ -56,7 +56,7 @@ Pesanan
                                             <tr>
                                                 <td><?= esc($pesan['kode_pesanan']) ?></td>
                                                 <td><?= esc($pesan['nama_user']) ?></td>
-                                                <td><?= esc($pesan['total_harga']) ?></td>
+                                                <td>Rp. <?= esc(number_format($pesan['total_harga'])) ?></td>
                                                 <td><?= esc(match ($pesan['status_value']) {
                                                         1 => 'Diterima',
                                                         2 => 'Diproses',

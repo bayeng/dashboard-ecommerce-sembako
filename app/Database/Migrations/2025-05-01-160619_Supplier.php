@@ -41,6 +41,10 @@ class Supplier extends Migration
                 'constraint' => 255,
                 'null' => true,
             ],
+            'user_id' => [
+                'type' => 'INT',
+                'null' => true,
+            ],
             'created_at' => [
                 'type' => 'DATETIME',
                 'null' => true,
@@ -55,6 +59,7 @@ class Supplier extends Migration
             ]
             ]);
             $this->forge->addKey('id', true);
+            $this->forge->addForeignKey('user_id', 'users', 'id', 'CASCADE', 'CASCADE', 'fk_supplier_users');
             $this->forge->createTable('supplier');
     }
 

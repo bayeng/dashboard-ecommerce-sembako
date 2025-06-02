@@ -19,6 +19,16 @@ Toko
             </div>
         </div>
 
+        <?php if (session()->has('error')) : ?>
+            <div class="alert alert-danger">
+                <?= session('error') ?>
+            </div>
+        <?php elseif (session()->has('success')) : ?>
+            <div class="alert alert-info">
+                <?= session('success') ?>
+            </div>
+        <?php endif; ?>
+
         <div class="section-body">
             <div class="row">
                 <div class="col-12 col-md-12 col-lg-12">
@@ -41,9 +51,9 @@ Toko
 
                         <div class="card-body">
                             <div class="float-left">
-                                <form>
+                                <form action="<?= base_url('admin/toko') ?>">
                                     <div class="input-group mb-3">
-                                        <input type="text" class="form-control" placeholder="Search">
+                                        <input type="text" class="form-control" name="keyword" placeholder="Search">
                                         <div class="input-group-append">
                                             <button class="btn btn-primary"><i class="fas fa-search"></i></button>
                                         </div>
@@ -72,7 +82,7 @@ Toko
                                                     <img src="<?= base_url('uploads/toko/' . $toko['foto']) ?>" alt="" style="width: 50px; height: 50px; object-fit: cover;">
                                                 </td>
                                                 <td>
-                                                    <a href="/admin/detail-toko/<?= $toko['id'] ?>" class="btn btn-primary btn-sm" >
+                                                    <a href="/admin/detail-toko/<?= $toko['id'] ?>" class="btn btn-primary btn-sm">
                                                         Lihat Toko
                                                     </a>
 
@@ -97,9 +107,6 @@ Toko
                                     </tbody>
                                 </table>
                             </div>
-                        </div>
-                        <div class="mt-4 d-flex justify-content-center">
-                            <?= $pager->links() ?>
                         </div>
                     </div>
                 </div>

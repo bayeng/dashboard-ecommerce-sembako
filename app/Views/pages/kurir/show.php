@@ -4,8 +4,18 @@
     <input type="hidden" name="_method" value="PUT">
 
     <div class="form-group">
-        <label for="nama">Nama Produk</label>
+        <label for="nama">Nama</label>
         <input type="text" class="form-control" id="nama" name="nama" value="<?= $item['nama'] ?>" disabled required>
+    </div>
+
+    <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" class="form-control" id="username" name="username" value="<?= $item['username'] ?>" disabled required>
+    </div>
+
+    <div class="form-group">
+        <label for="password">Password</label>
+        <input type="text" class="form-control" id="password" name="password" value="" disabled required>
     </div>
 
     <div class="form-group">

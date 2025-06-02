@@ -20,14 +20,21 @@ class KategoriController extends BaseController
     {
         $role = session()->get('role');
         $tokoId = session()->get('toko_id');
+        $keyword = $this->request->getGet('keyword');
 
         if ($role === 'admin') {
             $kategori = $this->kategoriModel
+                ->when($keyword, function ($query) use ($keyword) {
+                    $query->like('kategori.nama', $keyword);
+                })
                 ->where('toko_id', null)
                 ->paginate(10);
         } elseif ($role === 'penjual') {
             $kategori = $this->kategoriModel
                 ->where('toko_id', $tokoId)
+                ->when($keyword, function ($query) use ($keyword) {
+                    $query->like('kategori.nama', $keyword);
+                })
                 ->paginate(10);
         } else {
             return redirect()->to('/login')->with('error', 'Akses tidak diizinkan.');

@@ -25,9 +25,14 @@ class ProductTransferController extends BaseController
     }
 
     public function show($id)
-    {
+    {   
+        $keyword = $this->request->getGet('keyword');
         $toko = $this->tokoModel->find($id);
-        $produkToko = $this->produkTokoModel->select(
+        $produkToko = $this->produkTokoModel
+        ->when($keyword, function ($query) use ($keyword) {
+            $query->like('produk_toko.nama', $keyword);
+        })
+        ->select(
             'produk_toko.*, produk_toko.id as id, produk_toko.kode as kode, produk_toko.nama as nama, produk_toko.foto as foto, produk_transfer.kuantiti as stok, produk_transfer.harga as harga'
         )->join('produk_transfer', 'produk_transfer.produk_toko_id = produk_toko.id')->where('produk_toko.toko_id', $id)->paginate(10);
 

@@ -25,6 +25,14 @@ class UserSeeder extends Seeder
                 'no_hp'    => 'no hp penjual',
                 'toko_id'  => 1,
             ],
+            [
+                'username' => 'supplier1',
+                'password' => password_hash('supplier', PASSWORD_DEFAULT),
+                'role'     => 'supplier',
+                'alamat'   => 'alamat supplier',
+                'no_hp'    => 'no hp supplier',
+                'toko_id'  => null,
+            ],
             // [
             //     'username' => 'penjual2',
             //     'password' => password_hash('penjual', PASSWORD_DEFAULT),

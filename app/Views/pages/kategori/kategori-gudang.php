@@ -41,11 +41,11 @@ Kategori
 
                         <div class="card-body">
                             <div class="float-left">
-                                <form>
+                                <form action="<?= site_url('admin/kategori') ?>">
                                     <div class="input-group mb-3">
-                                        <input type="text" class="form-control" placeholder="Search">
+                                        <input type="text" class="form-control" name="keyword" placeholder="Search">
                                         <div class="input-group-append">
-                                            <button class="btn btn-primary"><i class="fas fa-search"></i></button>
+                                            <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i></button>
                                         </div>
                                     </div>
                                 </form>

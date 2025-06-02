@@ -82,7 +82,7 @@ Produk Gudang
                                                 <?php endif; ?>
                                             </td>
                                             <td><?= esc($item['nama']) ?></td>
-                                            <td><?= esc($item['harga']) ?></td>
+                                            <td>Rp. <?= esc(number_format($item['harga'])) ?></td>
                                             <td><?= esc($item['stok']) ?> <?= esc($item['satuan_stok']) ?></td>
                                             <td>
                                                 <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-show-<?= $item['id'] ?>">

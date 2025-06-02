@@ -40,6 +40,16 @@ Kurir
                         </div>
 
                         <div class="card-body">
+                            <div class="float-left">
+                                <form action="<?= base_url('admin/kurir') ?>">
+                                    <div class="input-group mb-3">
+                                        <input type="text" class="form-control" name="keyword" placeholder="Search">
+                                        <div class="input-group-append">
+                                            <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i></button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
                             <div class="table-responsive">
                                 <table class="table-striped table" id="sortable-table">
                                     <thead>
@@ -86,9 +96,6 @@ Kurir
                                     </tbody>
                                 </table>
                             </div>
-                        </div>
-                        <div class="mt-4 d-flex justify-content-center">
-                            <?= $pager->links() ?>
                         </div>
                     </div>
                 </div>

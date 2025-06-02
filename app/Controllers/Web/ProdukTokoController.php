@@ -22,8 +22,13 @@ class ProdukTokoController extends BaseController
     }
 
     public function index()
-    {
+    {   
+        $keyword = $this->request->getGet('keyword');
+
         $produks = $this->produkTokoModel
+            ->when($keyword, function ($query) use ($keyword) {
+                $query->like('produk_toko.nama', $keyword);
+            })
             ->where('toko_id', session()->get('toko_id'))
             ->paginate(25);
         $kategoris = $this->kategoriModel->findAll();

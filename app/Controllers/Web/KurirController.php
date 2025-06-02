@@ -20,11 +20,29 @@ class KurirController extends BaseController
 
     public function index()
     {
-        $kurir = $this->kurirModel->paginate(10);
+        $keyword = $this->request->getGet('keyword');
+        $kurir = $this->kurirModel
+            ->select('kurir.*, kurir.id as id, kurir.nama as nama, kurir.alamat as alamat, kurir.no_hp as no_hp, kurir.foto as foto, users.username as username')
+            ->join('users', 'users.id = kurir.user_id')
+            ->when($keyword, function ($query) use ($keyword) {
+                $query->like('kurir.nama', $keyword);
+            })->findAll();
 
         return view('/pages/kurir/index', [
             'kurir' => $kurir,
-            'pager' => $this->kurirModel->pager
+        ]); //file viewnya
+    }
+
+    public function penjual()
+    {
+        $keyword = $this->request->getGet('keyword');
+        $kurir = $this->kurirModel
+            ->when($keyword, function ($query) use ($keyword) {
+                $query->like('kurir.nama', $keyword);
+            })->findAll();
+
+        return view('/pages/kurir/penjual', [
+            'kurir' => $kurir
         ]); //file viewnya
     }
 
@@ -66,37 +84,53 @@ class KurirController extends BaseController
 
     public function update($id)
     {
-        $kurir = $this->kurirModel->find($id);
-        $foto = $this->request->getFile('foto');
-        $filename = $foto->getRandomName();
-        if ($this->request->getFile('foto')->isValid()) {
-            $foto = $this->request->getFile('foto');
-            $filename = $foto->getRandomName();
+        $kurir = $this->kurirModel->where('id', $id)->first();
+        $user = $this->userModel->where('id', $kurir['user_id'])->first();
 
-            if (!is_dir('uploads/kurir')) {
-                mkdir('uploads/kurir', 0777, true);
-            }
-
-            if (!$foto->move('uploads/kurir', $filename)) {
-                return redirect()->to('/admin/kurir')->with('error', 'Gagal mengunggah foto');
-            }
-        } else {
-            $filename = $kurir['foto'];
-        }
-
-        $this->kurirModel->update($id, [
+        $userReg = [
             'nama' => $this->request->getPost('nama'),
+            'username' => $this->request->getPost('username'),
+            'password' => password_hash($this->request->getPost('password'), PASSWORD_BCRYPT) ?? $user['password'],
             'no_hp' => $this->request->getPost('no_hp'),
             'alamat' => $this->request->getPost('alamat'),
-            'kontak_person' => $this->request->getPost('kontak_person'),
-        ]);
+            'role' => 'kurir',
+            'toko_id' => null
+        ];
 
+        if ($this->userModel->update($user['id'], $userReg)) {
+            $foto = $this->request->getFile('foto');
+            $filename = $foto->getRandomName();
+            if ($this->request->getFile('foto')->isValid()) {
+                $foto = $this->request->getFile('foto');
+                $filename = $foto->getRandomName();
+
+                if (!is_dir('uploads/kurir')) {
+                    mkdir('uploads/kurir', 0777, true);
+                }
+
+                if (!$foto->move('uploads/kurir', $filename)) {
+                    return redirect()->to('/admin/kurir')->with('error', 'Gagal mengunggah foto');
+                }
+            } else {
+                $filename = $kurir['foto'];
+            }
+
+            $this->kurirModel->update($id, [
+                'nama' => $this->request->getPost('nama'),
+                'no_hp' => $this->request->getPost('no_hp'),
+                'alamat' => $this->request->getPost('alamat'),
+                'kontak_person' => $this->request->getPost('kontak_person'),
+            ]);
+        } else {
+            return redirect()->to('/admin/kurir')->with('error', 'Data gagal diperbarui.');
+        }
         return redirect()->to('/admin/kurir')->with('success', 'Data diperbarui.'); // file view redirect
     }
 
     public function delete($id)
     {
         $kurir = $this->kurirModel->find($id);
+        $this->userModel->delete($kurir['user_id']);
 
         if (!$kurir) {
             return redirect()->to('/admin/kurir')->with('error', 'Data tidak ditemukan');

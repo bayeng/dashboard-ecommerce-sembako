@@ -41,7 +41,7 @@
 
                             <div class="card-body">
                                 <div class="float-left">
-                                    <form action="<?= site_url('pengguna') ?>">
+                                    <form action="<?= site_url('admin/pengguna') ?>">
                                         <div class="input-group mb-3">
                                             <input type="text" class="form-control" placeholder="Search" name="keyword" value="<?= esc($keyword) ?>">
                                             <div class="input-group-append">
