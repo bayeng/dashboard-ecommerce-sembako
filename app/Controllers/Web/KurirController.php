@@ -136,7 +136,7 @@ class KurirController extends BaseController
         $this->userModel->delete($kurir['user_id']);
 
         if (!$kurir) {
-            return redirect()->to('/admin/kurir')->with('error', 'Data tidak ditemukan');
+            return redirect()->to('/toko/kurir')->with('error', 'Data tidak ditemukan');
         }
 
         if (!empty($kurir['foto'])) {
@@ -148,6 +148,6 @@ class KurirController extends BaseController
 
         $this->kurirModel->delete($id);
 
-        return redirect()->to('/admin/kurir')->with('success', 'Data berhasil dihapus');
+        return redirect()->to('/toko/kurir')->with('success', 'Data berhasil dihapus');
     }
 }

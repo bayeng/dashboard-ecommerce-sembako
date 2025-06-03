@@ -8,16 +8,6 @@
     </div>
 
     <div class="form-group">
-        <label for="username">Username</label>
-        <input type="text" class="form-control" id="username" name="username" value="<?= $supplier['username'] ?>">
-    </div>
-
-    <div class="form-group">
-        <label for="password">Password</label>
-        <input type="password" class="form-control" id="name" name="password" value="">
-    </div>
-
-    <div class="form-group">
         <label for="email">Email Supplier</label>
         <input type="email" class="form-control" id="email" name="email" value="<?= $supplier['email'] ?>" required>
     </div>

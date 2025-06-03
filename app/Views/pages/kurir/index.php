@@ -84,7 +84,7 @@ Kurir
                                                 </button>
 
                                                 <!-- Form untuk menghapus supplier -->
-                                                <form action="<?= site_url('/admin/kurir/delete/' . $item['id']) ?>" method="POST" style="display:inline;" onsubmit="return confirm('Yakin ingin menghapus supplier ini?')">
+                                                <form action="<?= site_url('/toko/kurir/delete/' . $item['id']) ?>" method="POST" style="display:inline;" onsubmit="return confirm('Yakin ingin menghapus supplier ini?')">
                                                     <?= csrf_field() ?>
                                                     <button type="submit" class="btn btn-danger btn-sm">
                                                         <i class="fas fa-trash"></i>
