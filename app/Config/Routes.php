@@ -75,12 +75,7 @@ $routes->group('', ['namespace' => 'App\Controllers\Web', 'filter' => 'auth'], f
         // Kategori
         $routes->get('kategori', 'KategoriController::index');
 
-        $routes->group('kurir', function ($routes) {
-            $routes->get('', 'KurirController::index');
-            $routes->post('store', 'KurirController::store');
-            $routes->put('update/(:num)', 'KurirController::update/$1');
-            $routes->post('delete/(:num)', 'KurirController::delete/$1');
-        });
+
     });
 
     $routes->group('kategori', function ($routes) {
@@ -109,7 +104,10 @@ $routes->group('', ['namespace' => 'App\Controllers\Web', 'filter' => 'auth'], f
         });
         // kurir
         $routes->group('kurir', function ($routes) {
-            $routes->get('', 'KurirController::penjual');
+            $routes->get('', 'KurirController::index');
+            $routes->post('store', 'KurirController::store');
+            $routes->put('update/(:num)', 'KurirController::update/$1');
+            $routes->post('delete/(:num)', 'KurirController::delete/$1');
         });
     });
 });

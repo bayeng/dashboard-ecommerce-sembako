@@ -35,6 +35,10 @@ class Kurir extends Migration
                 'constraint' => 255,
                 'null' => true,
             ],
+            'toko_id' => [
+                'type' => 'INT',
+                'null' => false,
+            ],
             'user_id' => [
                 'type' => 'INT',
                 'null' => false,

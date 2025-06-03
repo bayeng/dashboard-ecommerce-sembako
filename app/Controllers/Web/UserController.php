@@ -30,7 +30,6 @@ class UserController extends BaseController
                     ->orLike('users.nama', $request('keyword'))
                     ->groupEnd();
             })
-            ->where('users.role', 'pengguna')
             ->orderBy('users.created_at', 'DESC')
             ->paginate(10);
         $tokos = $this->tokoModel->findAll();

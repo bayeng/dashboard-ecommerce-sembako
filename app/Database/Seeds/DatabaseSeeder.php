@@ -10,6 +10,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->call('TokoSeeder');
         $this->call('UserSeeder');
+        $this->call('KurirSeeder');
         // $this->call('SupplierSeeder');
         $this->call('KategoriSeeder');
         $this->call('ProdukGudangSeeder');

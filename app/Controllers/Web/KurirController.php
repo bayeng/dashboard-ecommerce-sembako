@@ -24,6 +24,7 @@ class KurirController extends BaseController
         $kurir = $this->kurirModel
             ->select('kurir.*, kurir.id as id, kurir.nama as nama, kurir.alamat as alamat, kurir.no_hp as no_hp, kurir.foto as foto, users.username as username')
             ->join('users', 'users.id = kurir.user_id')
+            ->where('kurir.toko_id', session()->get('toko_id'))
             ->when($keyword, function ($query) use ($keyword) {
                 $query->like('kurir.nama', $keyword);
             })->findAll();
@@ -39,8 +40,9 @@ class KurirController extends BaseController
         $kurir = $this->kurirModel
             ->when($keyword, function ($query) use ($keyword) {
                 $query->like('kurir.nama', $keyword);
-            })->findAll();
-
+            })
+            ->where('kurir.toko_id', session()->get('toko_id'))
+            ->findAll();
         return view('/pages/kurir/penjual', [
             'kurir' => $kurir
         ]); //file viewnya
@@ -75,11 +77,12 @@ class KurirController extends BaseController
                 'no_hp' => $this->request->getPost('no_hp'),
                 'alamat' => $this->request->getPost('alamat'),
                 'kontak_person' => $this->request->getPost('kontak_person'),
-                'user_id' => $user_id
+                'user_id' => $user_id,
+                'toko_id' => session()->get('toko_id')
             ]);
         }
 
-        return redirect()->to('/admin/kurir')->with('success', 'Data ditambahkan.'); // file view redirect
+        return redirect()->to('/toko/kurir')->with('success', 'Data ditambahkan.'); // file view redirect
     }
 
     public function update($id)
@@ -109,7 +112,7 @@ class KurirController extends BaseController
                 }
 
                 if (!$foto->move('uploads/kurir', $filename)) {
-                    return redirect()->to('/admin/kurir')->with('error', 'Gagal mengunggah foto');
+                    return redirect()->to('/toko/kurir')->with('error', 'Gagal mengunggah foto');
                 }
             } else {
                 $filename = $kurir['foto'];
@@ -122,9 +125,9 @@ class KurirController extends BaseController
                 'kontak_person' => $this->request->getPost('kontak_person'),
             ]);
         } else {
-            return redirect()->to('/admin/kurir')->with('error', 'Data gagal diperbarui.');
+            return redirect()->to('/toko/kurir')->with('error', 'Data gagal diperbarui.');
         }
-        return redirect()->to('/admin/kurir')->with('success', 'Data diperbarui.'); // file view redirect
+        return redirect()->to('/toko/kurir')->with('success', 'Data diperbarui.'); // file view redirect
     }
 
     public function delete($id)

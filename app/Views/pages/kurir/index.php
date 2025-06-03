@@ -41,7 +41,7 @@ Kurir
 
                         <div class="card-body">
                             <div class="float-left">
-                                <form action="<?= base_url('admin/kurir') ?>">
+                                <form action="<?= base_url('toko/kurir') ?>">
                                     <div class="input-group mb-3">
                                         <input type="text" class="form-control" name="keyword" placeholder="Search">
                                         <div class="input-group-append">

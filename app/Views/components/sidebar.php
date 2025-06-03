@@ -19,7 +19,7 @@
                 </li>
                 <li class="nav"><a class="nav-link" href="/admin/toko"><i class="fa fa-store"></i> <span>Toko</span></a></li>
                 <li class="nav"><a class="nav-link" href="/admin/supplier"><i class="fa fa-truck"></i> <span>Supplier</span></a></li>
-                <li class="nav"><a class="nav-link" href="/admin/kurir"><i class="fa fa-paper-plane"></i> <span>Kurir</span></a></li>
+<!--                <li class="nav"><a class="nav-link" href="/admin/kurir"><i class="fa fa-paper-plane"></i> <span>Kurir</span></a></li>-->
                 <li class="nav"><a class="nav-link" href="/admin/pengguna"><i class="fa fa-user"></i> <span>Pengguna</span></a></li>
                 <?php endif; ?>
                 <?php if ($role === 'penjual'): ?>
