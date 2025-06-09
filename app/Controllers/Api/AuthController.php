@@ -49,7 +49,10 @@ class AuthController extends BaseController
             $username = $this->request->getVar('username');
             $password = $this->request->getVar('password');
 
-            $user = $this->userModel->where('username', $username)->first();
+            $user = $this->userModel
+                ->select('users.*, toko.id as toko_id, toko.nama as nama_toko')
+                ->join('toko', 'toko.id = users.toko_id', 'left')
+                ->where('username', $username)->first();
 
             if (!$user || !password_verify($password, $user['password'])) {
                 return $this->response->setStatusCode(ResponseInterface::HTTP_UNAUTHORIZED)->setJSON('Invalid username or password');
@@ -59,17 +62,21 @@ class AuthController extends BaseController
             $payload = [
                 'iat' => time(),
                 'exp' => time() + (60 * 60), // 1 jam
-                'user_id' => $user['id'],
+                'id_pelanggan' => $user['id'],
                 'nama' => $user['nama'],
                 'username' => $user['username'],
                 'role' => $user['role'],
+                'no_hp' => $user['no_hp'],
+                'tipe' => 'platinum',
+                'foto' => 'https://unsplash.com/photos/delicate-light-blue-flowers-against-a-soft-background-HZ3EXv2h_LQ',
+
             ];
 
-            $token = JWT::encode($payload, $this->jwtKey, 'HS256');
+//            $token = JWT::encode($payload, $this->jwtKey, 'HS256');
 
             return $this->response->setJSON([
                 'message' => 'Login successful',
-                'token'   => $token
+                'data'   => $payload
             ]);
         } catch (\Exception $e) {
             return $this->response->setStatusCode(ResponseInterface::HTTP_INTERNAL_SERVER_ERROR)->setJSON($e->getMessage());
