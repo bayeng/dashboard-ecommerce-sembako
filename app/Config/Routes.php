@@ -66,6 +66,14 @@ $routes->group('', ['namespace' => 'App\Controllers\Web', 'filter' => 'auth'], f
         $routes->put('pengemasan-produk/update/(:num)', 'PengemasanProdukController::update/$1');
         $routes->post('pengemasan-produk/delete/(:num)', 'PengemasanProdukController::delete/$1');
 
+        // resep
+        $routes->get('resep', 'ResepController::index');
+        $routes->get('resep/create', 'ResepController::create');
+        $routes->get('resep/edit/(:num)', 'ResepController::edit/$1');
+        $routes->post('resep/store', 'ResepController::store');
+        $routes->put('resep/update/(:num)', 'ResepController::update/$1');
+        $routes->post('resep/delete/(:num)', 'ResepController::delete/$1');
+
         // Produk Gudang
         $routes->get('produk-gudang', 'ProdukGudangController::index');
         $routes->post('produk-gudang/store', 'ProdukGudangController::store');
