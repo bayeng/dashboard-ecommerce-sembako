@@ -210,14 +210,28 @@ class ProdukMentahController extends BaseController
         $produkGudang = $this->produkGudangModel
             ->where('id', $produkPacking['produk_gudang_id'])
             ->first();
+        $produkMentah = $this->produkMentahModel
+            ->where('id', $produkPacking['produk_mentah_id'])
+            ->first();
 
         if (!$produkGudang) {
             return redirect()->to('/admin/produk-mentah')->with('error', 'Produk gudang tidak ditemukan');
         }
 
+        if (!$produkMentah) {
+            return redirect()->to('/admin/produk-mentah')->with('error', 'Produk mentah tidak ditemukan');
+        }
+
+        $produkMentah['stok'] -= intval($this->request->getPost('stok'));
+        $reduceStokProdukMentah = $produkMentah['stok'] - intval($this->request->getPost('stok'));
+        if ($reduceStokProdukMentah < 0) {
+            return redirect()->to('/admin/produk-mentah/' . '/pengemasan-produk/' . $produkPacking['produk_mentah_id'])->with('error', 'Stok produk mentah tidak mencukupi');
+        }
 
 //        dd($this->request->getPost());
         $produkGudang['stok'] += intval($this->request->getPost('stok'));
+        $this->produkGudangModel->update($produkGudang['id'], $produkGudang);
+        $this->produkMentahModel->update($produkMentah['id'], $produkMentah);
         $this->productPackingModel->insert([
             'produk_mentah_id' => $produkPacking['produk_mentah_id'],
             'produk_gudang_id' => $produkPacking['produk_gudang_id'],
@@ -226,6 +240,40 @@ class ProdukMentahController extends BaseController
         ]);
 
         return redirect()->to('/admin/produk-mentah/' . '/pengemasan-produk/' . $produkPacking['produk_mentah_id'])->with('success', 'Stok produk pengemasan berhasil ditambahkan');
+    }
+
+    public function hapusPengemasanTambahStok($id)
+    {
+
+        $produkPacking = $this->productPackingModel
+            ->where('id', $id)
+            ->first();
+
+        if (!$produkPacking) {
+            return redirect()->to('/admin/produk-mentah')->with('error', 'Produk pengemasan tidak ditemukan');
+        }
+
+        $produkGudang = $this->produkGudangModel
+            ->where('id', $produkPacking['produk_gudang_id'])
+            ->first();
+        $produkMentah = $this->produkMentahModel
+            ->where('id', $produkPacking['produk_mentah_id'])
+            ->first();
+
+        if (!$produkGudang) {
+            return redirect()->to('/admin/produk-mentah')->with('error', 'Produk gudang tidak ditemukan');
+        }
+
+        if (!$produkMentah) {
+            return redirect()->to('/admin/produk-mentah')->with('error', 'Produk mentah tidak ditemukan');
+        }
+
+        $produkMentah['stok'] += intval($produkPacking['stok']);
+        $this->produkMentahModel->update($produkMentah['id'], $produkMentah);
+        $produkGudang['stok'] -= intval($produkPacking['stok']);
+        $this->produkGudangModel->update($produkGudang['id'], $produkGudang);
+        $this->productPackingModel->delete($id);
+        return redirect()->to('/admin/produk-mentah')->with('success', 'Produk pengemasan berhasil dihapus');
     }
 
 }

@@ -33,6 +33,7 @@ class PesananController extends BaseController
                 ->when($get('status_value') !== null, fn($query) => $query->where('pesanan.status_value', $get('status_value')))
                 ->when($get('start_date') !== null, fn($query) => $query->where('pesanan.created_at >=', $get('start_date')))
                 ->when($get('end_date') !== null, fn($query) => $query->where('pesanan.created_at <=', $get('end_date')))
+                ->when($get('kurir_id') !== null, fn($query) => $query->where('pesanan.kurir_id', $get('kurir_id')))
                 ->orderBy('pesanan.created_at', 'DESC')
                 ->paginate($get('rowPerPage') ?? 10);
 
@@ -51,10 +52,11 @@ class PesananController extends BaseController
     {
         try {
             $pesanan = $this->pesananModel
-                ->select('pesanan.*, users.nama as nama_user, users.id as user_id, toko.id as toko_id, toko.nama as nama_toko, kurir.id as kurir_id, kurir.nama as nama_kurir')
+                ->select('pesanan.*, users.nama as nama_user, users.id as user_id, toko.id as toko_id, toko.nama as nama_toko, kurir.id as kurir_id, kurir.nama as nama_kurir, pesanan_produk.id as pesanan_produk_id, pesanan_produk.nama as nama_pesanan_produk, pesanan_produk.jumlah as jumlah_pesanan_produk, pesanan_produk.harga as harga_pesanan_produk')
                 ->join('users', 'users.id = pesanan.user_id')
                 ->join('toko', 'toko.id = pesanan.toko_id')
                 ->join('kurir', 'kurir.id = pesanan.kurir_id')
+                ->join('pesanan_produk', 'pesanan_produk.id = pesanan.pesanan_produk_id')
                 ->where('pesanan.id', $id)
                 ->first();
             if (!$pesanan) {

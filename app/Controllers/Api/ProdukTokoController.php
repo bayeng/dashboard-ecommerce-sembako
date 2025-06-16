@@ -32,8 +32,8 @@ class ProdukTokoController extends BaseController
                 ->join('kategori', 'kategori.id = produk_toko.kategori_id')
                 ->join('toko', 'toko.id = produk_toko.toko_id')
                 ->when($get('nama') !== null, fn($query) => $query->like('produk_toko.nama', $get('nama')))
-                ->when($get('toko') !== null, fn($query) => $query->where('produk_toko.toko_id', $get('toko_id')))
-                ->when($get('kategori') !== null, fn($query) => $query->where('produk_toko.kategori_id', $get('kategori_id')))
+                ->when($get('toko_id') !== null, fn($query) => $query->where('produk_toko.toko_id', $get('toko_id')))
+                ->when($get('kategori_id') !== null, fn($query) => $query->where('produk_toko.kategori_id', $get('kategori_id')))
                 ->when($get('stok_ada') !== null, fn($query) => $query->where('produk_toko.stok', '>', 0))
                 ->when($get('stok_kosong') !== null, fn($query) => $query->where('produk_toko.stok', 0))
                 ->paginate($get('rowPerPage') ?? 10);
