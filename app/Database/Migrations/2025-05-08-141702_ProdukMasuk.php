@@ -17,6 +17,7 @@ class ProdukMasuk extends Migration
             'supplier_id' => [
                 'type' => 'INT',
                 'constraint' => 11,
+                'null' => true,
             ],
             'produk_gudang_id' => [
                 'type' => 'INT',

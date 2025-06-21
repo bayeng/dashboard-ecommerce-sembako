@@ -36,7 +36,7 @@ class ProductTransferController extends BaseController
             'produk_toko.*, produk_toko.id as id, produk_toko.kode as kode, produk_toko.nama as nama, produk_toko.foto as foto, produk_transfer.kuantiti as stok, produk_transfer.harga as harga'
         )->join('produk_transfer', 'produk_transfer.produk_toko_id = produk_toko.id')->where('produk_toko.toko_id', $id)->paginate(10);
 
-        $produkGudang = $this->produkGudangModel->findAll();
+        $produkGudang = $this->produkGudangModel->where('jenis_value', 2)->findAll();
 
         return view('pages/toko-detail/index', [
             'toko' => $toko,

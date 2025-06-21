@@ -1,7 +1,8 @@
 <form action="<?= site_url('/admin/produk-gudang/store'); ?>" method="POST" enctype="multipart/form-data">
     <?= csrf_field(); ?>
+    <input type="hidden" name="status" value="2">
+    <input type="hidden" name="produk_gudang_id" value="<?= $produkMentah['id'] ?>">
 
-    <input type="hidden" name="status" value="1">
     <div class="form-group">
         <label for="nama">Nama Produk</label>
         <input type="text" class="form-control" id="nama" name="nama" required>
@@ -24,7 +25,7 @@
 
     <div class="form-group">
         <label for="supplier_id">Supplier</label>
-        <select class="form-control" id="supplier_id" name="supplier_id" required>
+        <select class="form-control" id="supplier_id" name="supplier_id">
             <option value="">-- Pilih Supplier --</option>
             <?php foreach ($supplier as $s): ?>
                 <option value="<?= $s['id'] ?>"><?= $s['nama'] ?></option>

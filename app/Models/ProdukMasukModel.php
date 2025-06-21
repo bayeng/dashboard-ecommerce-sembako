@@ -12,7 +12,8 @@ class ProdukMasukModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = true;
     protected $protectFields    = false;
-    protected $allowedFields    = [];
+    protected $allowedFields    = [
+    ];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;

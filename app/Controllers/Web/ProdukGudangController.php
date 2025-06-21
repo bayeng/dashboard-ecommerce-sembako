@@ -112,16 +112,29 @@ class ProdukGudangController extends BaseController
             'foto' => $filename
         ]);
 
-        $this->produkMasukModel->insert([
-            'supplier_id' => $this->request->getPost('supplier_id'),
+        $produkMentah = [
             'produk_gudang_id' => $this->produkGudangModel->getInsertID(),
             'stok' => $this->request->getPost('stok'),
             'harga' => $this->request->getPost('harga'),
             'tanggal_masuk' => $this->request->getPost('tanggal_masuk'),
             'satuan_stok' => $this->request->getPost('satuan_stok'),
-        ]);
+        ];
 
-        return redirect()->to('/admin/produk-gudang')->with('success', 'Data ditambahkan.');
+        if ($this->request->getPost('supplier_id') != "") {
+            $produkMentah['supplier_id'] = $this->request->getPost('supplier_id');
+        } else {
+            $produkMentah['supplier_id'] = null;
+        }
+
+        $this->produkMasukModel->insert($produkMentah);
+
+        if ($this->request->getPost('status') == 1) {
+            return redirect()->to('/admin/produk-gudang')->with('success', 'Data ditambahkan.');
+        } else {
+            $produkGudang = $this->request->getPost('produk_gudang_id');
+
+            return redirect()->to('/admin/produk-mentah/pengemasan-produk/' . $produkGudang)->with('success', 'Data ditambahkan.')->with('success', 'Data ditambahkan.');
+        }
     }
 
 

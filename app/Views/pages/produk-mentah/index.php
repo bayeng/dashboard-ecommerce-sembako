@@ -53,47 +53,48 @@ Produk Mentah
                             <div class="table-responsive">
                                 <table class="table-striped table" id="sortable-table">
                                     <thead>
-                                    <tr>
-                                        <th class="text-center">No</th>
-                                        <th>Foto</th>
-                                        <th>Nama Produk</th>
-                                        <th>Nama Supplier</th>
-                                        <th>Kuantiti</th>
-                                        <th>Aksi</th>
-                                    </tr>
+                                        <tr>
+                                            <th class="text-center">No</th>
+                                            <th>Foto</th>
+                                            <th>Nama Produk</th>
+                                            <th>Nama Supplier</th>
+                                            <th>Kuantiti</th>
+                                            <th>Aksi</th>
+                                        </tr>
                                     </thead>
                                     <tbody>
-                                    <?php $no = 1; foreach ($produkMentah as $item): ?>
-                                        <tr>
-                                            <td class="text-center"><?= $no++ ?></td>
-                                            <td>
-                                                <?php if (!empty($item['foto'])): ?>
-                                                    <img src="<?= base_url('uploads/produk-mentah/' . $item['foto']) ?>" width="100px" height="100px" alt="">
-                                                <?php endif; ?>
-                                            </td>
-                                            <td><?= esc($item['nama']) ?></td>
-                                            <td><?= esc($item['nama_supplier']) ?></td>
-                                            <td><?= esc($item['stok']) ?> <?= esc($item['satuan_stok']) ?></td>
-                                            <td>
-                                                <a href="<?= base_url('/admin/produk-mentah/pengemasan-produk/' . $item['id']) ?>" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="Pengemasan Produk">Kemas</a>
-                                                <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-show-<?= $item['id'] ?>">
-                                                    <i class="fas fa-eye"></i>
-                                                </button>
-                                                <!-- Tombol untuk membuka modal edit -->
-                                                <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modal-edit-<?= $item['id'] ?>">
-                                                    <i class="fas fa-edit"></i>
-                                                </button>
-
-                                                <!-- Form untuk menghapus supplier -->
-                                                <form action="<?= site_url('/admin/produk-mentah/delete/' . $item['id']) ?>" method="POST" style="display:inline;" onsubmit="return confirm('Yakin ingin menghapus supplier ini?')">
-                                                    <?= csrf_field() ?>
-                                                    <button type="submit" class="btn btn-danger btn-sm">
-                                                        <i class="fas fa-trash"></i>
+                                        <?php $no = 1;
+                                        foreach ($produkMentah as $item): ?>
+                                            <tr>
+                                                <td class="text-center"><?= $no++ ?></td>
+                                                <td>
+                                                    <?php if (!empty($item['foto'])): ?>
+                                                        <img src="<?= base_url('uploads/produk-mentah/' . $item['foto']) ?>" width="100px" height="100px" alt="">
+                                                    <?php endif; ?>
+                                                </td>
+                                                <td><?= esc($item['nama']) ?></td>
+                                                <td><?= esc($item['nama_supplier']) ?></td>
+                                                <td><?= esc($item['stok']) ?> <?= esc($item['satuan_stok']) ?></td>
+                                                <td>
+                                                    <a href="<?= base_url('/admin/produk-mentah/pengemasan-produk/' . $item['id']) ?>" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="Pengemasan Produk">Kemas</a>
+                                                    <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-show-<?= $item['id'] ?>">
+                                                        <i class="fas fa-eye"></i>
                                                     </button>
-                                                </form>
-                                            </td>
-                                        </tr>
-                                    <?php endforeach; ?>
+                                                    <!-- Tombol untuk membuka modal edit -->
+                                                    <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modal-edit-<?= $item['id'] ?>">
+                                                        <i class="fas fa-edit"></i>
+                                                    </button>
+
+                                                    <!-- Form untuk menghapus supplier -->
+                                                    <form action="<?= site_url('/admin/produk-mentah/delete/' . $item['id']) ?>" method="POST" style="display:inline;" onsubmit="return confirm('Yakin ingin menghapus supplier ini?')">
+                                                        <?= csrf_field() ?>
+                                                        <button type="submit" class="btn btn-danger btn-sm">
+                                                            <i class="fas fa-trash"></i>
+                                                        </button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                        <?php endforeach; ?>
                                     </tbody>
                                 </table>
                             </div>
@@ -107,10 +108,11 @@ Produk Mentah
         </div>
     </section>
 </div>
+
 <?= view('components/modal', [
     'id' => 'modal-create',
     'title' => 'Tambah Produk Mentah',
-//        'size' => 'modal-lg', // opsional
+    //        'size' => 'modal-lg', // opsional
     'slot' => view('pages/produk-mentah/create-form', ['supplier' => $supplier])
 ]) ?>
 
@@ -133,4 +135,3 @@ Produk Mentah
 <?php endforeach; ?>
 
 <?= $this->endSection() ?>
-

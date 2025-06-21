@@ -3,6 +3,7 @@
 namespace App\Controllers\Web;
 
 use App\Controllers\BaseController;
+use App\Models\KategoriModel;
 use App\Models\ProdukGudangModel;
 use App\Models\ProdukMasukModel;
 use App\Models\ProdukMentahModel;
@@ -18,6 +19,7 @@ class ProdukMentahController extends BaseController
     protected $supllierModel;
     protected $productPackingModel;
     protected $produkGudangModel;
+    protected $kategoriModel;
 
     public function __construct()
     {
@@ -26,6 +28,7 @@ class ProdukMentahController extends BaseController
         $this->produkMasukModel = new ProdukMasukModel();
         $this->productPackingModel = new ProdukPackingModel();
         $this->produkGudangModel = new ProdukGudangModel();
+        $this->kategoriModel = new KategoriModel();
     }
 
     public function index()
@@ -44,10 +47,12 @@ class ProdukMentahController extends BaseController
             ->join('supplier', 'supplier.id = produk_gudang.supplier_id')
             ->paginate(10);
         $supplier = $this->supllierModel->findAll();
+        $kategori = $this->kategoriModel->findAll();
 //        dd($produkMentah);
         return view('pages/produk-mentah/index',[
             'produkMentah' => $produkMentah,
             'supplier' => $supplier,
+            'kategori' => $kategori,
             'pager' => $this->produkMentahModel->pager
         ]);
     }
@@ -165,10 +170,15 @@ class ProdukMentahController extends BaseController
             return redirect()->to('/admin/produk-mentah')->with('error', 'Produk mentah tidak ditemukan');
         }
 
+        $supplier = $this->supllierModel->findAll();
+        $kategori = $this->kategoriModel->findAll();
+
         return view('pages/produk-mentah/pengemasan-produk', [
             'produkMentah' => $produkMentah,
             'produkPacking' => $produkPacking,
             'produkGudang' => $produkGudang,
+            'supplier' => $supplier,
+            'kategori' => $kategori,
             'pager' => $this->productPackingModel->pager
         ]);
 

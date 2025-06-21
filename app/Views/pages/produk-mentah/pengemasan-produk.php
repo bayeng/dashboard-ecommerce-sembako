@@ -41,15 +41,20 @@ Pengemasan Produk
                         </div>
 
                         <div class="card-body">
-                            <div class="float-left">
+                            <div class="float-left d-flex justify-content-between w-100 mb-3">
                                 <form>
-                                    <div class="input-group mb-3">
+                                    <div class="input-group">
                                         <input type="text" class="form-control" placeholder="Search">
                                         <div class="input-group-append">
                                             <button class="btn btn-primary"><i class="fas fa-search"></i></button>
                                         </div>
                                     </div>
                                 </form>
+
+                                
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-create-gudang">
+                                    Pengemasan Baru
+                                </button>
                             </div>
                             <div class="table-responsive">
                                 <table class="table-striped table" id="sortable-table">
@@ -107,6 +112,14 @@ Pengemasan Produk
 //        'size' => 'modal-lg', // opsional
     'slot' => view('pages/produk-mentah/create-pengemasan', ['produkMentah' => $produkMentah, 'produkGudang' => $produkGudang])
 ]) ?>
+
+<?= view('components/modal', [
+    'id' => 'modal-create-gudang',
+    'title' => 'Tambah Produk Gudang',
+    //        'size' => 'modal-lg', // opsional
+    'slot' => view('pages/produk-mentah/create-form-gudang', ['supplier' => $supplier])
+]) ?>
+
 <!---->
 <?php //foreach ($produkMentah as $item): ?>
 <!--    --><?php //= view('components/modal', [
