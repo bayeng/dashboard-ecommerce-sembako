@@ -183,6 +183,40 @@ class ProdukMentahController extends BaseController
             'satuan_stok' => $this->request->getPost('satuan_stok'),
         ];
 
+        if (!$data['produk_gudang_id']) {
+            $foto = $this->request->getFile('foto');
+            $filename = $foto->getRandomName();
+            if (!is_dir('uploads/produk-gudang')) {
+                mkdir('uploads/produk-gudang', 0777, true);
+            }
+
+            if (!$foto->move('uploads/produk-gudang', $filename)) {
+                return redirect()->to('index')->with('error', 'Gagal mengunggah foto');
+            }
+
+            $produkGudang = $this->produkGudangModel->insert([
+                'nama' => $this->request->getPost('nama'),
+                'kode' => $this->request->getPost('kode'),
+                'harga' => $this->request->getPost('harga'),
+                'stok' => $this->request->getPost('stok'),
+                'jenis_value' => 2,
+                'satuan_stok' => $this->request->getPost('satuan_stok'),
+                'kategori_id' => $this->request->getPost('kategori_id'),
+                'foto' => $filename
+            ]);
+
+            $produkGudangId = $this->produkGudangModel->getInsertID();
+
+            $this->productPackingModel->insert([
+                'produk_mentah_id' => $data['produk_mentah_id'],
+                'produk_gudang_id' => $produkGudangId,
+                'stok' => $data['stok'],
+                'satuan_stok' => $data['satuan_stok'],
+            ]);
+
+            return redirect()->to('/admin/produk-mentah/' . '/pengemasan-produk/' . $data['produk_mentah_id'] )->with('success', 'Produk pengemasan berhasil ditambahkan');
+        }
+
         $cek = $this->productPackingModel
             ->where('produk_mentah_id', $data['produk_mentah_id'])
             ->where('produk_gudang_id', $data['produk_gudang_id'])
