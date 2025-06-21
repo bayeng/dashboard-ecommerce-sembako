@@ -16,7 +16,6 @@ class SupplierSeeder extends Seeder
                 'email' => 'makmur@supplier.com',
                 'bank' => 'BRI',
                 'no_rekening' => '1234567890',
-                'user_id' => 3
             ],
         ];
 
