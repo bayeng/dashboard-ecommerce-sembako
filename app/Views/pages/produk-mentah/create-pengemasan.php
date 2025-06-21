@@ -3,7 +3,7 @@
 
     <input type="text" hidden="hidden" name="produk_mentah_id" value="<?= $produkMentah['id'] ?>">
     <div class="form-group">
-        <label for="produk_gudang_id">Supplier</label>
+        <label for="produk_gudang_id">Produk Mentah</label>
         <select class="form-control" id="produk_gudang_id" name="produk_gudang_id" required>
             <option value="">-- Pilih Produk Gudang --</option>
             <?php foreach ($produkGudang as $item): ?>

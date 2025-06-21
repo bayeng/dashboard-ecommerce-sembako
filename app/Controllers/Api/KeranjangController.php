@@ -21,6 +21,7 @@ class KeranjangController extends BaseController
             $keranjang = $this->keranjangModel
                 ->select('keranjang.*, produk_toko.id as produk_id, produk_toko.nama as produk, produk_toko.harga as harga, produk_toko.foto as gambar, users.id as user_id, users.nama as nama_user')
                 ->join('produk_toko', 'produk_toko.id = keranjang.produk_toko_id')
+                ->join('users', 'users.id = keranjang.user_id')
                 ->where('keranjang.user_id', $get('user_id'))
                 ->paginate($get('rowPerPage') ?? 10);
 
@@ -57,12 +58,12 @@ class KeranjangController extends BaseController
     public function createKeranjangUser()
     {
         try {
-            $post = fn($key) => $this->request->getPost($key);
+            $data = $this->request->getJSON(true);
 
             $this->keranjangModel->insert([
-                'user_id' => $post('user_id'),
-                'produk_toko_id' => $post('produk_toko_id'),
-                'jumlah' => $post('jumlah')
+                'user_id' => $data['user_id'],
+                'produk_toko_id' => $data['produk_toko_id'],
+                'jumlah' => $data['jumlah']
             ]);
 
             return $this->response->setJSON([
