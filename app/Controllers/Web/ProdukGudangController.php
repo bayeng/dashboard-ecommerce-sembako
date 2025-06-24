@@ -7,6 +7,7 @@ use App\Models\KategoriModel;
 use App\Models\ProdukGudangModel;
 use App\Models\ProdukMasukModel;
 use App\Models\ProdukMentahModel;
+use App\Models\ProdukPackingModel;
 use App\Models\SupplierModel;
 use CodeIgniter\HTTP\ResponseInterface;
 
@@ -16,6 +17,7 @@ class ProdukGudangController extends BaseController
     protected $kategoriModel;
     protected $produkMasukModel;
     protected $supllierModel;
+    protected $productPackingModel;
 
 
     public function __construct()
@@ -24,6 +26,7 @@ class ProdukGudangController extends BaseController
         $this->kategoriModel = new KategoriModel();
         $this->produkMasukModel = new ProdukMasukModel();
         $this->supllierModel = new SupplierModel();
+        $this->productPackingModel = new ProdukPackingModel();
     }
 
 /* <<<<<<<<<<<<<<  ✨ Windsurf Command ⭐ >>>>>>>>>>>>>>>> */
@@ -101,7 +104,7 @@ class ProdukGudangController extends BaseController
             return redirect()->to('index')->with('error', 'Gagal mengunggah foto');
         }
 
-        $this->produkGudangModel->insert([
+        $newProdukGudang = $this->produkGudangModel->insert([
             'nama' => $this->request->getPost('nama'),
             'kode' => $this->request->getPost('kode'),
             'harga' => $this->request->getPost('harga'),
@@ -131,9 +134,14 @@ class ProdukGudangController extends BaseController
         if ($this->request->getPost('status') == 1) {
             return redirect()->to('/admin/produk-gudang')->with('success', 'Data ditambahkan.');
         } else {
-            $produkGudang = $this->request->getPost('produk_gudang_id');
-
-            return redirect()->to('/admin/produk-mentah/pengemasan-produk/' . $produkGudang)->with('success', 'Data ditambahkan.')->with('success', 'Data ditambahkan.');
+            $produkMentahId = $this->request->getPost('produk_gudang_id');
+            $this->productPackingModel->insert([
+                'produk_mentah_id' => $produkMentahId,
+                'produk_gudang_id' => $this->produkGudangModel->getInsertID(),
+                'stok' => $this->request->getPost('stok'),
+                'satuan_stok' => $this->request->getPost('satuan_stok'),
+            ]);
+            return redirect()->to('/admin/produk-mentah/pengemasan-produk/' . $produkMentahId)->with('success', 'Data ditambahkan.')->with('success', 'Data ditambahkan.');
         }
     }
 
