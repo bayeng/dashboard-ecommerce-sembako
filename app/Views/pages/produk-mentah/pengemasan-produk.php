@@ -64,7 +64,7 @@ Pengemasan Produk
                                         <th>Foto</th>
                                         <th>Nama Produk</th>
                                         <th>Stok</th>
-                                        <th>Aksi</th>
+                                        <th>Tanggal Pengemasan</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -78,19 +78,20 @@ Pengemasan Produk
                                             </td>
                                             <td><?= esc($item['nama_produk_gudang']) ?></td>
                                             <td><?= esc($item['stok']) ?> <?= esc($item['satuan_stok']) ?></td>
-                                            <td>
-                                                <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-add-<?= $item['id'] ?>">
-                                                    <i class="fas fa-cart-plus"></i>
-                                                </button>
-
-                                                <!-- Form untuk menghapus supplier -->
-                                                <form action="<?= site_url('/admin/produk-mentah/delete/' . $item['id']) ?>" method="POST" style="display:inline;" onsubmit="return confirm('Yakin ingin menghapus supplier ini?')">
-                                                    <?= csrf_field() ?>
-                                                    <button type="submit" class="btn btn-danger btn-sm">
-                                                        <i class="fas fa-trash"></i>
-                                                    </button>
-                                                </form>
-                                            </td>
+                                            <td><?= esc($item['created_at']) ?></td>
+<!--                                            <td>-->
+<!--                                                <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-add---><?php //= $item['id'] ?><!--">-->
+<!--                                                    <i class="fas fa-cart-plus"></i>-->
+<!--                                                </button>-->
+<!---->
+<!--                                                <!-- Form untuk menghapus supplier -->-->
+<!--                                                <form action="--><?php //= site_url('/admin/produk-mentah/delete/' . $item['id']) ?><!--" method="POST" style="display:inline;" onsubmit="return confirm('Yakin ingin menghapus supplier ini?')">-->
+<!--                                                    --><?php //= csrf_field() ?>
+<!--                                                    <button type="submit" class="btn btn-danger btn-sm">-->
+<!--                                                        <i class="fas fa-trash"></i>-->
+<!--                                                    </button>-->
+<!--                                                </form>-->
+<!--                                            </td>-->
                                         </tr>
                                     <?php endforeach; ?>
                                     </tbody>
