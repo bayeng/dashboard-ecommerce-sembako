@@ -12,22 +12,12 @@ class TokoSeeder extends Seeder
             [
                 'nama' => 'Toko 1',
                 'alamat' => 'Alamat Toko 1',
-                'foto' => 'toko1.jpg',
+                'foto' => 'toko-1.jpg',
             ],
             [
                 'nama' => 'Toko 2',
                 'alamat' => 'Alamat Toko 2',
-                'foto' => 'toko1.jpg',
-            ],
-            [
-                'nama' => 'Toko 3',
-                'alamat' => 'Alamat Toko 3',
-                'foto' => 'toko1.jpg',
-            ],
-            [
-                'nama' => 'Toko 4',
-                'alamat' => 'Alamat Toko 4',
-                'foto' => 'toko1.jpg',
+                'foto' => 'toko-2.jpg',
             ],
         ];
 

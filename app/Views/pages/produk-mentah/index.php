@@ -113,7 +113,7 @@ Produk Mentah
     'id' => 'modal-create',
     'title' => 'Tambah Produk Mentah',
     //        'size' => 'modal-lg', // opsional
-    'slot' => view('pages/produk-mentah/create-form', ['supplier' => $supplier])
+    'slot' => view('pages/produk-mentah/create-form', ['supplier' => $supplier, 'satuanStok' => $satuanStok])
 ]) ?>
 
 <?php foreach ($produkMentah as $item): ?>
@@ -121,7 +121,7 @@ Produk Mentah
         'id' => 'modal-edit-' . $item['id'],
         'title' => 'Edit Produk Mentah',
         'size' => 'modal-lg',
-        'slot' => view('pages/produk-mentah/edit-form', ['kategori' => $item, 'supplier' => $supplier])
+        'slot' => view('pages/produk-mentah/edit-form', ['kategori' => $item, 'supplier' => $supplier, 'satuanStok' => $satuanStok])
     ]) ?>
 <?php endforeach; ?>
 
@@ -130,7 +130,7 @@ Produk Mentah
         'id' => 'modal-show-' . $item['id'],
         'title' => 'detail Produk Mentah',
         'size' => 'modal-lg',
-        'slot' => view('pages/produk-mentah/show', ['item' => $item, 'supplier' => $supplier])
+        'slot' => view('pages/produk-mentah/show', ['item' => $item, 'supplier' => $supplier, 'satuanStok' => $satuanStok])
     ]) ?>
 <?php endforeach; ?>
 

@@ -54,9 +54,14 @@
             <input type="text" class="form-control" id="stok" name="stok" required>
         </div>
 
-        <div class="form-group col-md-6">
-            <label for="satuan_stok">Satuan Stok</label>
-            <input type="text" class="form-control" id="satuan_stok" name="satuan_stok" required>
+        <div class="form-group">
+            <label for="supplier_id">Supplier</label>
+            <select class="form-control" id="supplier_id" name="supplier_id">
+                <option value="">-- Pilih Satuan --</option>
+                <?php foreach ($satuanStok as $ss): ?>
+                    <option value="<?= $ss['nama'] ?>"><?= $ss['nama'] ?></option>
+                <?php endforeach; ?>
+            </select>
         </div>
     </div>
 

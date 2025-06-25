@@ -6,8 +6,9 @@ use App\Controllers\BaseController;
 use App\Models\KategoriModel;
 use App\Models\ProdukGudangModel;
 use App\Models\ProdukMasukModel;
-use App\Models\ProdukMentahModel;
+
 use App\Models\ProdukPackingModel;
+use App\Models\SatuanStokModel;
 use App\Models\SupplierModel;
 use CodeIgniter\HTTP\ResponseInterface;
 
@@ -18,6 +19,7 @@ class ProdukGudangController extends BaseController
     protected $produkMasukModel;
     protected $supllierModel;
     protected $productPackingModel;
+    protected $satuanStokModel;
 
 
     public function __construct()
@@ -27,20 +29,10 @@ class ProdukGudangController extends BaseController
         $this->produkMasukModel = new ProdukMasukModel();
         $this->supllierModel = new SupplierModel();
         $this->productPackingModel = new ProdukPackingModel();
+        $this->satuanStokModel = new SatuanStokModel();
     }
 
-/* <<<<<<<<<<<<<<  ✨ Windsurf Command ⭐ >>>>>>>>>>>>>>>> */
-    /**
-     * Display a paginated list of warehouse products along with related raw products and categories.
-     *
-     * This method retrieves warehouse products from the ProdukGudangModel, including associated
-     * category information. It also fetches all raw products and categories, and returns a view
-     * displaying this information with pagination.
-     *
-     * @return string The rendered view of the warehouse products page.
-     */
 
-/* <<<<<<<<<<  fd065c5c-5154-4abb-b56c-5deee7bf0f48  >>>>>>>>>>> */
     public function index()
     {
         $keyword = $this->request->getGet('keyword');
@@ -81,11 +73,14 @@ class ProdukGudangController extends BaseController
 
         $kategori = $this->kategoriModel->findAll();
 
+        $satuanStok = $this->satuanStokModel->findAll();
+
         return view('pages/produk-gudang/index', [
             'produkMentah' => $produkMentah,
             'produkGudang' => $produkGudang,
             'kategori' => $kategori,
             'supplier' => $supplier,
+            'satuanStok' => $satuanStok,
             'pager' => $this->produkGudangModel->pager,
             'keyword' => $keyword,
         ]);

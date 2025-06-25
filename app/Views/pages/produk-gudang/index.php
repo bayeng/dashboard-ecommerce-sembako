@@ -120,7 +120,7 @@ Produk Gudang
     'id' => 'modal-create',
     'title' => 'Tambah Produk Gudang',
 //        'size' => 'modal-lg', // opsional
-    'slot' => view('pages/produk-gudang/create-form', ['produkMentah' => $produkMentah, 'kategori' => $kategori])
+    'slot' => view('pages/produk-gudang/create-form', ['produkMentah' => $produkMentah, 'kategori' => $kategori, 'satuanStok' => $satuanStok])
 ]) ?>
 
 <?php foreach ($produkGudang as $item): ?>
@@ -128,7 +128,7 @@ Produk Gudang
         'id' => 'modal-edit-' . $item['id'],
         'title' => 'Edit Produk Gudang',
         'size' => 'modal-lg',
-        'slot' => view('pages/produk-gudang/edit-form', ['item' => $item, 'produkMentah' => $produkMentah])
+        'slot' => view('pages/produk-gudang/edit-form', ['item' => $item, 'produkMentah' => $produkMentah, 'satuanStok' => $satuanStok])
     ]) ?>
 <?php endforeach; ?>
 

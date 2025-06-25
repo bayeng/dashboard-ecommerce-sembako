@@ -8,6 +8,7 @@ use App\Models\ProdukGudangModel;
 use App\Models\ProdukMasukModel;
 use App\Models\ProdukMentahModel;
 use App\Models\ProdukPackingModel;
+use App\Models\SatuanStokModel;
 use App\Models\SupplierModel;
 use CodeIgniter\HTTP\ResponseInterface;
 
@@ -20,6 +21,7 @@ class ProdukMentahController extends BaseController
     protected $productPackingModel;
     protected $produkGudangModel;
     protected $kategoriModel;
+    protected $satuanStokModel;
 
     public function __construct()
     {
@@ -29,6 +31,7 @@ class ProdukMentahController extends BaseController
         $this->productPackingModel = new ProdukPackingModel();
         $this->produkGudangModel = new ProdukGudangModel();
         $this->kategoriModel = new KategoriModel();
+        $this->satuanStokModel = new SatuanStokModel();
     }
 
     public function index()
@@ -48,11 +51,13 @@ class ProdukMentahController extends BaseController
             ->paginate(10);
         $supplier = $this->supllierModel->findAll();
         $kategori = $this->kategoriModel->findAll();
+        $satuanStok = $this->satuanStokModel->findAll();
 //        dd($produkMentah);
         return view('pages/produk-mentah/index',[
             'produkMentah' => $produkMentah,
             'supplier' => $supplier,
             'kategori' => $kategori,
+            'satuanStok' => $satuanStok,
             'pager' => $this->produkMentahModel->pager
         ]);
     }

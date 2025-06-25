@@ -3,6 +3,7 @@
 namespace App\Controllers\Web;
 
 use App\Controllers\BaseController;
+use App\Models\SatuanStokModel;
 use CodeIgniter\HTTP\ResponseInterface;
 use App\Models\ProdukTokoModel;
 use App\Models\KategoriModel;
@@ -13,12 +14,14 @@ class ProdukTokoController extends BaseController
     protected $produkTokoModel;
     protected $kategoriModel;
     protected $produkGudangModel;
+    protected $satuanStokModel;
 
     public function __construct()
     {
         $this->produkTokoModel = new ProdukTokoModel();
         $this->kategoriModel = new KategoriModel();
         $this->produkGudangModel = new ProdukGudangModel();
+        $this->satuanStokModel = new SatuanStokModel();
     }
 
     public function index()
@@ -33,12 +36,15 @@ class ProdukTokoController extends BaseController
             ->paginate(25);
         $kategoris = $this->kategoriModel->findAll();
         $produkGudangs = $this->produkGudangModel->where('jenis_value', 2)->findAll();
+        $satuanStok = $this->satuanStokModel->findAll();
+
         $data = [
             'title' => 'Produk Toko',
             'pager' => $this->produkTokoModel->pager,
             'produks' => $produks,
+            'produkGudangs' => $produkGudangs,
             'kategoris' => $kategoris,
-            'produkGudangs' => $produkGudangs
+            'satuanStok' => $satuanStok,
         ];
 
         return view('pages/produk/index', $data);

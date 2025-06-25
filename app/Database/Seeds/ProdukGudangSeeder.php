@@ -10,7 +10,7 @@ class ProdukGudangSeeder extends Seeder
     {
         $data = [];
 
-        for ($i = 1; $i <= 10; $i++) {
+        for ($i = 1; $i <= 2; $i++) {
             $data[] = [
                 'nama'         => 'Produk ' . $i,
                 'kode'         => 'PRD' . str_pad($i, 4, '0', STR_PAD_LEFT),

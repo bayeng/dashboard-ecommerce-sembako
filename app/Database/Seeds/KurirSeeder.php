@@ -19,8 +19,8 @@ class KurirSeeder extends Seeder
               'toko_id' => 1
           ],
             [
-                'nama' => 'JNE',
-                'foto' => 'jne.jpg',
+                'nama' => 'JNT',
+                'foto' => 'jnt.jpg',
                 'no_hp' => '081234567890',
                 'alamat' => 'Jl. Kemerdekaan No.10, Jakarta',
                 'kontak_person' => 'John Doe',
