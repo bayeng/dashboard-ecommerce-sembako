@@ -177,11 +177,13 @@ class ProdukMentahController extends BaseController
 
         $supplier = $this->supllierModel->findAll();
         $kategori = $this->kategoriModel->findAll();
+        $satuanStok = $this->satuanStokModel->findAll();
 
         return view('pages/produk-mentah/pengemasan-produk', [
             'produkMentah' => $produkMentah,
             'produkPacking' => $produkPacking,
             'produkGudang' => $produkGudang,
+            'satuanStok' => $satuanStok,
             'supplier' => $supplier,
             'kategori' => $kategori,
             'pager' => $this->productPackingModel->pager

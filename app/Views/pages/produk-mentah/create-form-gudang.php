@@ -55,8 +55,8 @@
         </div>
 
         <div class="form-group">
-            <label for="supplier_id">Supplier</label>
-            <select class="form-control" id="supplier_id" name="supplier_id">
+            <label for="satuan_stok">Supplier</label>
+            <select class="form-control" id="satuan_stok" name="satuan_stok">
                 <option value="">-- Pilih Satuan --</option>
                 <?php foreach ($satuanStok as $ss): ?>
                     <option value="<?= $ss['nama'] ?>"><?= $ss['nama'] ?></option>
