@@ -80,6 +80,12 @@ $routes->group('', ['namespace' => 'App\Controllers\Web', 'filter' => 'auth'], f
         $routes->put('produk-gudang/update/(:num)', 'ProdukGudangController::update/$1');
         $routes->post('produk-gudang/delete/(:num)', 'ProdukGudangController::delete/$1');
 
+        // Pengemesan Stok
+        $routes->get('pengemasan-stok', 'ProductTransferController::showPengemasanStok');
+        $routes->post('pengemasan-stok', 'ProductTransferController::createPengemasanStok');
+//        $routes->put('pengemasan-stok/update/(:num)', 'ProductTransferController::update/$1');
+        $routes->post('pengemasan-stok/(:num)', 'ProductTransferController::deletePengemasanStok/$1');
+
         // Kategori
         $routes->get('kategori', 'KategoriController::index');
 

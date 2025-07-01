@@ -14,6 +14,7 @@
                     <a href="#" class="nav-link has-dropdown"><i class="fa fa-box"></i> <span>Produk</span></a></a>
                     <ul class="dropdown-menu">
                         <li class="nav"><a class="nav-link" href="/admin/produk-gudang"><i class="fa fa-box"></i> <span>Produk</span></a></li>
+                        <li class="nav"><a class="nav-link" href="/admin/pengemasan-stok"><i class="fa fa-box"></i> <span>Pengemasan Stok</span></a></li>
                         <li class="nav"><a class="nav-link" href="/admin/kategori"><i class="fa fa-tag"></i> <span>Kategori</span></a></li>
                     </ul>
                 </li>

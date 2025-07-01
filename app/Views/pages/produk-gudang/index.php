@@ -57,8 +57,10 @@ Produk Gudang
                                         </div>
                                     </div>
                                 </form>
-
-                                <a href="/admin/produk-mentah" class="btn btn-primary">Produk Mentah</a>
+                                <div>
+                                    <a href="/admin/produk-mentah" class="btn btn-primary">Pengemasan Stok</a>
+                                    <a href="/admin/produk-mentah" class="btn btn-primary">Produk Mentah</a>
+                                </div>
                             </div>
                             <div class="table-responsive">
                                 <table class="table-striped table" id="sortable-table">

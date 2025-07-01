@@ -8,8 +8,10 @@ use App\Models\ProdukGudangModel;
 use App\Models\ProdukMasukModel;
 
 use App\Models\ProdukPackingModel;
+use App\Models\ProdukTransferModel;
 use App\Models\SatuanStokModel;
 use App\Models\SupplierModel;
+use App\Models\TokoModel;
 use CodeIgniter\HTTP\ResponseInterface;
 
 class ProdukGudangController extends BaseController
@@ -20,6 +22,8 @@ class ProdukGudangController extends BaseController
     protected $supllierModel;
     protected $productPackingModel;
     protected $satuanStokModel;
+    protected $produkTransferModel;
+    protected $tokoModel;
 
 
     public function __construct()
@@ -30,6 +34,8 @@ class ProdukGudangController extends BaseController
         $this->supllierModel = new SupplierModel();
         $this->productPackingModel = new ProdukPackingModel();
         $this->satuanStokModel = new SatuanStokModel();
+        $this->produkTransferModel = new ProdukTransferModel();
+        $this->tokoModel = new TokoModel();
     }
 
 
@@ -201,4 +207,5 @@ class ProdukGudangController extends BaseController
 
         return redirect()->to('/admin/produk-gudang')->with('success', 'Data berhasil dihapus');
     }
+
 }

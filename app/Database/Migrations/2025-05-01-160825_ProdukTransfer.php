@@ -22,6 +22,15 @@ class ProdukTransfer extends Migration
                 'type' => 'FLOAT',
                 'constraint' => 11,
             ],
+            'toko_id' => [
+                'type' => 'INT',
+                'null' => true,
+            ],
+            'status' => [
+                'type' => 'VARCHAR',
+                'null' => true,
+                'constraint' => '10',
+            ],
             'produk_gudang_id' => [
                 'type' => 'INT',
                 'null' => true,

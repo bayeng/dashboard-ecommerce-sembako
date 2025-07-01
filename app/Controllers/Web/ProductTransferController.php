@@ -67,6 +67,26 @@ class ProductTransferController extends BaseController
             $kategori_id = $produkGudang['kategori_id'];
             $foto = $produkGudang['foto'];
 
+            if ($foto) {
+                // Ambil nama file dari path lama
+                $oldPath = FCPATH . 'uploads/produk-gudang/' .$foto; // misalnya: 'uploads/produk_gudang/xxx.jpg'
+                $filename = basename($foto);
+                $newPath = FCPATH . 'uploads/produk/' . $filename;
+
+                // Pastikan file sumber ada dan belum ada di tujuan
+                if (file_exists($oldPath)) {
+                    if (!file_exists($newPath)) {
+                        copy($oldPath, $newPath);
+                    }
+                    $foto = $filename;
+                } else {
+                    // Jika file tidak ditemukan
+                    $foto = null;
+                }
+            } else {
+                $foto = null;
+            }
+
             $produkIn = $this->produkTokoModel->insert([
                 'kode' => $kode,
                 'nama' => $nama,
@@ -89,6 +109,8 @@ class ProductTransferController extends BaseController
                     'produk_gudang_id' => $produk_gudang_id,
                     'produk_toko_id' => $produkId,
                     'kuantiti' => $stokIn,
+                    'toko_id' => $toko_id,
+                    'status_transfer' => 'SELESAI',
                     'harga' => $harga
                 ]);
             }
@@ -142,5 +164,54 @@ class ProductTransferController extends BaseController
         $this->produkTokoModel->delete($id);
 
         return redirect()->to('/admin/detail-toko/' . $tokoId)->with('success', 'Produk berhasil dihapus');
+    }
+
+    public function showPengemasanStok()
+    {
+        $produkGudang = $this->produkGudangModel
+            ->where('jenis_value', 2)
+            ->findAll();
+        $dataPengemasanStok = $this->produkTransferModel->select('produk_transfer.*, produk_gudang.satuan_stok as satuan_stok, produk_gudang.nama as nama_produk_gudang, produk_gudang.foto as foto, toko.nama as toko')
+            ->join('produk_gudang', 'produk_gudang.id = produk_transfer.produk_gudang_id', 'left')
+            ->join('toko', 'toko.id = produk_transfer.toko_id', 'left')
+            ->orderBy('produk_transfer.created_at', 'DESC')
+            ->paginate();
+        $toko = $this->tokoModel->findAll();
+
+        return view('pages/produk-gudang/pengemasan-stok', [
+            'produkGudang' => $produkGudang,
+            'dataPengemasanStok' => $dataPengemasanStok,
+            'toko' => $toko,
+            'pager' => $this->produkTransferModel->pager
+        ]);
+    }
+
+    public function showCreatePengemasanStok()
+    {
+        $produkGudang = $this->produkGudangModel->findAll();
+        $toko = $this->tokoModel->findAll();
+
+        return view('pages/produk-gudang/create', [
+            'produkGudang' => $produkGudang,
+            'toko' => $toko,
+        ]);
+    }
+
+    public function createPengemasanStok()
+    {
+        $this->produkTransferModel->insert([
+            'produk_gudang_id' => intval($this->request->getPost('produk_gudang_id')),
+            'toko_id' => intval($this->request->getPost('toko_id')),
+            'kuantiti' => intval($this->request->getPost('stok')),
+            'status' => 'BELUM',
+        ]);
+        return redirect()->to('/admin/pengemasan-stok')->with('success', 'Data pengemasan berhasil ditambahkan');
+    }
+
+
+    public function deletePengemasanStok($id)
+    {
+        $this->produkTransferModel->delete($id);
+        return redirect()->to('/pengemasan')->with('success', 'Data pengemasan berhasil dihapus');
     }
 }

@@ -11,7 +11,7 @@ class ProdukTransferModel extends Model
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
-    protected $protectFields    = true;
+    protected $protectFields    = false;
     protected $allowedFields    = [
         'kuantiti', 'harga', 'produk_gudang_id', 'produk_toko_id'
     ];
@@ -23,7 +23,7 @@ class ProdukTransferModel extends Model
     protected array $castHandlers = [];
 
     // Dates
-    protected $useTimestamps = false;
+    protected $useTimestamps = true;
     protected $dateFormat    = 'datetime';
     protected $createdField  = 'created_at';
     protected $updatedField  = 'updated_at';
