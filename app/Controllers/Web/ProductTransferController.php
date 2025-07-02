@@ -29,14 +29,26 @@ class ProductTransferController extends BaseController
         $keyword = $this->request->getGet('keyword');
         $toko = $this->tokoModel->find($id);
         $produkToko = $this->produkTokoModel
-        ->when($keyword, function ($query) use ($keyword) {
+            ->when($keyword, function ($query) use ($keyword) {
             $query->like('produk_toko.nama', $keyword);
         })
         ->select(
-            'produk_toko.*, produk_toko.id as id, produk_toko.kode as kode, produk_toko.nama as nama, produk_toko.foto as foto, produk_transfer.kuantiti as stok, produk_transfer.harga as harga'
-        )->join('produk_transfer', 'produk_transfer.produk_toko_id = produk_toko.id')->where('produk_toko.toko_id', $id)->paginate(10);
+            'produk_toko.*, produk_toko.id as id, produk_toko.kode as kode, produk_toko.nama as nama, 
+            produk_toko.foto as foto, produk_transfer.kuantiti as kuantiti_produk_transfer, produk_transfer.harga as harga_produk_transfer'
+        )->join('produk_transfer', 'produk_transfer.produk_toko_id = produk_toko.id', 'left')
+            ->where('produk_toko.toko_id', $id)->paginate(10);
 
         $produkGudang = $this->produkGudangModel->where('jenis_value', 2)->findAll();
+//        $produkTransfers = $this->produkTransferModel
+//            ->where('toko_id', $id)
+//            ->where('status_transfer', 'SUDAH')
+//            ->select('produk_transfer.*, produk_gudang.satuan_stok as satuan_stok, produk_gudang.nama as nama_produk_gudang, produk_gudang.foto as foto')
+//            ->join('produk_gudang', 'produk_gudang.id = produk_transfer.produk_gudang_id', 'left')
+//            ->join('produk_toko', 'produk_toko.id = produk_transfer.produk_toko_id', 'left')
+//            ->orderBy('produk_transfer.created_at', 'DESC')
+//            ->findAll();
+
+
 
         return view('pages/toko-detail/index', [
             'toko' => $toko,
@@ -116,6 +128,75 @@ class ProductTransferController extends BaseController
             }
         }
         return redirect()->to('/admin/detail-toko/' . $toko_id)->with('success', 'Produk berhasil ditambahkan');
+    }
+
+    public function transferToStore()
+    {
+        $toko_id = $this->request->getPost('toko_id');
+        $productTransfers = $this->produkTransferModel
+            ->select('
+                produk_transfer.*, produk_gudang.nama as nama_produk_gudang, 
+                produk_gudang.foto as produk_gudang_foto, produk_gudang.stok as stok_produk_gudang,
+                produk_gudang.kode as kode_produk_gudang, produk_gudang.harga as harga_produk_gudang,
+                produk_gudang.kategori_id as kategori_id_produk_gudang 
+            ')
+            ->join('produk_gudang', 'produk_gudang.id = produk_transfer.produk_gudang_id', 'left')
+            ->where('produk_transfer.toko_id', $toko_id)
+            ->where('produk_transfer.status', 'BELUM')
+            ->findAll();
+
+        if (count($productTransfers) == 0) {
+            return redirect()->to('/admin/detail-toko/' . $toko_id)->with('error', 'Tidak ada data produk yang di transfer');
+        }
+
+        foreach ($productTransfers as $productTransfer) {
+            $cekProdukToko = $this->produkTokoModel->where('kode', $productTransfer['kode_produk_gudang'])->first();
+
+            if ($cekProdukToko != null) {
+                $this->produkTokoModel->update($cekProdukToko['id'], [
+                    'stok' => $cekProdukToko['stok'] + $productTransfer['kuantiti']
+                ]);
+            } else {
+                if ($productTransfer['produk_gudang_foto']) {
+                    // Ambil nama file dari path lama
+                    $oldPath = FCPATH . 'uploads/produk-gudang/' . $productTransfer['produk_gudang_foto']; // misalnya: 'uploads/produk_gudang/xxx.jpg'
+                    $filename = basename($productTransfer['produk_gudang_foto']);
+                    $newPath = FCPATH . 'uploads/produk/' . $filename;
+
+                    // Pastikan file sumber ada dan belum ada di tujuan
+                    if (file_exists($oldPath)) {
+                        if (!file_exists($newPath)) {
+                            copy($oldPath, $newPath);
+                        }
+                        $productTransfer['produk_gudang_foto'] = $filename;
+                    } else {
+                        // Jika file tidak ditemukan
+                        $productTransfer['produk_gudang_foto'] = null;
+                    }
+                }
+                $produkIn = $this->produkTokoModel->insert([
+                    'kode' => $productTransfer['kode_produk_gudang'],
+                    'nama' => $productTransfer['nama_produk_gudang'],
+                    'harga' => $productTransfer['harga_produk_gudang'],
+                    'stok' => $productTransfer['kuantiti'],
+                    'deskripsi' => "",
+                    'kategori_id' => $productTransfer['kategori_id_produk_gudang'],
+                    'toko_id' => $toko_id,
+                    'foto' => $productTransfer['produk_gudang_foto']
+                ]);
+
+                if ($produkIn) {
+                    $produkId = $this->produkTokoModel->insertID();
+                    $this->produkGudangModel->update($productTransfer['produk_gudang_id'], [
+                        'stok' => ((int) $productTransfer['stok_produk_gudang']) - $productTransfer['kuantiti']
+                    ]);
+                    $this->produkTransferModel->update($productTransfer['id'], [
+                        'produk_toko_id' => $produkId,
+                        'status' => 'SELESAI'
+                    ]);
+                }
+            }
+        }
     }
 
     public function update($id = null)

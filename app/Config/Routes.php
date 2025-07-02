@@ -40,7 +40,7 @@ $routes->group('', ['namespace' => 'App\Controllers\Web', 'filter' => 'auth'], f
 
         $routes->group('detail-toko', function ($routes) {
             $routes->get('(:num)', 'ProductTransferController::show/$1');
-            $routes->post('store', 'ProductTransferController::store');
+            $routes->post('store', 'ProductTransferController::transferToStore');
             $routes->put('update/(:num)', 'ProductTransferController::update/$1');
             $routes->post('delete/(:num)', 'ProductTransferController::delete/$1');
         });

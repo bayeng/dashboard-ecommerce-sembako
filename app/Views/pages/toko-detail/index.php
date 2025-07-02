@@ -36,12 +36,14 @@ Toko
                         <div class="card-header">
                             <h4>List Produk</h4>
                             <div class="card-header-action">
-                                <form>
+                                <form action="<?= site_url('/admin/detail-toko/store'); ?>" method="POST" enctype="multipart/form-data">
+                                    <?= csrf_field(); ?>
+                                    <input type="hidden" value="<?= $toko['id']; ?>" name="toko_id">
                                     <div class="input-group">
                                         <div class="input-group-btn">
                                             <!-- Tombol untuk membuka modal -->
-                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-create">
-                                                Tambah
+                                            <button type="submit" class="btn btn-primary">
+                                                Tambahkan Stok
                                             </button>
                                         </div>
                                     </div>
@@ -70,7 +72,7 @@ Toko
                                             <th>QTY</th>
                                             <th>Harga Terakhir</th>
                                             <th>Foto</th>
-                                            <th>Aksi</th>
+<!--                                            <th>Aksi</th>-->
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -85,19 +87,19 @@ Toko
                                                 <td>
                                                     <img src="<?= base_url('uploads/produk/' . $toko['foto']) ?>" alt="" style="width: 50px; height: 50px; object-fit: cover;">
                                                 </td>
-                                                <td>
-                                                    <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-edit-<?= $toko['id'] ?>">
-                                                        <i class="fas fa-plus"></i>
-                                                    </button>
-
-                                                    <!-- Form untuk menghapus supplier -->
-                                                    <form action="<?= site_url('/admin/detail-toko/delete/' . $toko['id']) ?>" method="POST" style="display:inline;" onsubmit="return confirm('Yakin ingin menghapus toko ini?')">
-                                                        <?= csrf_field() ?>
-                                                        <button type="submit" class="btn btn-danger btn-sm">
-                                                            <i class="fas fa-trash"></i>
-                                                        </button>
-                                                    </form>
-                                                </td>
+<!--                                                <td>-->
+<!--                                                    <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-edit---><?php //= $toko['id'] ?><!--">-->
+<!--                                                        <i class="fas fa-plus"></i>-->
+<!--                                                    </button>-->
+<!---->
+<!--                                                    <!-- Form untuk menghapus supplier -->-->
+<!--                                                    <form action="--><?php //= site_url('/admin/detail-toko/delete/' . $toko['id']) ?><!--" method="POST" style="display:inline;" onsubmit="return confirm('Yakin ingin menghapus toko ini?')">-->
+<!--                                                        --><?php //= csrf_field() ?>
+<!--                                                        <button type="submit" class="btn btn-danger btn-sm">-->
+<!--                                                            <i class="fas fa-trash"></i>-->
+<!--                                                        </button>-->
+<!--                                                    </form>-->
+<!--                                                </td>-->
                                             </tr>
                                         <?php endforeach; ?>
                                     </tbody>
@@ -114,11 +116,11 @@ Toko
     </section>
 </div>
 
-<?= view('components/modal', [
-    'id' => 'modal-create',
-    'title' => 'Tambah Produk',
-    'slot' => view('pages/toko-detail/form-create')
-]) ?>
+<?php //= view('components/modal', [
+//    'id' => 'modal-create',
+//    'title' => 'Tambah Produk',
+//    'slot' => view('pages/toko-detail/form-create')
+//]) ?>
 
 <?php foreach ($produkToko as $toko): ?>
     <?= view('components/modal', [
