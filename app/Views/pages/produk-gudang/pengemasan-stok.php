@@ -12,10 +12,9 @@ Pengemasan Produk
 <div class="main-content">
     <section class="section">
         <div class="section-header">
-            <h1>Pengemasan Produk Mentah</h1>
+            <h1>Pengemasan Stok Produk</h1>
             <div class="section-header-breadcrumb">
                 <div class="breadcrumb-item"><a href="#">Dashboard</a></div>
-                <div class="breadcrumb-item"><a href="#">Produk Mentah</a></div>
                 <div class="breadcrumb-item active font-weight-bold"><a href="#">Pengemasan Produk</a></div>
             </div>
         </div>

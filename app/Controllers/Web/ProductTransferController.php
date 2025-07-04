@@ -194,6 +194,7 @@ class ProductTransferController extends BaseController
                         'produk_toko_id' => $produkId,
                         'status' => 'SELESAI'
                     ]);
+                    return redirect()->to('/admin/detail-toko/' . $toko_id)->with('success', 'Produk berhasil Dikirim');
                 }
             }
         }
