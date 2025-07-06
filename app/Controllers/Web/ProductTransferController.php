@@ -132,6 +132,7 @@ class ProductTransferController extends BaseController
 
     public function transferToStore()
     {
+
         $toko_id = $this->request->getPost('toko_id');
         $productTransfers = $this->produkTransferModel
             ->select('
@@ -185,19 +186,9 @@ class ProductTransferController extends BaseController
                     'foto' => $productTransfer['produk_gudang_foto']
                 ]);
 
-                if ($produkIn) {
-                    $produkId = $this->produkTokoModel->insertID();
-                    $this->produkGudangModel->update($productTransfer['produk_gudang_id'], [
-                        'stok' => ((int) $productTransfer['stok_produk_gudang']) - $productTransfer['kuantiti']
-                    ]);
-                    $this->produkTransferModel->update($productTransfer['id'], [
-                        'produk_toko_id' => $produkId,
-                        'status' => 'SELESAI'
-                    ]);
-                    return redirect()->to('/admin/detail-toko/' . $toko_id)->with('success', 'Produk berhasil Dikirim');
-                }
             }
         }
+        return redirect()->to('/admin/detail-toko/' . $toko_id)->with('success', 'Produk berhasil Dikirim');
     }
 
     public function update($id = null)
@@ -281,12 +272,21 @@ class ProductTransferController extends BaseController
 
     public function createPengemasanStok()
     {
+        $produkGudang = $this->produkGudangModel->find($this->request->getPost('produk_gudang_id'));
+        if ($produkGudang['stok'] < $this->request->getPost('stok')) {
+            return redirect()->to('/admin/pengemasan-stok')->with('error', 'Stok produk tidak mencukupi');
+        }
+        $this->produkGudangModel->update($produkGudang['id'], [
+            'stok' => $produkGudang['stok'] - $this->request->getPost('stok')
+        ]);
+
         $this->produkTransferModel->insert([
             'produk_gudang_id' => intval($this->request->getPost('produk_gudang_id')),
             'toko_id' => intval($this->request->getPost('toko_id')),
             'kuantiti' => intval($this->request->getPost('stok')),
             'status' => 'BELUM',
         ]);
+
         return redirect()->to('/admin/pengemasan-stok')->with('success', 'Data pengemasan berhasil ditambahkan');
     }
 

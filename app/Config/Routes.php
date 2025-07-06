@@ -156,4 +156,9 @@ $routes->group('api', ['namespace' => 'App\Controllers\Api'], function ($routes)
         $routes->put('(:num)', 'PesananController::updateStatusPesanan/$1');
         $routes->post('delete/(:num)', 'PesananController::deletePesanan/$1');
     });
+
+    $routes->group('resep', function ($routes) {
+        $routes->get('', 'ResepController::getResepByFilters');
+        $routes->get('(:num)', 'ResepController::getResepById/$1');
+    });
 });
