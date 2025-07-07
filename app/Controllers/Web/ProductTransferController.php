@@ -157,6 +157,12 @@ class ProductTransferController extends BaseController
                 $this->produkTokoModel->update($cekProdukToko['id'], [
                     'stok' => $cekProdukToko['stok'] + $productTransfer['kuantiti']
                 ]);
+
+                $this->produkTransferModel->update($productTransfer['id'], [
+                    'produk_toko_id' => $cekProdukToko['id'],
+                    'status' => 'SELESAI'
+                ]);
+
             } else {
                 if ($productTransfer['produk_gudang_foto']) {
                     // Ambil nama file dari path lama
@@ -186,14 +192,14 @@ class ProductTransferController extends BaseController
                     'foto' => $productTransfer['produk_gudang_foto']
                 ]);
 
+                if ($produkIn) {
+                    $produkId = $this->produkTokoModel->insertID();
 
-                $produkId = $this->produkTokoModel->insertID();
-
-                $this->produkTransferModel->update($productTransfer['id'], [
-                    'produk_toko_id' => $produkId,
-                    'status' => 'SELESAI'
-                ]);
-
+                    $this->produkTransferModel->update($productTransfer['id'], [
+                        'produk_toko_id' => $produkId,
+                        'status' => 'SELESAI'
+                    ]);
+                }
             }
         }
         return redirect()->to('/admin/detail-toko/' . $toko_id)->with('success', 'Produk berhasil Dikirim');
