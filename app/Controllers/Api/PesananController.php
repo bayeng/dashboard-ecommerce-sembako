@@ -23,7 +23,7 @@ class PesananController extends BaseController
     public function getAllPesananByFilters()
     {
         try {
-            $get = fn($key) => $this->request->getGet($key);
+            $get = $this->request->getJSON(true);
             $pesanan = $this->pesananModel
                 ->select('pesanan.*, users.nama as nama_user, users.id as user_id, toko.id as toko_id, toko.nama as nama_toko')
                 ->join('users', 'users.id = pesanan.user_id')
