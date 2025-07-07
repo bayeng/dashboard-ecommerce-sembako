@@ -186,6 +186,14 @@ class ProductTransferController extends BaseController
                     'foto' => $productTransfer['produk_gudang_foto']
                 ]);
 
+                if ($produkIn) {
+                    $produkId = $this->produkTokoModel->insertID();
+
+                    $this->produkTransferModel->update($productTransfer['id'], [
+                        'produk_toko_id' => $produkId,
+                        'status' => 'SELESAI'
+                    ]);
+                }
             }
         }
         return redirect()->to('/admin/detail-toko/' . $toko_id)->with('success', 'Produk berhasil Dikirim');
