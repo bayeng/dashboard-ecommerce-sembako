@@ -62,7 +62,7 @@ class AuthController extends BaseController
             }
 
             $getKurir = $this->kurirModel
-                ->where('user_id', $user['user_id'])
+                ->where('user_id', $user['id'])
                 ->first();
 
             // Buat payload JWT
