@@ -3,6 +3,7 @@
 namespace App\Controllers\Api;
 
 use App\Controllers\BaseController;
+use App\Models\KurirModel;
 use App\Models\UserModel;
 use CodeIgniter\HTTP\ResponseInterface;
 use Firebase\JWT\JWT;
@@ -11,11 +12,13 @@ class AuthController extends BaseController
 {
     protected $format = 'json';
     protected $userModel;
+    protected $kurirModel;
     private $jwtKey;
 
     public function __construct()
     {
         $this->userModel = new UserModel();
+        $this->kurirModel = new KurirModel();
         $this->jwtKey = getenv('JWT_KEY');
     }
 
@@ -58,11 +61,16 @@ class AuthController extends BaseController
                 return $this->response->setStatusCode(ResponseInterface::HTTP_UNAUTHORIZED)->setJSON('Invalid username or password');
             }
 
+            $getKurir = $this->kurirModel
+                ->where('user_id', $user['user_id'])
+                ->first();
+
             // Buat payload JWT
             $payload = [
+                'kurir' => $getKurir ?? '',
                 'iat' => time(),
                 'exp' => time() + (60 * 60), // 1 jam
-                'id_pelanggan' => $user['id'],
+                'id_user' => $user['id'],
                 'nama' => $user['nama'],
                 'username' => $user['username'],
                 'role' => $user['role'],
