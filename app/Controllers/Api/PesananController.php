@@ -84,20 +84,20 @@ class PesananController extends BaseController
     public function createPesanan()
     {
         try {
-            $post = fn($key) => $this->request->getPost($key);
+            $post = $this->request->getJSON(true);
 
             $pesanan = $this->pesananModel->insert([
-                'kode_pesanan' => '#'.random_int(100000, 999999),
-                'user_id' => $post('user_id'),
-                'toko_id' => $post('toko_id'),
-                'kurir_id' => $post('kurir_id'),
-                'alamat_pengiriman' => $post('alamat_pengiriman'),
+                'kode_pesanan' => '#' . random_int(100000, 999999),
+                'user_id' => $post['user_id'],
+                'toko_id' => $post['toko_id'],
+                'kurir_id' => $post['kurir_id'],
+                'alamat_pengiriman' => $post['alamat_pengiriman'],
                 'status_value' => 1,
-                'metode_pembayaran' => $post('metode_pembayaran'),
-                'total_harga' => $post('total_harga'),
-                'lat' => $post('lat'),
-                'lng' => $post('lng'),
-                'catatan' => $post('catatan')
+                'metode_pembayaran' => $post['metode_pembayaran'],
+                'total_harga' => $post['total_harga'],
+                'lat' => $post['lat'],
+                'lng' => $post['lng'],
+                'catatan' => $post['catatan']
             ]);
 
             $keranjang = $this->keranjangModel
@@ -114,7 +114,7 @@ class PesananController extends BaseController
                     'harga' => $item['jumlah'] * $item['harga']
                 ]);
             }
-            $this->keranjangModel->where('user_id', $post('user_id'))->delete();
+            $this->keranjangModel->where('user_id', $post['user_id'])->delete();
 
             return $this->response->setJSON([
                 'pesanan' => $this->pesananModel->find($pesanan)
@@ -129,19 +129,45 @@ class PesananController extends BaseController
     public function updateStatusPesanan()
     {
         try {
-            $post = fn($key) => $this->request->getPost($key);
-            $pesanan = $this->pesananModel->find($post('pesanan_id'));
+            $post = $this->request->getPost();
+            $foto = $this->request->getFile('foto');
+
+            if (!isset($post['pesanan_id'])) {
+                return $this->response->setJSON([
+                    'error' => 'pesanan_id wajib dikirim'
+                ])->setStatusCode(ResponseInterface::HTTP_BAD_REQUEST);
+            }
+
+            $pesanan = $this->pesananModel->find($post['pesanan_id']);
             if (!$pesanan) {
                 return $this->response->setJSON([
                     'error' => 'Pesanan tidak ditemukan'
-                ])->setStatusCode(404);
+                ])->setStatusCode(ResponseInterface::HTTP_NOT_FOUND);
             }
-            $this->pesananModel->update($post('pesanan_id'), [
-                'status_value' => $post('status_value')
+
+            $this->pesananModel->update($post['pesanan_id'], [
+                'status_value' => $post['status_value'] ?? $pesanan['status_value']
             ]);
 
+            if ($foto && $foto->isValid()) {
+                $uploadPath = FCPATH . 'uploads/pesanan/';
+
+                if (!is_dir($uploadPath)) {
+                    mkdir($uploadPath, 0755, true);
+                }
+
+                $namaFile = $foto->getRandomName();
+                $foto->move($uploadPath, $namaFile);
+
+                $this->pesananModel->update($post['pesanan_id'], [
+                    'foto' => $namaFile
+                ]);
+            }
+
+            $updated = $this->pesananModel->find($post['pesanan_id']);
+
             return $this->response->setJSON([
-                'pesanan' => $this->pesananModel->find($post('pesanan_id'))
+                'pesanan' => $updated
             ])->setStatusCode(ResponseInterface::HTTP_OK);
         } catch (\Exception $e) {
             return $this->response->setJSON([
@@ -149,4 +175,5 @@ class PesananController extends BaseController
             ])->setStatusCode(500);
         }
     }
+
 }
