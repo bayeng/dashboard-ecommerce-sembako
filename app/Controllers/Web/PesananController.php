@@ -3,6 +3,7 @@
 namespace App\Controllers\Web;
 
 use App\Controllers\BaseController;
+use App\Models\KurirModel;
 use App\Models\PesananModel;
 use App\Models\PesananProdukModel;
 use CodeIgniter\HTTP\ResponseInterface;
@@ -11,15 +12,18 @@ class PesananController extends BaseController
 {
     protected $pesananModel;
     protected $pesananProdukModel;
+    protected $kurirModel;
 
     public function __construct()
     {
         $this->pesananModel = new PesananModel();
         $this->pesananProdukModel = new PesananProdukModel();
+        $this->kurirModel = new KurirModel();
     }
     public function index()
     {
         $toko_id = session()->get('toko_id');
+        $kurirs = $this->kurirModel->findAll();
 
         $pesanan = $this->pesananModel
             ->select('pesanan.*, pesanan.id as pesanan_id, users.nama as nama_user')
@@ -29,7 +33,8 @@ class PesananController extends BaseController
 
         return view('pages/pesanan/index', [
             'pesanan' => $pesanan,
-            'pager'    => $this->pesananModel->pager
+            'pager'    => $this->pesananModel->pager,
+            'kurirs'   => $kurirs,
         ]);
     }
 
@@ -39,14 +44,16 @@ class PesananController extends BaseController
             ->select('pesanan.*, pesanan.id as pesanan_id, pesanan.status_value as status_value, users.nama as nama_user, users.id as user_id, toko.id as toko_id, toko.nama as nama_toko, kurir.id as kurir_id, kurir.nama as nama_kurir')
             ->join('users', 'users.id = pesanan.user_id')
             ->join('toko', 'toko.id = pesanan.toko_id')
-            ->join('kurir', 'kurir.id = pesanan.kurir_id')
+            ->join('kurir', 'kurir.id = pesanan.kurir_id', 'left')
             ->where('pesanan.id', $id)
             ->first();
+
         if (!$pesanan) {
             return $this->response->setJSON([
                 'error' => 'Pesanan tidak ditemukan'
             ])->setStatusCode(404);
         }
+
         $pesanan['produk'] = $this->pesananProdukModel
             ->select('pesanan_produk.*, pesanan_produk.jumlah as qty, pesanan_produk.harga as harga, produk_toko.id as produk_id, produk_toko.nama as produk, produk_toko.foto as gambar')
             ->join('produk_toko', 'produk_toko.id = pesanan_produk.produk_toko_id', 'left')
@@ -60,6 +67,7 @@ class PesananController extends BaseController
 
     public function update($id = null)
     {
+        $kurir_id = $this->request->getPost('kurir_id');
         $status = $this->request->getPost('status');
 
         if (!$status) {
@@ -67,6 +75,7 @@ class PesananController extends BaseController
         }
 
         $data = [
+            'kurir_id' => $kurir_id,
             'status_value' => $status,
         ];
 

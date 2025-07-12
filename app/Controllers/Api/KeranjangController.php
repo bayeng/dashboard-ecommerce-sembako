@@ -58,16 +58,34 @@ class KeranjangController extends BaseController
     public function createKeranjangUser()
     {
         try {
-            $data = $this->request->getJSON(true);
+            $data = fn($key) => $this->request->getPost($key);
 
-            $this->keranjangModel->insert([
-                'user_id' => $data['user_id'],
-                'produk_toko_id' => $data['produk_toko_id'],
-                'jumlah' => $data['jumlah']
-            ]);
+            $insertData = [
+                'user_id' => $data('user_id'),
+                'produk_toko_id' => $data('produk_toko_id'),
+                'jumlah' => $data('jumlah')
+            ];
+
+            if (
+                empty($insertData['user_id']) ||
+                empty($insertData['produk_toko_id']) ||
+                empty($insertData['jumlah'])
+            ) {
+                return $this->response->setJSON([
+                    'error' => 'Semua field harus diisi'
+                ])->setStatusCode(400);
+            }
+
+            $this->keranjangModel->insert($insertData);
+
+            if ($this->keranjangModel->errors()) {
+                return $this->response->setJSON([
+                    'error' => $this->keranjangModel->errors()
+                ])->setStatusCode(400);
+            }
 
             return $this->response->setJSON([
-                'keranjang' => $this->keranjangModel->find($this->keranjangModel->insertID)
+                'keranjang' => $this->keranjangModel->find($this->keranjangModel->getInsertID())
             ])->setStatusCode(ResponseInterface::HTTP_OK);
         } catch (\Exception $e) {
             return $this->response->setJSON([

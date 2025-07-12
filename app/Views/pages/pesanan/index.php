@@ -58,9 +58,9 @@ Pesanan
                                                 <td><?= esc($pesan['nama_user']) ?></td>
                                                 <td>Rp. <?= esc(number_format($pesan['total_harga'])) ?></td>
                                                 <td><?= esc(match ($pesan['status_value']) {
-                                                        1 => 'Diterima',
-                                                        2 => 'Diproses',
-                                                        3 => 'Dikirim',
+                                                        "1" => 'Diterima',
+                                                        "2" => 'Diproses',
+                                                        "3" => 'Dikirim',
                                                         default => 'Tidak diketahui'
                                                     }) ?></td>
                                                 <td>
