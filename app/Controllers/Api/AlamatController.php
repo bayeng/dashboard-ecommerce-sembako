@@ -58,7 +58,7 @@ class AlamatController extends BaseController
     public function addAlamat()
     {
         try {
-            $request = fn($key) => $this->request->getVar($key);
+            $request = fn($key) => $this->request->getPost($key);
             $data = [
                 'user_id' => $request('user_id'),
                 'alamat_lengkap' => $request('alamat_lengkap'),

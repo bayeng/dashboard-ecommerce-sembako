@@ -49,6 +49,7 @@ class Pesanan extends Migration
             ],
             'kurir_id' => [
                 'type' => 'INT',
+                'null' => true,
             ],
             'user_id' => [
                 'type' => 'INT',

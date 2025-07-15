@@ -84,7 +84,10 @@ class PesananController extends BaseController
     public function createPesanan()
     {
         try {
-            $post = $this->request->getJSON(true);
+            $db = \Config\Database::connect();
+            $db->transStart();
+
+            $post = fn($key) => $this->request->getPost($key);
 
             $fixHarga = $post['total_harga'];
             if ($fixHarga < 100000) {
@@ -93,18 +96,24 @@ class PesananController extends BaseController
 
             $pesanan = $this->pesananModel->insert([
                 'kode_pesanan' => '#' . random_int(100000, 999999),
-                'user_id' => $post['user_id'],
-                'toko_id' => $post['toko_id'],
-                'kurir_id' => $post['kurir_id'],
-                'alamat_pengiriman' => $post['alamat_pengiriman'],
+                'user_id' => $post('user_id'),
+                'toko_id' => $post('toko_id'),
+                'alamat_pengiriman' => $post('alamat_pengiriman'),
                 'status_value' => 1,
-                'metode_pembayaran' => $post['metode_pembayaran'],
-                'total_harga' => $post['total_harga'],
-                'ongkir' => $post['total_harga'] < 100000 ? 5000 : 0,
-                'lat' => $post['lat'],
-                'lng' => $post['lng'],
-                'catatan' => $post['catatan']
+                'metode_pembayaran' => $post('metode_pembayaran'),
+                'ongkir' => $post('total_harga') < 100000 ? 5000 : 0,
+                'total_harga' => $post('total_harga'),
+                'lat' => $post('lat'),
+                'lng' => $post('lng'),
+                'catatan' => $post('catatan')
             ]);
+            $insertedPesananId = $this->pesananModel->getInsertID();
+            if ($pesanan === false) {
+                $db->transRollback();
+                return $this->response->setJSON([
+                    'error' => 'Gagal membuat pesanan'
+                ])->setStatusCode(ResponseInterface::HTTP_BAD_REQUEST);
+            }
 
             $keranjang = $this->keranjangModel
                 ->select('keranjang.*, produk_toko.id as produk_toko_id, produk_toko.nama as nama_produk, produk_toko.harga as harga, produk_toko.foto as gambar')
@@ -113,17 +122,32 @@ class PesananController extends BaseController
 
             foreach ($keranjang as $item) {
                 $this->pesnananProdukModel->insert([
-                    'pesanan_id' => $this->pesananModel->getInsertID(),
+                    'pesanan_id' => $insertedPesananId,
                     'produk_toko_id' => $item['produk_toko_id'],
                     'toko_id' => $post('toko_id'),
                     'jumlah' => $item['jumlah'],
                     'harga' => $item['jumlah'] * $item['harga']
                 ]);
             }
-            $this->keranjangModel->where('user_id', $post['user_id'])->delete();
+            $this->keranjangModel->where('user_id', $post('user_id'))->delete();
+
+            $db->transComplete();
+
+            if ($db->transStatus() === false) {
+                return $this->response->setJSON([
+                    'error' => 'Transaksi gagal, data tidak disimpan.'
+                ])->setStatusCode(ResponseInterface::HTTP_INTERNAL_SERVER_ERROR);
+            }
+
+            $pesananData = $this->pesananModel->find($insertedPesananId);
+            if (!$pesananData) {
+                return $this->response->setJSON([
+                    'error' => 'Pesanan berhasil dibuat, tetapi data tidak ditemukan'
+                ])->setStatusCode(ResponseInterface::HTTP_INTERNAL_SERVER_ERROR);
+            }
 
             return $this->response->setJSON([
-                'pesanan' => $this->pesananModel->find($pesanan)
+                'pesanan' => $pesananData
             ])->setStatusCode(ResponseInterface::HTTP_OK);
         } catch (\Exception $e) {
             return $this->response->setJSON([
