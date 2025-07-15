@@ -86,6 +86,11 @@ class PesananController extends BaseController
         try {
             $post = $this->request->getJSON(true);
 
+            $fixHarga = $post['total_harga'];
+            if ($fixHarga < 100000) {
+                $fixHarga += 5000;
+            }
+
             $pesanan = $this->pesananModel->insert([
                 'kode_pesanan' => '#' . random_int(100000, 999999),
                 'user_id' => $post['user_id'],
@@ -95,6 +100,7 @@ class PesananController extends BaseController
                 'status_value' => 1,
                 'metode_pembayaran' => $post['metode_pembayaran'],
                 'total_harga' => $post['total_harga'],
+                'ongkir' => $post['total_harga'] < 100000 ? 5000 : 0,
                 'lat' => $post['lat'],
                 'lng' => $post['lng'],
                 'catatan' => $post['catatan']

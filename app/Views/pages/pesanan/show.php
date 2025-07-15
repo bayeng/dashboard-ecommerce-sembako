@@ -38,6 +38,11 @@ Detail Pesanan
                                             </td>
                                         </tr>
                                         <tr>
+                                            <td>Ongkir</td>
+                                            <td>: Rp. <?= $pesanan['ongkir'] ? esc(number_format($pesanan['total_harga'])) : 'Gratis' ?>
+                                            </td>
+                                        </tr>
+                                        <tr>
                                             <td>Total Harga</td>
                                             <td>: Rp. <?= esc(number_format($pesanan['total_harga'])) ?>
                                             </td>
@@ -48,6 +53,7 @@ Detail Pesanan
                                                         "1" => 'Diterima',
                                                         "2" => 'Diproses',
                                                         "3" => 'Dikirim',
+                                                        "4" => 'Dikirim',
                                                         default => 'Tidak diketahui'
                                                     }) ?>
                                             </td>
