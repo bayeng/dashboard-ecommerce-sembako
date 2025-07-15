@@ -142,6 +142,13 @@ $routes->group('api', ['namespace' => 'App\Controllers\Api'], function ($routes)
     $routes->get('produk', 'ProdukTokoController::getAllProdukTokoByFilters');
     $routes->get('produk/(:num)', 'ProdukTokoController::getProdukTokoById/$1');
 
+    // alamat
+    $routes->get('alamat', 'AlamatController::getAlamatByFilters');
+    $routes->get('alamat/(:num)', 'AlamatController::getAlamatById/$1');
+    $routes->post('alamat', 'AlamatController::addAlamat');
+    $routes->put('alamat/(:num)', 'AlamatController::updateAlamat/$1');
+    $routes->post('alamat/(:num)', 'AlamatController::deleteAlamat/$1');
+
     //keranjang
     $routes->get('keranjang', 'KeranjangController::getKeranjangByUser');
     $routes->get('keranjang/(:num)', 'KeranjangController::getKeranjangById/$1');

@@ -46,6 +46,15 @@ class KurirController extends BaseController
                 ->join('ulasan', 'ulasan.kurir_id = kurir.id')
                 ->first();
 
+            //tambahkan ulasan rating keseluruhan
+            $ulasan = $this->ulasanModel->where('kurir_id', $id)->get();
+            $totalRating = 0;
+            foreach ($ulasan as $u) {
+                $totalRating += $u->rating;
+            }
+            $averageRating = $totalRating / count($ulasan);
+            $kurir['total_rating'] = $averageRating;
+
             return $this->response->setJSON([
                 'kurir' => $kurir
             ])->setStatusCode(ResponseInterface::HTTP_OK);
@@ -73,7 +82,6 @@ class KurirController extends BaseController
                 'rating' => $post('rating'),
                 'pesanan_id' => $post('pesanan_id')
             ]);
-
 
             return $this->response->setJSON([
                 'kurir' => $kurir

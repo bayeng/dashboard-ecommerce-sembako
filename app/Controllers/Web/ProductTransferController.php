@@ -151,7 +151,10 @@ class ProductTransferController extends BaseController
         }
 
         foreach ($productTransfers as $productTransfer) {
-            $cekProdukToko = $this->produkTokoModel->where('kode', $productTransfer['kode_produk_gudang'])->first();
+
+            $cekProdukToko = $this->produkTokoModel->where('kode', $productTransfer['kode_produk_gudang'])
+                ->where('toko_id', $toko_id)
+                ->first();
 
             if ($cekProdukToko != null) {
                 $this->produkTokoModel->update($cekProdukToko['id'], [

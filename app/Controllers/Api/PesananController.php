@@ -176,7 +176,8 @@ class PesananController extends BaseController
             }
 
             $this->pesananModel->update($post['pesanan_id'], [
-                'status_value' => $post['status_value'] ?? $pesanan['status_value']
+                'status_value' => $post['status_value'] ?? $pesanan['status_value'],
+                'catatatn_kurir' => $post['catatan_kurir']
             ]);
 
             if ($foto && $foto->isValid()) {

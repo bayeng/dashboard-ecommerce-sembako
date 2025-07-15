@@ -7,6 +7,10 @@
         <label for="nama">Nama Produk</label>
         <input type="text" class="form-control" id="nama" name="nama" value="<?= $item['nama'] ?>" required>
     </div>
+    <div class="form-group">
+        <label for="kode">Kode</label>
+        <input type="text" class="form-control" id="kode" name="kode" value="<?= $item['kode'] ?>" required>
+    </div>
 
     <div class="form-group">
         <label for="kategori_id">Supplier</label>
