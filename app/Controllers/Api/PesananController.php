@@ -99,11 +99,11 @@ class PesananController extends BaseController
                 'kode_pesanan'        => '#' . random_int(100000, 999999),
                 'user_id'             => $post['user_id'],
                 'toko_id'             => $post['toko_id'],
-                'alamat_pengiriman'   => $post['alamat_pengiriman'],
+                'alamat_pengiriman'   => $post['alamat'],
                 'status_value'        => 1,
                 'metode_pembayaran'   => $post['metode_pembayaran'],
                 'ongkir'              => $post['ongkir'],
-                'total_harga'         => $post['total_harga'],
+                'total_harga'         => $post['total'],
                 'lat'                 => $post['lat'],
                 'lng'                 => $post['lng'],
                 'catatan'             => $post['catatan'],
@@ -115,8 +115,6 @@ class PesananController extends BaseController
                     'error' => 'Gagal membuat pesanan'
                 ])->setStatusCode(ResponseInterface::HTTP_BAD_REQUEST);
             }
-
-
 
             foreach ($produk as $item) {
                 $this->pesnananProdukModel->insert([
