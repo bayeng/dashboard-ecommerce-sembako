@@ -76,7 +76,7 @@ class KurirController extends BaseController
                 ])->setStatusCode(404);
             }
 
-            $this->ulasanModel->insert([
+            $ulasan =$this->ulasanModel->insert([
                 'kurir_id' => $id,
                 'keterangan' => $post('ulasan'),
                 'rating' => $post('rating'),
@@ -84,7 +84,8 @@ class KurirController extends BaseController
             ]);
 
             return $this->response->setJSON([
-                'kurir' => $kurir
+                'kurir' => $kurir,
+                'ulasan' => $ulasan
             ])->setStatusCode(ResponseInterface::HTTP_OK);
         } catch (\Exception $e) {
             return $this->response->setJSON([
