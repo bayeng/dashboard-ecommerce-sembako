@@ -159,25 +159,24 @@ class PesananController extends BaseController
     public function updateStatusPesanan()
     {
         try {
-            $post = $this->request->getPost();
+            $post = fn($key) => $this->request->getPost($key);
             $foto = $this->request->getFile('foto');
-
-            if (!isset($post['pesanan_id'])) {
+            if ($post('pesanan_id') === null) {
                 return $this->response->setJSON([
                     'error' => 'pesanan_id wajib dikirim'
                 ])->setStatusCode(ResponseInterface::HTTP_BAD_REQUEST);
             }
 
-            $pesanan = $this->pesananModel->find($post['pesanan_id']);
+            $pesanan = $this->pesananModel->find($post('pesanan_id'));
             if (!$pesanan) {
                 return $this->response->setJSON([
                     'error' => 'Pesanan tidak ditemukan'
                 ])->setStatusCode(ResponseInterface::HTTP_NOT_FOUND);
             }
 
-            $this->pesananModel->update($post['pesanan_id'], [
-                'status_value' => $post['status_value'] ?? $pesanan['status_value'],
-                'catatatn_kurir' => $post['catatan_kurir']
+            $this->pesananModel->update($post('pesanan_id'), [
+                'status_value' => $post('status_value') ?? $pesanan('status_value'),
+                'catatan_kurir' => $post('catatan_kurir')
             ]);
 
             if ($foto && $foto->isValid()) {
@@ -190,12 +189,12 @@ class PesananController extends BaseController
                 $namaFile = $foto->getRandomName();
                 $foto->move($uploadPath, $namaFile);
 
-                $this->pesananModel->update($post['pesanan_id'], [
+                $this->pesananModel->update($post('pesanan_id'), [
                     'foto' => $namaFile
                 ]);
             }
 
-            $updated = $this->pesananModel->find($post['pesanan_id']);
+            $updated = $this->pesananModel->find($post('pesanan_id'));
 
             return $this->response->setJSON([
                 'pesanan' => $updated
