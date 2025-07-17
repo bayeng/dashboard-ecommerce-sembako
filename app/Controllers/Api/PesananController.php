@@ -6,7 +6,6 @@ use App\Controllers\BaseController;
 use App\Models\KeranjangModel;
 use App\Models\PesananModel;
 use App\Models\PesananProdukModel;
-use App\Models\ProdukTokoModel;
 use CodeIgniter\HTTP\ResponseInterface;
 
 class PesananController extends BaseController
@@ -14,14 +13,12 @@ class PesananController extends BaseController
     protected $pesananModel;
     protected $keranjangModel;
     protected $pesnananProdukModel;
-    protected $produkTokoModel;
 
     public function __construct()
     {
         $this->pesananModel = new PesananModel();
         $this->keranjangModel = new KeranjangModel();
         $this->pesnananProdukModel = new PesananProdukModel();
-        $this->produkTokoModel = new ProdukTokoModel();
     }
     public function getAllPesananByFilters()
     {
@@ -90,25 +87,26 @@ class PesananController extends BaseController
             $db = \Config\Database::connect();
             $db->transStart();
 
-            $post = fn($key) => $this->request->getPost($key);
-
-            $fixHarga = $post('total_harga');
-            if ($fixHarga < 100000) {
-                $fixHarga += 5000;
+            $post = $this->request->getJSON(true);
+            $produk = $post['produk'];
+            if (!$produk) {
+                return $this->response->setJSON([
+                    'error' => 'Produk tidak ditemukan'
+                ])->setStatusCode(ResponseInterface::HTTP_BAD_REQUEST);
             }
 
             $pesanan = $this->pesananModel->insert([
-                'kode_pesanan' => '#' . random_int(100000, 999999),
-                'user_id' => $post('user_id'),
-                'toko_id' => $post('toko_id'),
-                'alamat_pengiriman' => $post('alamat_pengiriman'),
-                'status_value' => 1,
-                'metode_pembayaran' => $post('metode_pembayaran'),
-                'ongkir' => $post('total_harga') < 100000 ? 5000 : 0,
-                'total_harga' => $post('total_harga'),
-                'lat' => $post('lat'),
-                'lng' => $post('lng'),
-                'catatan' => $post('catatan')
+                'kode_pesanan'        => '#' . random_int(100000, 999999),
+                'user_id'             => $post['user_id'],
+                'toko_id'             => $post['toko_id'],
+                'alamat_pengiriman'   => $post['alamat_pengiriman'],
+                'status_value'        => 1,
+                'metode_pembayaran'   => $post['metode_pembayaran'],
+                'ongkir'              => $post['ongkir'],
+                'total_harga'         => $post['total_harga'],
+                'lat'                 => $post['lat'],
+                'lng'                 => $post['lng'],
+                'catatan'             => $post['catatan'],
             ]);
             $insertedPesananId = $this->pesananModel->getInsertID();
             if ($pesanan === false) {
@@ -118,15 +116,16 @@ class PesananController extends BaseController
                 ])->setStatusCode(ResponseInterface::HTTP_BAD_REQUEST);
             }
 
-            $produkToko = $this->produkToko
 
-            foreach ($produkToko as $item) {
+
+            foreach ($produk as $item) {
                 $this->pesnananProdukModel->insert([
                     'pesanan_id' => $insertedPesananId,
-                    'produk_toko_id' => $item['produk_toko_id'],
-                    'toko_id' => $post('toko_id'),
+                    'produk_toko_id' => $item['id_barang'] ?? null,
+                    'toko_id' => $post['toko_id'] ?? null,
                     'jumlah' => $item['jumlah'],
-                    'harga' => $item['jumlah'] * $item['harga']
+                    'harga' => $item['total_harga'],
+                    'harga_satuan' => $item['harga_satuan']
                 ]);
             }
 
