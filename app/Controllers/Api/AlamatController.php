@@ -75,9 +75,8 @@ class AlamatController extends BaseController
                 $this->alamatModel
                     ->where('user_id', $request('user_id'))
                     ->where('is_utama', 1)
-                    ->update([
-                    'is_utama' => 0
-                ]);
+                    ->set('is_utama', 0)
+                    ->update();
             }
             $this->alamatModel->insert($data);
             return $this->response->setJSON([
