@@ -146,7 +146,7 @@ $routes->group('api', ['namespace' => 'App\Controllers\Api'], function ($routes)
     $routes->get('alamat', 'AlamatController::getAlamatByFilters');
     $routes->get('alamat/(:num)', 'AlamatController::getAlamatById/$1');
     $routes->post('alamat', 'AlamatController::addAlamat');
-    $routes->put('alamat/(:num)', 'AlamatController::updateAlamat/$1');
+    $routes->post('alamat/(:num)', 'AlamatController::updateAlamat/$1');
     $routes->post('alamat/(:num)', 'AlamatController::deleteAlamat/$1');
 
     //keranjang
@@ -160,7 +160,7 @@ $routes->group('api', ['namespace' => 'App\Controllers\Api'], function ($routes)
         $routes->get('', 'PesananController::getAllPesananByFilters');
         $routes->get('(:num)', 'PesananController::getPesananById/$1');
         $routes->post('', 'PesananController::createPesanan');
-        $routes->put('(:num)', 'PesananController::updateStatusPesanan/$1');
+        $routes->post('(:num)', 'PesananController::updateStatusPesanan/$1');
         $routes->post('delete/(:num)', 'PesananController::deletePesanan/$1');
     });
 
