@@ -6,7 +6,7 @@ use CodeIgniter\Model;
 
 class UlasanModel extends Model
 {
-    protected $table            = 'ulasans';
+    protected $table            = 'ulasan';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
