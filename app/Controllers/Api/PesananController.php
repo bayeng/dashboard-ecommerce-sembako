@@ -161,12 +161,7 @@ class PesananController extends BaseController
         try {
             $post = fn($key) => $this->request->getPost($key);
             $foto = $this->request->getFile('foto');
-            $pesanan_id = $post('pesanan_id');
-            if ($pesanan_id) {
-                return $this->response->setJSON([
-                    'error' => 'pesanan_id wajib dikirim'
-                ])->setStatusCode(ResponseInterface::HTTP_BAD_REQUEST);
-            }
+            $pesanan_id = $id;
 
             $pesanan = $this->pesananModel->find($pesanan_id);
             if (!$pesanan) {
