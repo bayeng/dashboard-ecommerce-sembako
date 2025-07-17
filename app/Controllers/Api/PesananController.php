@@ -6,6 +6,7 @@ use App\Controllers\BaseController;
 use App\Models\KeranjangModel;
 use App\Models\PesananModel;
 use App\Models\PesananProdukModel;
+use App\Models\ProdukTokoModel;
 use CodeIgniter\HTTP\ResponseInterface;
 
 class PesananController extends BaseController
@@ -13,12 +14,14 @@ class PesananController extends BaseController
     protected $pesananModel;
     protected $keranjangModel;
     protected $pesnananProdukModel;
+    protected $produkTokoModel;
 
     public function __construct()
     {
         $this->pesananModel = new PesananModel();
         $this->keranjangModel = new KeranjangModel();
         $this->pesnananProdukModel = new PesananProdukModel();
+        $this->produkTokoModel = new ProdukTokoModel();
     }
     public function getAllPesananByFilters()
     {
@@ -89,7 +92,7 @@ class PesananController extends BaseController
 
             $post = fn($key) => $this->request->getPost($key);
 
-            $fixHarga = $post['total_harga'];
+            $fixHarga = $post('total_harga');
             if ($fixHarga < 100000) {
                 $fixHarga += 5000;
             }
@@ -115,12 +118,9 @@ class PesananController extends BaseController
                 ])->setStatusCode(ResponseInterface::HTTP_BAD_REQUEST);
             }
 
-            $keranjang = $this->keranjangModel
-                ->select('keranjang.*, produk_toko.id as produk_toko_id, produk_toko.nama as nama_produk, produk_toko.harga as harga, produk_toko.foto as gambar')
-                ->join('produk_toko', 'produk_toko.id = keranjang.produk_toko_id')
-                ->where('user_id', $post('user_id'))->get()->getResultArray();
+            $produkToko = $this->produkToko
 
-            foreach ($keranjang as $item) {
+            foreach ($produkToko as $item) {
                 $this->pesnananProdukModel->insert([
                     'pesanan_id' => $insertedPesananId,
                     'produk_toko_id' => $item['produk_toko_id'],
@@ -129,7 +129,6 @@ class PesananController extends BaseController
                     'harga' => $item['jumlah'] * $item['harga']
                 ]);
             }
-            $this->keranjangModel->where('user_id', $post('user_id'))->delete();
 
             $db->transComplete();
 

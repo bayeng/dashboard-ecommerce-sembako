@@ -92,7 +92,7 @@ class AlamatController extends BaseController
     public function updateAlamat($id)
     {
         try {
-            $request = fn($key) => $this->request->getVar($key);
+            $request = fn($key) => $this->request->getPost($key);
             $data = [
                 'user_id' => $request('user_id'),
                 'alamat_lengkap' => $request('alamat_lengkap'),
@@ -113,9 +113,9 @@ class AlamatController extends BaseController
                     'is_utama' => 0
                 ]);
             }
-            $this->alamatModel->update($id, $data);
+            $alamat = $this->alamatModel->update($id, $data);
             return $this->response->setJSON([
-                'success' => 'Alamat berhasil diubah'
+                'alamat' => $alamat
             ])->setStatusCode(ResponseInterface::HTTP_OK);
         } catch (\Exception $e) {
             return $this->response->setJSON([
