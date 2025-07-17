@@ -76,7 +76,7 @@ class KurirController extends BaseController
                 ])->setStatusCode(404);
             }
 
-            $this->ulasanModel->save([
+            $this->ulasanModel->insert([
                 'kurir_id' => $id,
                 'keterangan' => $post('ulasan'),
                 'rating' => $post('rating'),
