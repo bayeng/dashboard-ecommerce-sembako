@@ -76,12 +76,20 @@ class KurirController extends BaseController
                 ])->setStatusCode(404);
             }
 
-            $ulasan =$this->ulasanModel->insert([
+            $ulasanId =$this->ulasanModel->insert([
                 'kurir_id' => $id,
                 'keterangan' => $post('ulasan'),
                 'rating' => $post('rating'),
                 'pesanan_id' => $post('pesanan_id')
             ]);
+
+            if ($ulasanId === false) {
+                return $this->response->setJSON([
+                    'error' => 'Gagal membuat ulasan'
+                ])->setStatusCode(500);
+            }
+
+            $ulasan = $this->ulasanModel->where('id', $ulasanId)->first();
 
             return $this->response->setJSON([
                 'kurir' => $kurir,
