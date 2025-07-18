@@ -45,7 +45,7 @@ class KurirController extends BaseController
                     'error' => 'kurir_id wajib diisi'
                 ])->setStatusCode(404);
             }
-            $kurir = $this->kurirModel->find($this->request->getGet('kurir_id'));
+            $kurir = $this->kurirModel->where('id', $this->request->getGet('kurir_id'))->first();
 
             if (!$kurir) {
                 return $this->response->setJSON([
