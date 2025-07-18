@@ -53,11 +53,11 @@ class KurirController extends BaseController
                 ])->setStatusCode(404);
             }
 
-            $ulasan = $this->ulasanModel->where('kurir_id', $kurir->id)->get();
+            $ulasan = $this->ulasanModel->where('kurir_id', $this->request->getGet('kurir_id'))->get();
+            $kurir['ulasan'] = $ulasan->getResultArray();
 
             return $this->response->setJSON([
                 'kurir' => $kurir,
-                'ulasan' => $ulasan
             ])->setStatusCode(ResponseInterface::HTTP_OK);
         } catch (\Exception $e) {
             return $this->response->setJSON([
