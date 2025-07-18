@@ -37,7 +37,7 @@ class KurirController extends BaseController
 
     }
 
-    public function getAllUlasanByKurir()
+    public function getAllUlasanByKurirId()
     {
         try {
             $kurir = $this->kurirModel->find($this->request->getGet('kurir_id'));
