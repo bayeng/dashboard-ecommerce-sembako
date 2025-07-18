@@ -42,7 +42,6 @@ class AlamatController extends BaseController
         try {
             $alamat = $this->alamatModel
                 ->select('alamat.*, users.username, users.id as user_id, users.nama as nama_user')
-                ->join('users', 'users.id = alamat.user_id', 'left')
                 ->where('id', $id)
                 ->first();
 
