@@ -42,6 +42,11 @@ class AlamatController extends BaseController
         try {
             $alamat = $this->alamatModel->where('id', $id)->first();
 
+            if (!$alamat) {
+                return $this->response->setJSON([
+                    'alamat' => 'Alamat tidak ditemukan'
+                ])->setStatusCode(404);
+            }
             return $this->response->setJSON([
                 $alamat,
             ])->setStatusCode(ResponseInterface::HTTP_OK);
