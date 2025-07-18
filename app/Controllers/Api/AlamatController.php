@@ -21,7 +21,9 @@ class AlamatController extends BaseController
             $alamat = $this->alamatModel
                 ->select('alamat.*, users.username, users.id as user_id, users.nama as nama_user')
                 ->join('users', 'users.id = alamat.user_id', 'left')
-                ->where('user_id', $this->request->getGet('user_id'))
+                ->when($this->request->getGet('user_id') !== null, function ($query) {
+                    return $query->where('alamat.user_id', $this->request->getGet('user_id'));
+                })
                 ->paginate($this->request->getGet('rowPerPage') ?? 10);
 
             return $this->response->setJSON([
