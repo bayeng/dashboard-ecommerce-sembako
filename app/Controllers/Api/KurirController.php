@@ -40,6 +40,11 @@ class KurirController extends BaseController
     public function getAllUlasanByKurirId()
     {
         try {
+            if ($this->request->getGet('kurir_id') === null) {
+                return $this->response->setJSON([
+                    'error' => 'kurir_id wajib diisi'
+                ])->setStatusCode(404);
+            }
             $kurir = $this->kurirModel->find($this->request->getGet('kurir_id'));
 
             if (!$kurir) {
