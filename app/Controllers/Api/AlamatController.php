@@ -40,10 +40,7 @@ class AlamatController extends BaseController
     public function getAlamatById($id)
     {
         try {
-            $alamat = $this->alamatModel
-                ->select('alamat.*, users.username, users.id as user_id, users.nama as nama_user')
-                ->where('id', $id)
-                ->first();
+            $alamat = $this->alamatModel->where('id', $id)->first();
 
             return $this->response->setJSON([
                 $alamat,
