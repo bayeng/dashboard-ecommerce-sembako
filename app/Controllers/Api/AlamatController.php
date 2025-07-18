@@ -17,13 +17,12 @@ class AlamatController extends BaseController
     }
     public function getAlamatByFilters()
     {
-
         try {
             $alamat = $this->alamatModel
                 ->select('alamat.*, users.username, users.id as user_id, users.nama as nama_user')
                 ->join('users', 'users.id = alamat.user_id', 'left')
-                ->where('user_id', $this->request->getVar('user_id'))
-                ->paginate($this->request->getVar('rowPerPage') ?? 10);
+                ->where('user_id', $this->request->getGet('user_id'))
+                ->paginate($this->request->getGet('rowPerPage') ?? 10);
 
             return $this->response->setJSON([
                 'alamat' => $alamat,

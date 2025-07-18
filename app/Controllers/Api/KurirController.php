@@ -37,6 +37,30 @@ class KurirController extends BaseController
 
     }
 
+    public function getAllUlasanByKurir()
+    {
+        try {
+            $kurir = $this->kurirModel->find($this->request->getGet('kurir_id'));
+
+            if (!$kurir) {
+                return $this->response->setJSON([
+                    'error' => 'Kurir tidak ditemukan'
+                ])->setStatusCode(404);
+            }
+
+            $ulasan = $this->ulasanModel->where('kurir_id', $kurir->id)->get();
+
+            return $this->response->setJSON([
+                'kurir' => $kurir,
+                'ulasan' => $ulasan
+            ])->setStatusCode(ResponseInterface::HTTP_OK);
+        } catch (\Exception $e) {
+            return $this->response->setJSON([
+                'error' => $e->getMessage()
+            ])->setStatusCode(500);
+        }
+    }
+
     public function getKurirById($id)
     {
         try {

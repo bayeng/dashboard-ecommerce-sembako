@@ -137,6 +137,7 @@ $routes->group('api', ['namespace' => 'App\Controllers\Api'], function ($routes)
     $routes->get('kurir', 'KurirController::getAllKurirByFilters');
     $routes->get('kurir/(:num)', 'KurirController::getKurirById/$1');
     $routes->post('kurir/ulasan/(:num)', 'KurirController::createUlasanKurir/$1');
+    $routes->get('kurir/ulasan', 'KurirController::getAllUlasanByKurirId');
 
     //produk toko
     $routes->get('produk', 'ProdukTokoController::getAllProdukTokoByFilters');
