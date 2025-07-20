@@ -127,7 +127,7 @@ class AlamatController extends BaseController
                 'alamat' => $newAlamat
             ])->setStatusCode(ResponseInterface::HTTP_OK);
         } catch (\Exception $e) {
-            error_log($e);
+            dd($e);
             return $this->response->setJSON([
                 'error' => $e->getMessage()
             ])->setStatusCode(500);
