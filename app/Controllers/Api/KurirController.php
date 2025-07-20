@@ -70,9 +70,7 @@ class KurirController extends BaseController
     {
         try {
             $kurir = $this->kurirModel
-                ->select('kurir.*, ulasan.keterangan, ulasan.rating')
                 ->where('kurir.id', $id)
-                ->join('ulasan', 'ulasan.kurir_id = kurir.id')
                 ->first();
 
             //tambahkan ulasan rating keseluruhan
