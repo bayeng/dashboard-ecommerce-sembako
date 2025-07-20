@@ -106,7 +106,6 @@ class PesananController extends BaseController
                 'user_id'             => $post['user_id'],
                 'toko_id'             => $post['toko_id'],
                 'alamat_id'           => $post['alamat_id'],
-                'alamat_pengiriman'   => $post['alamat'],
                 'status_value'        => 1,
                 'metode_pembayaran'   => $post['metode_pembayaran'],
                 'ongkir'              => $post['ongkir'],
