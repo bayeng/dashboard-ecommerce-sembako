@@ -111,8 +111,6 @@ class PesananController extends BaseController
                 'metode_pembayaran'   => $post['metode_pembayaran'],
                 'ongkir'              => $post['ongkir'],
                 'total_harga'         => $post['total'],
-                'lat'                 => $post['lat'],
-                'lng'                 => $post['lng'],
                 'catatan'             => $post['catatan'],
             ]);
             $insertedPesananId = $this->pesananModel->getInsertID();
