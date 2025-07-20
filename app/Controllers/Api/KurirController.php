@@ -75,12 +75,14 @@ class KurirController extends BaseController
 
             //tambahkan ulasan rating keseluruhan
             $ulasan = $this->ulasanModel->where('kurir_id', $id)->findAll();
-            $totalRating = 0;
-            foreach ($ulasan as $u) {
-                $totalRating += $u['rating'];
+            if ($ulasan) {
+                $totalRating = 0;
+                foreach ($ulasan as $u) {
+                    $totalRating += $u['rating'];
+                }
+                $averageRating = $totalRating / count($ulasan);
+                $kurir['total_rating'] = $averageRating;
             }
-            $averageRating = $totalRating / count($ulasan);
-            $kurir['total_rating'] = $averageRating;
 
             return $this->response->setJSON([
                 'kurir' => $kurir
