@@ -96,43 +96,57 @@ class AlamatController extends BaseController
         try {
             $request = fn($key) => $this->request->getPost($key);
             $oldAlamat = $this->alamatModel->where('id', $id)->first();
+
             if (!$oldAlamat) {
                 return $this->response->setJSON([
                     'alamat' => 'Alamat tidak ditemukan'
                 ])->setStatusCode(404);
             }
+
             $data = [
-                'user_id' => $request('user_id') ?? $oldAlamat['user_id'],
-                'alamat_lengkap' => $request('alamat_lengkap') ?? $oldAlamat['alamat_lengkap'],
-                'provinsi' => $request('provinsi') ?? $oldAlamat['provinsi'],
-                'kabupaten' => $request('kabupaten') ?? $oldAlamat['kabupaten'],
-                'kecamatan' => $request('kecamatan') ?? $oldAlamat['kecamatan'],
-                'desa' => $request('desa') ?? $oldAlamat['desa'],
-                'is_utama' => $request('is_utama') ?? $oldAlamat['is_utama'],
-                'lat' => $request('lat') ?? $oldAlamat['lat'],
-                'lng' => $request('lng') ?? $oldAlamat['lng'],
+                'user_id' => $request('user_id') !== null && $request('user_id') !== '' ? $request('user_id') : $oldAlamat['user_id'],
+                'alamat_lengkap' => $request('alamat_lengkap') !== null && $request('alamat_lengkap') !== '' ? $request('alamat_lengkap') : $oldAlamat['alamat_lengkap'],
+                'provinsi' => $request('provinsi') !== null && $request('provinsi') !== '' ? $request('provinsi') : $oldAlamat['provinsi'],
+                'kabupaten' => $request('kabupaten') !== null && $request('kabupaten') !== '' ? $request('kabupaten') : $oldAlamat['kabupaten'],
+                'kecamatan' => $request('kecamatan') !== null && $request('kecamatan') !== '' ? $request('kecamatan') : $oldAlamat['kecamatan'],
+                'desa' => $request('desa') !== null && $request('desa') !== '' ? $request('desa') : $oldAlamat['desa'],
+                'is_utama' => $request('is_utama') !== null && $request('is_utama') !== '' ? $request('is_utama') : $oldAlamat['is_utama'],
+                'lat' => $request('lat') !== null && $request('lat') !== '' ? $request('lat') : $oldAlamat['lat'],
+                'lng' => $request('lng') !== null && $request('lng') !== '' ? $request('lng') : $oldAlamat['lng'],
             ];
 
-            $alamatAktif = $this->alamatModel->where('user_id', $request('user_id'))->where('is_utama', 1)->first();
-            if ($alamatAktif) {
-                $this->alamatModel
-                    ->where('user_id', $request('user_id'))
-                    ->where('is_utama', 1)
-                    ->update([
-                    'is_utama' => 0
-                ]);
+            // Cek apakah ada perubahan data
+            if ($data == $oldAlamat) {
+                return $this->response->setJSON([
+                    'message' => 'Tidak ada data yang diubah.'
+                ])->setStatusCode(400);
             }
+
+            // Kalau is_utama = 1, nonaktifkan alamat utama lainnya
+            if ($data['is_utama'] == 1) {
+                $this->alamatModel
+                    ->where('user_id', $data['user_id'])
+                    ->where('is_utama', 1)
+                    ->where('id !=', $id)
+                    ->set(['is_utama' => 0])
+                    ->update();
+            }
+
             $this->alamatModel->update($id, $data);
+
             $newAlamat = $this->alamatModel->where('id', $id)->first();
+
             return $this->response->setJSON([
                 'alamat' => $newAlamat
             ])->setStatusCode(ResponseInterface::HTTP_OK);
+
         } catch (\Exception $e) {
             return $this->response->setJSON([
                 'error' => $e->getMessage()
             ])->setStatusCode(500);
         }
     }
+
 
     public function deleteAlamat($id)
     {
