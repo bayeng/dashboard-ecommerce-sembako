@@ -117,6 +117,7 @@ class PesananController extends BaseController
             if ($pesanan === false) {
                 $db->transRollback();
                 return $this->response->setJSON([
+                    'errorDetail' => $this->pesananModel->errors(),
                     'error' => 'Gagal membuat pesanan'
                 ])->setStatusCode(ResponseInterface::HTTP_BAD_REQUEST);
             }
