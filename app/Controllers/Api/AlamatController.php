@@ -95,16 +95,17 @@ class AlamatController extends BaseController
     {
         try {
             $request = fn($key) => $this->request->getPost($key);
+            $oldAlamat = $this->alamatModel->where('id', $id)->first();
             $data = [
-                'user_id' => $request('user_id'),
-                'alamat_lengkap' => $request('alamat_lengkap'),
-                'provinsi' => $request('provinsi'),
-                'kabupaten' => $request('kabupaten'),
-                'kecamatan' => $request('kecamatan'),
-                'desa' => $request('desa'),
-                'is_utama' => $request('is_utama'),
-                'lat' => $request('lat'),
-                'lng' => $request('lng'),
+                'user_id' => $request('user_id') ?? $oldAlamat->user_id,
+                'alamat_lengkap' => $request('alamat_lengkap') ?? $oldAlamat->alamat_lengkap,
+                'provinsi' => $request('provinsi') ?? $oldAlamat->provinsi,
+                'kabupaten' => $request('kabupaten') ?? $oldAlamat->kabupaten,
+                'kecamatan' => $request('kecamatan') ?? $oldAlamat->kecamatan,
+                'desa' => $request('desa') ?? $oldAlamat->desa,
+                'is_utama' => $request('is_utama') ?? $oldAlamat->is_utama,
+                'lat' => $request('lat') ?? $oldAlamat->lat,
+                'lng' => $request('lng') ?? $oldAlamat->lng,
             ];
 
             if ($request('is_utama') == 1) {
