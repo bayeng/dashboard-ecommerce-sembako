@@ -3,6 +3,7 @@
 namespace App\Controllers\Api;
 
 use App\Controllers\BaseController;
+use App\Models\AlamatModel;
 use App\Models\KeranjangModel;
 use App\Models\PesananModel;
 use App\Models\PesananProdukModel;
@@ -13,12 +14,14 @@ class PesananController extends BaseController
     protected $pesananModel;
     protected $keranjangModel;
     protected $pesnananProdukModel;
+    protected $almatModel;
 
     public function __construct()
     {
         $this->pesananModel = new PesananModel();
         $this->keranjangModel = new KeranjangModel();
         $this->pesnananProdukModel = new PesananProdukModel();
+        $this->alamatModel = new AlamatModel();
     }
     public function getAllPesananByFilters()
     {
@@ -70,6 +73,9 @@ class PesananController extends BaseController
                 ->where('pesanan_produk.pesanan_id', $id)
                 ->get()->getResultArray();
 
+            $alamat = $this->alamatModel->where('id', $pesanan['alamat_id'])->first();
+            $pesanan['alamat'] = $alamat;
+
 
             return $this->response->setJSON([
                 'pesanan' => $pesanan
@@ -99,6 +105,7 @@ class PesananController extends BaseController
                 'kode_pesanan'        => '#' . random_int(100000, 999999),
                 'user_id'             => $post['user_id'],
                 'toko_id'             => $post['toko_id'],
+                'alamat_id'           => $post['alamat_id'],
                 'alamat_pengiriman'   => $post['alamat'],
                 'status_value'        => 1,
                 'metode_pembayaran'   => $post['metode_pembayaran'],

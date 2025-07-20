@@ -64,8 +64,8 @@ class AlamatController extends BaseController
             $data = [
                 'user_id' => $request('user_id'),
                 'alamat_lengkap' => $request('alamat_lengkap'),
-                'provinsi' => $request('provinsi'),
-                'kabupaten' => $request('kabupaten'),
+                'nama_penerima' => $request('nama_penerima'),
+                'nomor_hp' => $request('nomor_hp'),
                 'kecamatan' => $request('kecamatan'),
                 'desa' => $request('desa'),
                 'is_utama' => $request('is_utama'),
@@ -106,8 +106,8 @@ class AlamatController extends BaseController
             $data = [
                 'user_id' => $request('user_id') !== null && $request('user_id') !== '' ? $request('user_id') : $oldAlamat['user_id'],
                 'alamat_lengkap' => $request('alamat_lengkap') !== null && $request('alamat_lengkap') !== '' ? $request('alamat_lengkap') : $oldAlamat['alamat_lengkap'],
-                'provinsi' => $request('provinsi') !== null && $request('provinsi') !== '' ? $request('provinsi') : $oldAlamat['provinsi'],
-                'kabupaten' => $request('kabupaten') !== null && $request('kabupaten') !== '' ? $request('kabupaten') : $oldAlamat['kabupaten'],
+                'nama_penerima' => $request('nama_penerima') !== null && $request('nama_penerima') !== '' ? $request('nama_penerima') : $oldAlamat['nama_penerima'],
+                'nomor_hp' => $request('nomor_hp') !== null && $request('nomor_hp') !== '' ? $request('nomor_hp') : $oldAlamat['nomor_hp'],
                 'kecamatan' => $request('kecamatan') !== null && $request('kecamatan') !== '' ? $request('kecamatan') : $oldAlamat['kecamatan'],
                 'desa' => $request('desa') !== null && $request('desa') !== '' ? $request('desa') : $oldAlamat['desa'],
                 'is_utama' => $request('is_utama') !== null && $request('is_utama') !== '' ? $request('is_utama') : $oldAlamat['is_utama'],
