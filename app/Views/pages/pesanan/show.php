@@ -82,6 +82,11 @@ Detail Pesanan
                                             <td>Bukti Diterima</td>
                                             <td>: <img src="<?= base_url('uploads/pesanan/' . $pesanan['foto']) ?>" alt="" style="width: 50px; height: 50px; object-fit: cover;"></td>
                                         </tr>
+                                        <tr>
+                                            <td>Catatan Pelanggan</td>
+                                            <td>: <?= esc($pesanan['catatan']) ?>
+                                            </td>
+                                        </tr>
                                     </table>
 
                                 </div>
