@@ -14,7 +14,7 @@ class PesananController extends BaseController
     protected $pesananModel;
     protected $keranjangModel;
     protected $pesnananProdukModel;
-    protected $almatModel;
+    protected $alamatModel;
 
     public function __construct()
     {
