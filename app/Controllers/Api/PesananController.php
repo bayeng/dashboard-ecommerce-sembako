@@ -113,6 +113,7 @@ class PesananController extends BaseController
                 'total_harga'         => $post['total'],
                 'catatan'             => $post['catatan'],
             ]);
+            dd($pesanan);
             $insertedPesananId = $this->pesananModel->getInsertID();
             if ($pesanan === false) {
                 $db->transRollback();
