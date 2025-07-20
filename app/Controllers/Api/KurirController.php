@@ -76,16 +76,40 @@ class KurirController extends BaseController
                 ->first();
 
             //tambahkan ulasan rating keseluruhan
-            $ulasan = $this->ulasanModel->where('kurir_id', $id)->get();
+            $ulasan = $this->ulasanModel->where('kurir_id', $id)->findAll();
             $totalRating = 0;
             foreach ($ulasan as $u) {
-                $totalRating += $u->rating;
+                $totalRating += $u['rating'];
             }
             $averageRating = $totalRating / count($ulasan);
             $kurir['total_rating'] = $averageRating;
 
             return $this->response->setJSON([
                 'kurir' => $kurir
+            ])->setStatusCode(ResponseInterface::HTTP_OK);
+        } catch (\Exception $e) {
+            return $this->response->setJSON([
+                'error' => $e->getMessage()
+            ])->setStatusCode(500);
+        }
+    }
+
+    public function getTotalRatingByKurirId()
+    {
+        try {
+            if ($this->request->getGet('kurir_id') === null) {
+                return $this->response->setJSON([
+                    'error' => 'kurir_id wajib diisi'
+                ])->setStatusCode(404);
+            }
+            $ulasan = $this->ulasanModel->where('kurir_id', $this->request->getGet('kurir_id'))->findAll();
+            $totalRating = 0;
+            foreach ($ulasan as $u) {
+                $totalRating += $u['rating'];
+            }
+            $averageRating = $totalRating / count($ulasan);
+            return $this->response->setJSON([
+                'total_rating' => $averageRating
             ])->setStatusCode(ResponseInterface::HTTP_OK);
         } catch (\Exception $e) {
             return $this->response->setJSON([
