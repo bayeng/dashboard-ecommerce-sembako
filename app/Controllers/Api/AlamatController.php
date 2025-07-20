@@ -113,7 +113,8 @@ class AlamatController extends BaseController
                 'lng' => $request('lng') ?? $oldAlamat['lng'],
             ];
 
-            if ($request('is_utama') == 1) {
+            $alamatAktif = $this->alamatModel->where('user_id', $request('user_id'))->where('is_utama', 1)->first();
+            if ($alamatAktif) {
                 $this->alamatModel
                     ->where('user_id', $request('user_id'))
                     ->where('is_utama', 1)
@@ -121,13 +122,12 @@ class AlamatController extends BaseController
                     'is_utama' => 0
                 ]);
             }
-            $alamat = $this->alamatModel->update($id, $data);
+            $this->alamatModel->update($id, $data);
             $newAlamat = $this->alamatModel->where('id', $id)->first();
             return $this->response->setJSON([
                 'alamat' => $newAlamat
             ])->setStatusCode(ResponseInterface::HTTP_OK);
         } catch (\Exception $e) {
-            dd($e);
             return $this->response->setJSON([
                 'error' => $e->getMessage()
             ])->setStatusCode(500);
