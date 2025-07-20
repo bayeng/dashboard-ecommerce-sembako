@@ -78,7 +78,7 @@
 <body>
   <div class="glass-card">
     <p>Selamat Datang</p>
-    <h1>Dashboard E-Commerce</h1>
+    <h1>Dashboard Saktoko</h1>
     <a href="/login" class="btn btn-outline-light btn-custom mt-4">Masuk</a>
   </div>
 
