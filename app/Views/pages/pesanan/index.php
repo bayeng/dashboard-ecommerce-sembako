@@ -61,6 +61,7 @@ Pesanan
                                                         "1" => 'Diterima',
                                                         "2" => 'Diproses',
                                                         "3" => 'Dikirim',
+                                                        "4" => 'Selesai',
                                                         default => 'Tidak diketahui'
                                                     }) ?></td>
                                                 <td>

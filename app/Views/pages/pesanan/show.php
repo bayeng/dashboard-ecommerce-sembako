@@ -78,6 +78,10 @@ Detail Pesanan
                                             <td>: <?= esc(date('d F Y', strtotime($pesanan['updated_at']))) ?>
                                             </td>
                                         </tr>
+                                        <tr>
+                                            <td>Bukti Diterima</td>
+                                            <td>: <img src="<?= base_url('uploads/pesanan/' . $pesanan['foto']) ?>" alt="" style="width: 50px; height: 50px; object-fit: cover;"></td>
+                                        </tr>
                                     </table>
 
                                 </div>
