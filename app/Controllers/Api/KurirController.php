@@ -103,14 +103,20 @@ class KurirController extends BaseController
                 ])->setStatusCode(404);
             }
             $ulasan = $this->ulasanModel->where('kurir_id', $this->request->getGet('kurir_id'))->findAll();
-            $totalRating = 0;
-            foreach ($ulasan as $u) {
-                $totalRating += $u['rating'];
+            if ($ulasan) {
+                $totalRating = 0;
+                foreach ($ulasan as $u) {
+                    $totalRating += $u['rating'];
+                }
+                $averageRating = $totalRating / count($ulasan);
+                return $this->response->setJSON([
+                    'total_rating' => $averageRating
+                ])->setStatusCode(ResponseInterface::HTTP_OK);
+            }else {
+                return $this->response->setJSON([
+                    'total_rating' => 0
+                ])->setStatusCode(ResponseInterface::HTTP_OK);
             }
-            $averageRating = $totalRating / count($ulasan);
-            return $this->response->setJSON([
-                'total_rating' => $averageRating
-            ])->setStatusCode(ResponseInterface::HTTP_OK);
         } catch (\Exception $e) {
             return $this->response->setJSON([
                 'error' => $e->getMessage()
