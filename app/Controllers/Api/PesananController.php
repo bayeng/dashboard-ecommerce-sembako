@@ -28,9 +28,10 @@ class PesananController extends BaseController
         try {
             $get = fn($key) => $this->request->getGet($key);
             $pesanan = $this->pesananModel
-                ->select('pesanan.*, users.nama as nama_user, users.id as user_id, toko.id as toko_id, toko.nama as nama_toko')
-                ->join('users', 'users.id = pesanan.user_id')
-                ->join('toko', 'toko.id = pesanan.toko_id')
+                ->select('pesanan.*, users.nama as nama_user, users.id as user_id, toko.id as toko_id, toko.nama as nama_toko, alamat.nama_penerima as nama_penerima, alamat.nomor_hp, alamat.alamat_lengkap as alamat_lengkap, alamat.lat as lat, alamat.lng as lng')
+                ->join('users', 'users.id = pesanan.user_id', 'left')
+                ->join('toko', 'toko.id = pesanan.toko_id', 'left')
+                ->join('alamat', 'alamat.id = pesanan.alamat_id', 'left')
                 ->when($get('user_id') !== null, fn($query) => $query->where('pesanan.user_id', $get('user_id')))
                 ->when($get('toko_id') !== null, fn($query) => $query->where('pesanan.toko_id', $get('toko_id')))
                 ->when($get('kurir_id') !== null, fn($query) => $query->where('pesanan.kurir_id', $get('kurir_id')))
