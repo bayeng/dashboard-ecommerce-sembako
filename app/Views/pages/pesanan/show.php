@@ -39,7 +39,7 @@ Detail Pesanan
                                         </tr>
                                         <tr>
                                             <td>Ongkir</td>
-                                            <td>: Rp. <?= $pesanan['ongkir'] ? esc(number_format($pesanan['total_harga'])) : 'Gratis' ?>
+                                            <td>: Rp. <?= $pesanan['ongkir'] ? esc(number_format($pesanan['ongkir'])) : 'Gratis' ?>
                                             </td>
                                         </tr>
                                         <tr>
@@ -85,6 +85,11 @@ Detail Pesanan
                                         <tr>
                                             <td>Catatan Pelanggan</td>
                                             <td>: <?= esc($pesanan['catatan']) ?>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Catatan Kurir</td>
+                                            <td>: <?= esc($pesanan['catatan_kurir']) ?>
                                             </td>
                                         </tr>
                                     </table>
